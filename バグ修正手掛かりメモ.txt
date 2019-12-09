@@ -1,0 +1,10 @@
+透明度の値が四捨五入されてる説
+定数バッファのメモリ上のサイズは16の倍数でなければならない
+vcxprojfilterの競合解決策:
+.gitattributesファイルを作成し、その中に
+*.vcxproj.filters merge = union
+
+アルファブレンドはZバッファとかなり相性悪いっぽい
+
+GameObject系使いにくい Instantiateとかできるようにしたい
+Colliderの登録をカプセル化というか外部からできないようにしたい
