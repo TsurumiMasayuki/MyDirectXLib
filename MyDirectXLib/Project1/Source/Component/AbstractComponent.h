@@ -5,14 +5,6 @@ class RenderManager;
 class AbstractComponent
 {
 public:
-	enum TypeID
-	{
-		TNone = 0,
-		TSpriteRenderer = 1,
-		TCollider = 2,
-		TGravity = 3
-	};
-
 	virtual ~AbstractComponent();
 
 	void destroy();
@@ -23,8 +15,6 @@ public:
 
 	virtual void onStart() = 0;
 	virtual void onUpdate() = 0;
-
-	virtual TypeID getType() const = 0;
 
 	virtual void onDestroy() {};
 	virtual void onEnable() {};

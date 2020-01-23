@@ -28,7 +28,6 @@
     <ClCompile Include="Source\Device\Base\Shader\PixelShader.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Device\GameTime.cpp" />
-    <ClCompile Include="Source\Component\SpriteRenderer.cpp" />
     <ClCompile Include="Source\Device\Renderer.cpp" />
     <ClCompile Include="Source\Device\GameDevice.cpp" />
     <ClCompile Include="Source\Device\Buffer\VertexBuffer.cpp" />
@@ -45,7 +44,7 @@
     <ClCompile Include="Source\Physics\PhysicsCalc.cpp" />
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Utility\StringUtility.cpp" />
-    <ClCompile Include="Source\Component\Physics\Gravity.cpp" />
+    <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -79,7 +78,6 @@
     <ClInclude Include="Source\Device\GameTime.h" />
     <ClInclude Include="Source\Actor\IGameMediator.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
-    <ClInclude Include="Source\Component\SpriteRenderer.h" />
     <ClInclude Include="Source\Device\IRenderable2D.h" />
     <ClInclude Include="Source\Device\Renderer.h" />
     <ClInclude Include="Source\Device\GameDevice.h" />
@@ -99,8 +97,8 @@
     <ClInclude Include="Source\Physics\PhysicsCalc.h" />
     <ClInclude Include="Source\Component\Physics\CircleCollider2D.h" />
     <ClInclude Include="Source\Utility\StringUtility.h" />
-    <ClInclude Include="Source\Component\Physics\Gravity.h" />
     <ClInclude Include="Source\Physics\PhysicsLayer.h" />
+    <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

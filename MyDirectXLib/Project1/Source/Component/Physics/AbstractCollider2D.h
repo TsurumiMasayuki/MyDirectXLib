@@ -21,7 +21,6 @@ public:
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
-	virtual AbstractComponent::TypeID getType() const override;
 
 	virtual bool contains(const Vec3 point) = 0;
 

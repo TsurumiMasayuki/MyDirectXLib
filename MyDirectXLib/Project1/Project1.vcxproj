@@ -161,8 +161,7 @@
     <ClCompile Include="Source\Component\Physics\AbstractCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\BoxCollder2D.cpp" />
-    <ClCompile Include="Source\Component\Physics\Gravity.cpp" />
-    <ClCompile Include="Source\Component\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
     <ClCompile Include="Source\Device\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Device\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="Source\Device\Buffer\VertexBuffer.cpp" />
@@ -210,8 +209,7 @@
     <ClInclude Include="Source\Component\Physics\AbstractCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\CircleCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider2D.h" />
-    <ClInclude Include="Source\Component\Physics\Gravity.h" />
-    <ClInclude Include="Source\Component\SpriteRenderer.h" />
+    <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
     <ClInclude Include="Source\Device\Buffer\ConstantBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\IndexBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\SpriteConstantBuffer.h" />

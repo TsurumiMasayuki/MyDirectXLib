@@ -153,8 +153,3 @@ void AbstractCollider2D::onUpdate()
 {
 
 }
-
-AbstractComponent::TypeID AbstractCollider2D::getType() const
-{
-	return AbstractComponent::TCollider;
-}

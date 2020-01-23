@@ -64,11 +64,6 @@ void SpriteRenderer::onUpdate()
 {
 }
 
-AbstractComponent::TypeID SpriteRenderer::getType() const
-{
-	return TypeID::TSpriteRenderer;
-}
-
 int SpriteRenderer::getDrawOrder() const
 {
 	return m_DrawOrder;
@@ -102,7 +97,7 @@ void SpriteRenderer::draw()
 	//自身の各種プロパティをコンスタントバッファにセット
 	//ワールド行列
 	XMStoreFloat4x4(&constantBuffer.wvpMatrix, wvp);
-	//ピボット(仮置き)
+	//ピボット
 	constantBuffer.pivot = { m_ImagePivot.x, m_ImagePivot.y, 0.0f, 0.0f };
 	//色(仮置き)
 	XMStoreFloat4(&constantBuffer.color, m_Color.toXMFLOAT4());

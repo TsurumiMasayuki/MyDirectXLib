@@ -7,24 +7,6 @@ using namespace std;
 static unordered_map<string, VertexShader*> vsList;
 static unordered_map<string, PixelShader*> psList;
 
-//HRESULT ShaderManager::LoadVertexShader(ID3D11Device * pDevice, const string key, const void * pShaderByteCode, SIZE_T byteCodeLength)
-//{
-//	ID3D11VertexShader* pVertexShader;
-//	if (FAILED(pDevice->CreateVertexShader(pShaderByteCode, byteCodeLength, NULL, &pVertexShader)))
-//		return E_FAIL;
-//	vsList.emplace(key, pVertexShader);
-//	return S_OK;
-//}
-//
-//HRESULT ShaderManager::LoadPixelShader(ID3D11Device * pDevice, const string key, const void * pShaderByteCode, SIZE_T byteCodeLength)
-//{
-//	ID3D11PixelShader* pPixelShader;
-//	if (FAILED(pDevice->CreatePixelShader(pShaderByteCode, byteCodeLength, NULL, &pPixelShader)))
-//		return E_FAIL;
-//	psList.emplace(key, pPixelShader);
-//	return S_OK;
-//}
-
 HRESULT ShaderManager::LoadVertexShader_CSO(std::string key, const CHAR * filePath)
 {
 	auto pVertexShader = new VertexShader(filePath);

@@ -4,7 +4,7 @@
 
 #include "Def\Screen.h"
 
-#include "Component\SpriteRenderer.h"
+#include "Component\Graphics\SpriteRenderer.h"
 
 #include "Device\Camera.h"
 #include "Device\DirectXManager.h"
@@ -17,11 +17,6 @@
 
 #include "Device\Buffer\WVPConstantBuffer.h"
 #include "Device\TextureManager.h"
-
-struct BrightExtract
-{
-	DirectX::XMFLOAT4 minBrightness;
-};
 
 Renderer::Renderer()
 {

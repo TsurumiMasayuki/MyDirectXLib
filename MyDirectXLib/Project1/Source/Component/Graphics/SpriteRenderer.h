@@ -17,7 +17,6 @@ public:
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
-	virtual TypeID getType() const override;
 
 	int getDrawOrder() const;
 	void draw();
