@@ -110,8 +110,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)inc\WICTextureLoader;$(SolutionDir)inc\DDSTextureLoader;$(SolutionDir)inc\DirectXTex;$(SolutionDir)inc\WAVFileReader;$(ProjectDir)Source</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Winmm.Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)Assets\Shaders\%(Filename).cso</ObjectFileOutput>
@@ -149,8 +148,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Winmm.Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)Assets\Shaders\%(Filename).cso</ObjectFileOutput>
