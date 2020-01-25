@@ -16,13 +16,13 @@ public:
 	static void setPosition(Vec3 position);
 	static Vec3 getPosition();
 
-	//角度を付けられるようにする
-
-	static DirectX::XMMATRIX getViewProjMatrix();
-	static DirectX::XMMATRIX getViewOrthoMatrix();
+	//視野 * 射影変換の行列を取得(2D)
+	static DirectX::XMMATRIX getViewProjMatrix2D();
+	//視野 * 射影変換の行列を取得(3D)
+	static DirectX::XMMATRIX getViewProjMatrix3D();
 
 private:
-	static Vec3 m_Position;
+	static Vec3 position;
 
 	static DirectX::XMMATRIX viewMatrix2D;
 	static DirectX::XMMATRIX viewMatrix3D;

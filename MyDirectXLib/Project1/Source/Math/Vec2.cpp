@@ -32,7 +32,7 @@ DirectX::XMVECTOR Vec2::toXMVector() const
 Vec2 Vec2::normalized()
 {
 	float length = this->length();
-	if (length == 0) return Vec2::zero();
+	if (length == 0) return *this;
 
 	return *this / this->length();
 }

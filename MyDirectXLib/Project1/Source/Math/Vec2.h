@@ -12,15 +12,23 @@ public:
 
 	DirectX::XMVECTOR toXMVector() const;
 
+	//正規化
 	Vec2 normalized();
+	//長さ
 	float length() const;
+	//長さ(二乗)
 	float sqrLength() const;
+	//二つのベクトルの距離
 	float distance(const Vec2 & other) const;
+	//二つのベクトルの距離(二乗)
 	float sqrDistance(const Vec2 & other) const;
 
+	//ベクトルを角度に変換(ラジアン)
 	float angle() const;
+	//二つのべくトルとの角度(ラジアン)
 	float angleBetween(const Vec2 & other) const;
 
+	//Vec3に変換
 	Vec3 toVec3();
 
 	static Vec2 zero();
@@ -57,6 +65,8 @@ public:
 
 	Vec2 operator / (float n)
 	{
+		if (n == 0) return;
+
 		return Vec2(
 			this->x / n,
 			this->y / n
@@ -89,6 +99,8 @@ public:
 
 	Vec2& operator /= (float n)
 	{
+		if (n == 0) return;
+
 		this->x /= n;
 		this->y /= n;
 

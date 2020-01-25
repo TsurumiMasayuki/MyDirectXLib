@@ -10,14 +10,14 @@ AbstractComponent::AbstractComponent(GameObject* pUser, int updateOrder)
 	m_pUser->addComponent(this);
 }
 
-GameObject * AbstractComponent::getUser()
-{
-	return m_pUser;
-}
-
 AbstractComponent::~AbstractComponent()
 {
 	m_pUser->removeComponent(this);
+}
+
+GameObject * AbstractComponent::getUser()
+{
+	return m_pUser;
 }
 
 void AbstractComponent::destroy()
