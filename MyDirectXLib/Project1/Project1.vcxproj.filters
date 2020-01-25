@@ -99,9 +99,12 @@
     <ClInclude Include="Source\Utility\StringUtility.h" />
     <ClInclude Include="Source\Physics\PhysicsLayer.h" />
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
+    <ClInclude Include="Source\Device\Base\ModelVertex.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
     <FxCompile Include="Assets\Shaders\SpriteVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\MeshPS.hlsl" />
+    <FxCompile Include="Assets\Shaders\MeshVS.hlsl" />
   </ItemGroup>
 </Project>

@@ -39,7 +39,7 @@ void Game::init()
 
 	GameDevice::initialize();
 
-	m_pSceneManager = new SceneManager();
+	m_pSceneManager = new SceneManager();	
 }
 
 void Game::update()

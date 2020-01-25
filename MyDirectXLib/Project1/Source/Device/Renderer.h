@@ -30,6 +30,7 @@ private:
 	void initRenderTargets();
 
 	void drawSprites();
+	void drawMeshes();
 
 private:
 	std::vector<SpriteRenderer*> m_Sprites;

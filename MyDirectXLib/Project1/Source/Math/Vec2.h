@@ -65,7 +65,7 @@ public:
 
 	Vec2 operator / (float n)
 	{
-		if (n == 0) return;
+		if (n == 0) return Vec2(x, y);
 
 		return Vec2(
 			this->x / n,
@@ -99,7 +99,7 @@ public:
 
 	Vec2& operator /= (float n)
 	{
-		if (n == 0) return;
+		if (n == 0) return *this;
 
 		this->x /= n;
 		this->y /= n;

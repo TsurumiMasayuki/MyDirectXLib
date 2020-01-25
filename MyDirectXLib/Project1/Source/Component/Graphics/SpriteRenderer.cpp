@@ -92,7 +92,7 @@ void SpriteRenderer::draw()
 	XMMATRIX world = scaling * rotation * translate;
 
 	//行列を合成+転置
-	XMMATRIX wvp = XMMatrixTranspose(world * Camera::getViewOrthoMatrix());
+	XMMATRIX wvp = XMMatrixTranspose(world * Camera::getViewProjMatrix2D());
 
 	//自身の各種プロパティをコンスタントバッファにセット
 	//ワールド行列

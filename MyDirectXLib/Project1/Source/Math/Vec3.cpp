@@ -23,6 +23,7 @@ XMVECTOR Vec3::toXMVector() const
 	xmVector.m128_f32[0] = x;
 	xmVector.m128_f32[1] = y;
 	xmVector.m128_f32[2] = z;
+	xmVector.m128_f32[3] = 1.0f;
 	return xmVector;
 }
 

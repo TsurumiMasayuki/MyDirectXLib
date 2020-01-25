@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Def\Screen.h"
 #include <DirectXMath.h>
+#include "Math\MathUtility.h"
 
 Vec3 Camera::position = Vec3::zero();
 DirectX::XMMATRIX Camera::viewMatrix2D;
@@ -18,13 +19,17 @@ Camera::~Camera()
 
 void Camera::init()
 {
+	DirectX::XMVECTOR vEyePt;
+	DirectX::XMVECTOR vLookatPt;
+	DirectX::XMVECTOR vUpVec;
+
 	//2D用
 	//カメラの座標
-	DirectX::XMVECTOR vEyePt = { position.x, position.y, -10.0f, 0 };
+	vEyePt = { position.x, position.y, -10.0f, 0 };
 	//カメラが見る座標
-	DirectX::XMVECTOR vLookatPt = DirectX::XMVectorSet(position.x, position.y, 0.0f, 0.0f);
+	vLookatPt = DirectX::XMVectorSet(position.x, position.y, 0.0f, 0.0f);
 	//カメラの回転の軸
-	DirectX::XMVECTOR vUpVec = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	vUpVec = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	//視野行列
 	viewMatrix2D = DirectX::XMMatrixLookAtLH(vEyePt, vLookatPt, vUpVec);
 
@@ -33,21 +38,21 @@ void Camera::init()
 
 	//3D用
 	//カメラの座標
-	DirectX::XMVECTOR vEyePt = {position.x, position.y, position.z, 0};
+	vEyePt = { 0.0f, 0.0f, -10.0f, 1.0f };
 	//カメラが見る座標
-	DirectX::XMVECTOR vLookatPt = { 0.0f, 0.0f, 0.0f, 0.0f };
+	vLookatPt = { 0.0f, 0.0f, 0.0f, 1.0f };
 	//カメラの回転の軸
-	DirectX::XMVECTOR vUpVec = { 0.0f, 0.0f, 0.0f, 0.0f };
+	vUpVec = { 0.0f, 1.0f, 0.0f, 0.0f };
 	//視野行列
-	DirectX::XMMATRIX viewMatrix3D = DirectX::XMMatrixLookAtLH(vEyePt, vLookatPt, vUpVec);
+	viewMatrix3D = DirectX::XMMatrixLookAtLH(vEyePt, vLookatPt, vUpVec);
 
 	//視野角
 	const float fov = 60.0f;
 	//アスペクト比
-	const float aspect = Screen::getWindowWidth() / Screen::getWindowHeight();
+	const float aspect = (float)Screen::getWindowWidth() / (float)Screen::getWindowHeight();
 
 	//透視投影の行列
-	projMatrix = DirectX::XMMatrixPerspectiveFovLH(fov, aspect, 1.0f / (100.0f - 0.3f), 100.0f);
+	projMatrix = DirectX::XMMatrixPerspectiveFovLH(MathUtility::toRadian(fov), aspect, 0.01f, 500.0f);
 }
 
 void Camera::update()
