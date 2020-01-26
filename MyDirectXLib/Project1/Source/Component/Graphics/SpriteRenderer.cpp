@@ -8,8 +8,8 @@
 #include "Device\DirectXManager.h"
 #include "Device\GameDevice.h"
 #include "Device\Renderer.h"
-#include "Device\TextureManager.h"
-#include "Device\ShaderManager.h"
+#include "Device\Resource\TextureManager.h"
+#include "Device\Resource\Shader\ShaderManager.h"
 
 #include "Device\Buffer\SpriteConstantBuffer.h"
 #include "Device\Buffer\ConstantBuffer.h"
@@ -24,8 +24,8 @@ ConstantBuffer* SpriteRenderer::pSpriteCB;
 SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 	: AbstractComponent(pUser),
 	m_DrawOrder(drawOrder),
-	m_VSName("SpriteDefault"),
-	m_PSName("SpriteDefault"),
+	m_VSName("SpriteVS"),
+	m_PSName("SpritePS"),
 	m_Color(DirectX::Colors::White),
 	m_UVRect(0, 0, 1, 1),
 	m_ImagePivot(0, 0)

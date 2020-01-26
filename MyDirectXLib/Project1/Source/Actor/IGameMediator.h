@@ -11,7 +11,7 @@ public:
 	virtual GameObjectManager* getGameObjectManager() = 0;
 	virtual PhysicsWorld* getPhysicsWorld() = 0;
 
-private:
+protected:
 	IGameMediator() {};
 	
 };

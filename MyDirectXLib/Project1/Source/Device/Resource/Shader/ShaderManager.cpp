@@ -1,6 +1,10 @@
 #include "ShaderManager.h"
-#include "DirectXManager.h"
+#include "Device\DirectXManager.h"
 #include <unordered_map>
+#include <d3d11.h>
+
+#include "VertexShader.h"
+#include "PixelShader.h"
 
 using namespace std;
 
@@ -41,7 +45,7 @@ ID3D11PixelShader * ShaderManager::GetPixelShaderInstance(const string key)
 	return psList.at(key)->getShader();
 }
 
-void ShaderManager::releaseAll()
+void ShaderManager::unLoadAll()
 {
 	for (auto shader : vsList)
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 class Renderer;
+class MeshManager;
 
 class GameDevice
 {
@@ -10,17 +11,19 @@ public:
 	static void shutdown();
 
 	static Renderer* getRenderer();
+	static MeshManager* getMeshManager();
 
 private:
 	GameDevice();
 	~GameDevice();
 
 	//ÉRÉsÅ[ã÷é~
-	GameDevice(const GameDevice& other);
-	GameDevice& operator = (const GameDevice& other);
+	GameDevice(const GameDevice& other) = delete;
+	GameDevice& operator = (const GameDevice& other) = delete;
 
 private:
 	static GameDevice* instance;
 
 	Renderer* m_pRenderer;
+	MeshManager* m_pMeshManager;
 };

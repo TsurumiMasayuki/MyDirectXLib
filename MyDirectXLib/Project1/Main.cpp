@@ -16,9 +16,9 @@
 #include <chrono>
 
 #include "WindowInstance.h"
-#include "Device\ShaderManager.h"
 #include "Device\DirectXManager.h"
-#include "Device\SoundManager.h"
+#include "Device\Resource\Shader\ShaderManager.h"
+#include "Device\Resource\SoundManager.h"
 #include "Device\GameTime.h"
 
 #include "Game.h"
@@ -36,26 +36,11 @@ void app()
 	if (unscaledDeltaTime < MIN_FRAME_TIME)
 	{
 		float diff = MIN_FRAME_TIME - unscaledDeltaTime;
-		GameTime::addSleepTime(diff);
 		Sleep(diff * 1000.0f);
 	}
 
 	g_pGame->update();
 	g_pGame->draw();
-}
-
-HRESULT initDX()
-{
-	ID3D11Device* pDevice = DirectXManager::getDevice();
-	ID3D11DeviceContext* pDeviceContext = DirectXManager::getDeviceContext();
-
-	//バーテックスシェーダ作成
-	ShaderManager::LoadVertexShader_CSO("SpriteDefault", "Assets/Shaders/SpriteVS.cso");
-
-	//ピクセルシェーダ作成
-	ShaderManager::LoadPixelShader_CSO("SpriteDefault", "Assets/Shaders/SpritePS.cso");
-
-	return S_OK;
 }
 
 #pragma region XAudio2
@@ -98,7 +83,6 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ 
 
 	DirectXManager::initialize(g_pWindowInstance->getHWND());
 
-	if (FAILED(initDX())) return 1;
 	initXAudio();
 
 	MSG msg = { 0 };
@@ -118,7 +102,6 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ 
 	g_pGame->shutdown();
 	delete(g_pGame);
 
-	ShaderManager::releaseAll();
 	DirectXManager::shutdown();
 	shutdownXAudio();
 

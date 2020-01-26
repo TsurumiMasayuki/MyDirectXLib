@@ -6,23 +6,24 @@
 #include "Def\Screen.h"
 
 #include "Component\Graphics\SpriteRenderer.h"
+#include "Component\Graphics\MeshRenderer.h"
 
 #include "Device\Camera.h"
 #include "Device\DirectXManager.h"
-#include "Device\ShaderManager.h"
 
 #include "Device\Base\SpriteVertex.h"
-#include "Device\Base\ModelVertex.h"
+#include "Device\Base\MeshVertex.h"
 #include "Device\Buffer\VertexBuffer.h"
 #include "Device\Buffer\IndexBuffer.h"
 #include "Device\Buffer\ConstantBuffer.h"
 
 #include "Device\Buffer\WVPConstantBuffer.h"
-#include "Device\TextureManager.h"
+#include "Device\Resource\Shader\VertexShader.h"
+#include "Device\Resource\Shader\PixelShader.h"
+#include "Device\Resource\Shader\ShaderManager.h"
+#include "Device\Resource\TextureManager.h"
 
 #include "Math\MathUtility.h"
-
-float x = 0.0f;
 
 Renderer::Renderer()
 {
@@ -33,6 +34,8 @@ Renderer::~Renderer()
 	m_pSpriteInputLayout->Release();
 	delete m_pSpriteVertices;
 	delete m_pSpriteIndices;
+
+	m_pMeshInputLayout->Release();
 
 	m_pRenderTexDefault->Release();
 
@@ -58,7 +61,7 @@ void Renderer::draw()
 	//通常描画用レンダーターゲットをセット
 	pDeviceContext->OMSetRenderTargets(1, &m_pRTVDefault, NULL);
 
-	//drawSprites();
+	drawSprites();
 	drawMeshes();
 
 	DirectXManager::presentSwapChain();
@@ -69,6 +72,7 @@ void Renderer::addSprite(SpriteRenderer * pSprite)
 	int myDrawOrder = pSprite->getDrawOrder();
 
 	auto itr = m_Sprites.begin();
+	//自分よりDrawOrderが高くなるまでループ
 	while (itr != m_Sprites.end())
 	{
 		if (myDrawOrder < (*itr)->getDrawOrder())
@@ -86,6 +90,29 @@ void Renderer::removeSprite(SpriteRenderer * pSprite)
 	m_Sprites.erase(itr);
 }
 
+void Renderer::addMesh(MeshRenderer * pMesh)
+{
+	int myDrawOrder = pMesh->getDrawOrder();
+
+	auto itr = m_Meshes.begin();
+	//自分よりDrawOrderが高くなるまでループ
+	while (itr != m_Meshes.end())
+	{
+		if (myDrawOrder < (*itr)->getDrawOrder())
+			break;
+
+		++itr;
+	}
+
+	m_Meshes.insert(itr, pMesh);
+}
+
+void Renderer::removeMesh(MeshRenderer * pMesh)
+{
+	auto itr = std::find(m_Meshes.begin(), m_Meshes.end(), pMesh);
+	m_Meshes.erase(itr);
+}
+
 void Renderer::initBuffers()
 {
 #pragma region Sprite用
@@ -95,7 +122,7 @@ void Renderer::initBuffers()
 
 	auto pDevice = DirectXManager::getDevice();
 
-	ShaderManager::GetVertexShader("SpriteDefault")->createInputLayout(
+	ShaderManager::GetVertexShader("SpriteVS")->createInputLayout(
 		pDevice,
 		inputDesc,
 		2,
@@ -125,6 +152,24 @@ void Renderer::initBuffers()
 
 	m_pSpriteIndices = new IndexBuffer();
 	m_pSpriteIndices->init(pDevice, sizeof(UINT) * 6, indices);
+#pragma endregion
+
+#pragma region Mesh用
+
+	//インプットレイアウトの作成
+	D3D11_INPUT_ELEMENT_DESC layout[1];
+	MeshVertex::getInputDesc(layout);
+	ShaderManager::GetVertexShader("MeshVS")->createInputLayout(pDevice, layout, 1, &m_pMeshInputLayout);
+
+	//ラスタライザの作成
+	D3D11_RASTERIZER_DESC rasterDesc;
+	ZeroMemory(&rasterDesc, sizeof(D3D11_RASTERIZER_DESC));
+	rasterDesc.CullMode = D3D11_CULL_BACK;
+	rasterDesc.FillMode = D3D11_FILL_SOLID;
+	rasterDesc.FrontCounterClockwise = TRUE;
+
+	pDevice->CreateRasterizerState(&rasterDesc, &m_pRasterizer);
+
 #pragma endregion
 }
 
@@ -183,8 +228,6 @@ void Renderer::initRenderTargets()
 	pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBack);
 	//画面描画用RTV作成
 	pDevice->CreateRenderTargetView(pBack, NULL, &m_pRTVDefault);
-
-	pBack->Release();
 }
 
 void Renderer::drawSprites()
@@ -210,156 +253,12 @@ void Renderer::drawMeshes()
 	auto pDevice = DirectXManager::getDevice();
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
-	//Fbx系の管理オブジェクトを作成
-	FbxManager* pFbxManager = FbxManager::Create();
-	//入出力設定
-	FbxIOSettings* pIOSetting = FbxIOSettings::Create(pFbxManager, IOSROOT);
-	pFbxManager->SetIOSettings(pIOSetting);
-	//インポーター
-	FbxImporter* pImporter = FbxImporter::Create(pFbxManager, "");
+	pDeviceContext->IASetInputLayout(m_pMeshInputLayout);
+	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pDeviceContext->RSSetState(m_pRasterizer);
 
-	std::string fileName = "Assets/Models/tekitou.fbx";
-	//fbxをインポート
-	if (!pImporter->Initialize(fileName.c_str(), -1, pFbxManager->GetIOSettings()))
+	for (auto mesh : m_Meshes)
 	{
-		//失敗したらfalseが返るのでエラー処理
+		mesh->draw();
 	}
-
-	//シーンの作成とインポート
-	FbxScene* pFbxScene = FbxScene::Create(pFbxManager, "myScene");
-	pImporter->Import(pFbxScene);
-
-	//インポートが終わったので破棄
-	pImporter->Destroy();
-
-	//メッシュデータ
-	FbxMesh* pMesh = nullptr;
-	//メッシュデータの取得
-	for (int i = 0; i < pFbxScene->GetRootNode()->GetChildCount(); ++i)
-	{
-		//シーン内のノードを一個ずつ取得
-		FbxNode* pChildNode = pFbxScene->GetRootNode()->GetChild(i);
-
-		//ノードの種類がメッシュ用ならメッシュを取得
-		if (pChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-		{
-			pMesh = pChildNode->GetMesh();
-			break;
-		}
-	}
-
-	//コントロールポイント(頂点)の数で配列生成
-	ModelVertex* vertices = new ModelVertex[pMesh->GetControlPointsCount()];
-	//メッシュの頂点を全取得
-	for (int i = 0; i < pMesh->GetControlPointsCount(); ++i)
-	{
-		vertices[i].m_Pos.x = (float)pMesh->GetControlPointAt(i)[0];	//頂点のX成分を取得
-		vertices[i].m_Pos.y = (float)pMesh->GetControlPointAt(i)[1];	//頂点のY成分を取得
-		vertices[i].m_Pos.z = (float)pMesh->GetControlPointAt(i)[2];	//頂点のZ成分を取得
-		vertices[i].m_Pos.w = 1.0f;
-	}
-
-	//頂点バッファの作成
-	D3D11_BUFFER_DESC verticesDesc;
-	verticesDesc.ByteWidth = sizeof(ModelVertex) * pMesh->GetControlPointsCount();
-	verticesDesc.Usage = D3D11_USAGE_DEFAULT;
-	verticesDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	verticesDesc.CPUAccessFlags = 0;
-	verticesDesc.MiscFlags = 0;
-	verticesDesc.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA verticesData;
-	verticesData.pSysMem = vertices;
-
-	ID3D11Buffer* pVertexBuffer;
-	auto result = pDevice->CreateBuffer(&verticesDesc, &verticesData, &pVertexBuffer);
-
-	//インデックスバッファの作成
-	D3D11_BUFFER_DESC indicesDesc;
-	indicesDesc.ByteWidth = sizeof(int) * pMesh->GetPolygonVertexCount();
-	indicesDesc.Usage = D3D11_USAGE_DEFAULT;
-	indicesDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indicesDesc.CPUAccessFlags = 0;
-	indicesDesc.MiscFlags = 0;
-	indicesDesc.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA indicesData;
-	indicesData.pSysMem = pMesh->GetPolygonVertices();
-
-	int polyCount = pMesh->GetPolygonCount();
-
-	std::vector<int> indexVector;
-	for (int i = 0; i < pMesh->GetPolygonCount(); ++i)
-	{
-		for (int j = 0; j < 3; ++j)
-		{
-			indexVector.emplace_back(pMesh->GetPolygonVertex(i, j));
-		}
-	}
-
-	ID3D11Buffer* pIndexBuffer;
-	pDevice->CreateBuffer(&indicesDesc, &indicesData, &pIndexBuffer);
-
-	VertexShader meshVS("Assets/Shaders/MeshVS.cso");
-	PixelShader meshPS("Assets/Shaders/MeshPS.cso");
-
-	//インプットレイアウトの作成
-	D3D11_INPUT_ELEMENT_DESC layout[] = 
-	{
-		{ "POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-	ID3D11InputLayout* pInputLayout;
-	meshVS.createInputLayout(pDevice, layout, 1, &pInputLayout);
-
-	//定数バッファの作成
-	D3D11_BUFFER_DESC constantDesc;
-	constantDesc.ByteWidth = sizeof(WVPConstantBuffer);
-	constantDesc.Usage = D3D11_USAGE_DEFAULT;
-	constantDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	constantDesc.CPUAccessFlags = 0;
-	constantDesc.MiscFlags = 0;
-	constantDesc.StructureByteStride = 0;
-
-	WVPConstantBuffer constantBuffer;
-	//変換行列の作成
-	DirectX::XMMATRIX translate = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f);
-	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
-	DirectX::XMMATRIX rotate = DirectX::XMMatrixRotationRollPitchYaw(MathUtility::toRadian(x), MathUtility::toRadian(x += 10), 0.0f);
-	DirectX::XMMATRIX world = scale * rotate * translate;
-	DirectX::XMMATRIX wvp = DirectX::XMMatrixTranspose(world * Camera::getViewProjMatrix3D());
-
-	DirectX::XMStoreFloat4x4(&constantBuffer.wvpMatrix, wvp);
-
-	D3D11_SUBRESOURCE_DATA constantData;
-	constantData.pSysMem = &constantBuffer;
-
-	ID3D11Buffer* pWVPBuffer;
-	pDevice->CreateBuffer(&constantDesc, &constantData, &pWVPBuffer);
-
-	//ラスタライザの作成
-	D3D11_RASTERIZER_DESC rasterDesc;
-	ZeroMemory(&rasterDesc, sizeof(D3D11_RASTERIZER_DESC));
-	rasterDesc.CullMode = D3D11_CULL_BACK;
-	rasterDesc.FillMode = D3D11_FILL_SOLID;
-	rasterDesc.FrontCounterClockwise = TRUE;
-
-	ID3D11RasterizerState* pRasterizer;
-	pDevice->CreateRasterizerState(&rasterDesc, &pRasterizer);
-
-	UINT stride = sizeof(ModelVertex);
-	UINT offset = 0;
-	pDeviceContext->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
-	pDeviceContext->IASetIndexBuffer(pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	pDeviceContext->IASetInputLayout(pInputLayout);
-	pDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	pDeviceContext->VSSetShader(meshVS.getShader(), NULL, 0);
-	pDeviceContext->PSSetShader(meshPS.getShader(), NULL, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &pWVPBuffer);
-	pDeviceContext->RSSetState(pRasterizer);
-
-	pDeviceContext->DrawIndexed(pMesh->GetPolygonVertexCount(), 0, 0);
-
-	pFbxManager->Destroy();
-
-	delete vertices;
 }

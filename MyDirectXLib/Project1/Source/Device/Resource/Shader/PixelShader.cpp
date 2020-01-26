@@ -2,10 +2,18 @@
 #include <cstdio>
 #include "Device\DirectXManager.h"
 
+#ifdef _DEBUG
+#include <cassert>
+#endif
+
 PixelShader::PixelShader(const char * filePath)
 {
 	FILE* pFile = nullptr;
 	fopen_s(&pFile, filePath, "rb");	//バイト読み込みモードにする
+
+#ifdef _DEBUG
+	assert(pFile != nullptr);
+#endif
 
 	fseek(pFile, 0, SEEK_END); 		//ファイル末尾まで移動
 	long fileSize = ftell(pFile);	//現在の位置(↑で移動したので末尾)を取得

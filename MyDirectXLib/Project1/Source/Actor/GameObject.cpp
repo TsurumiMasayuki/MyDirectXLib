@@ -11,7 +11,7 @@
 GameObject::GameObject(IGameMediator* pGameMediator) :
 	m_Position(Vec3::zero()),
 	m_Angles(Vec3::zero()),
-	m_Size(Vec3::zero()),
+	m_Size(Vec3(1, 1, 1)),
 	m_Enabled(true),
 	m_DestroyFlag(false),
 	m_FirstUpdate(true),

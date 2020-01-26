@@ -7,9 +7,11 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	for (auto pScene : m_Scenes)
+	m_Scenes.at(m_CurrentScene)->shutdown();
+
+	for (auto scene : m_Scenes)
 	{
-		delete &pScene;
+		delete scene.second;
 	}
 	m_Scenes.clear();
 }
@@ -37,8 +39,11 @@ void SceneManager::addScene(std::string key, AbstractScene * pAbstractScene)
 
 void SceneManager::changeScene(std::string key)
 {
-	//古いシーンの終了処理
-	m_Scenes.at(m_CurrentScene)->shutdown();
+	if (!m_CurrentScene.empty())
+	{
+		//古いシーンの終了処理
+		m_Scenes.at(m_CurrentScene)->shutdown();
+	}
 
 	//現在のシーン名を更新
 	m_CurrentScene = key;

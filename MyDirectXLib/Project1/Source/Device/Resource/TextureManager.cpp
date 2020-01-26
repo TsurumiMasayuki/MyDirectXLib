@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include "WICTextureLoader.h"
 #include "WICTextureLoader.cpp"
-#include "DirectXManager.h"
+#include "Device\DirectXManager.h"
 #include <stdlib.h>
 
 using namespace std;

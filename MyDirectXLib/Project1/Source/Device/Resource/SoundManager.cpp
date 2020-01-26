@@ -124,6 +124,7 @@ SoundManager::~SoundManager()
 	for (auto& pSoundInstance : mSoundInstances)
 	{
 		pSoundInstance->shutdown();
+		delete pSoundInstance;
 	}
 
 	mSoundInstances.clear();

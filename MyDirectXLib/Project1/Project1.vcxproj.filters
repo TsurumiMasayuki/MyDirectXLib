@@ -8,10 +8,6 @@
     <ClCompile Include="Source\Device\Camera.cpp" />
     <ClCompile Include="Source\Device\DirectXManager.cpp" />
     <ClCompile Include="Source\Device\Input.cpp" />
-    <ClCompile Include="Source\Device\ShaderManager.cpp" />
-    <ClCompile Include="Source\Device\SoundInstance.cpp" />
-    <ClCompile Include="Source\Device\SoundManager.cpp" />
-    <ClCompile Include="Source\Device\TextureManager.cpp" />
     <ClCompile Include="Source\Actor\GameObject.cpp" />
     <ClCompile Include="Source\Actor\GameObjectManager.cpp" />
     <ClCompile Include="Source\Def\Screen.cpp" />
@@ -23,9 +19,7 @@
     <ClCompile Include="Source\Math\MathUtility.cpp" />
     <ClCompile Include="Source\Component\AbstractComponent.cpp" />
     <ClCompile Include="Source\Component\ComponentManager.cpp" />
-    <ClCompile Include="Source\Device\Base\Shader\VertexShader.cpp" />
     <ClCompile Include="Source\Utility\State\StateManager.cpp" />
-    <ClCompile Include="Source\Device\Base\Shader\PixelShader.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Device\GameTime.cpp" />
     <ClCompile Include="Source\Device\Renderer.cpp" />
@@ -45,6 +39,17 @@
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Utility\StringUtility.cpp" />
     <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Device\Resource\SoundManager.cpp" />
+    <ClCompile Include="Source\Device\Resource\TextureManager.cpp" />
+    <ClCompile Include="Source\Device\Resource\SoundInstance.cpp" />
+    <ClCompile Include="Source\Device\Base\MeshVertex.cpp" />
+    <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
+    <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
+    <ClCompile Include="Source\Device\Resource\Shader\PixelShader.cpp" />
+    <ClCompile Include="Source\Device\Resource\Shader\VertexShader.cpp" />
+    <ClCompile Include="Source\Device\Resource\Shader\ShaderManager.cpp" />
+    <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
+    <ClCompile Include="Source\Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -53,10 +58,6 @@
     <ClInclude Include="Source\Device\Camera.h" />
     <ClInclude Include="Source\Device\DirectXManager.h" />
     <ClInclude Include="Source\Device\Input.h" />
-    <ClInclude Include="Source\Device\ShaderManager.h" />
-    <ClInclude Include="Source\Device\SoundInstance.h" />
-    <ClInclude Include="Source\Device\SoundManager.h" />
-    <ClInclude Include="Source\Device\TextureManager.h" />
     <ClInclude Include="Source\Actor\GameObject.h" />
     <ClInclude Include="Source\Actor\GameObjectManager.h" />
     <ClInclude Include="Source\Def\Screen.h" />
@@ -71,9 +72,7 @@
     <ClInclude Include="Source\Component\AbstractComponent.h" />
     <ClInclude Include="Source\Component\ComponentManager.h" />
     <ClInclude Include="Source\Utility\State\IState.h" />
-    <ClInclude Include="Source\Device\Base\Shader\VertexShader.h" />
     <ClInclude Include="Source\Utility\State\StateManager.h" />
-    <ClInclude Include="Source\Device\Base\Shader\PixelShader.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\Device\GameTime.h" />
     <ClInclude Include="Source\Actor\IGameMediator.h" />
@@ -99,7 +98,17 @@
     <ClInclude Include="Source\Utility\StringUtility.h" />
     <ClInclude Include="Source\Physics\PhysicsLayer.h" />
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
-    <ClInclude Include="Source\Device\Base\ModelVertex.h" />
+    <ClInclude Include="Source\Device\Base\MeshVertex.h" />
+    <ClInclude Include="Source\Device\Resource\SoundManager.h" />
+    <ClInclude Include="Source\Device\Resource\TextureManager.h" />
+    <ClInclude Include="Source\Device\Resource\SoundInstance.h" />
+    <ClInclude Include="Source\Device\Resource\Mesh.h" />
+    <ClInclude Include="Source\Device\Resource\MeshManager.h" />
+    <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
+    <ClInclude Include="Source\Device\Resource\Shader\PixelShader.h" />
+    <ClInclude Include="Source\Device\Resource\Shader\VertexShader.h" />
+    <ClInclude Include="Source\Device\Resource\Shader\ShaderManager.h" />
+    <ClInclude Include="Source\Scene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

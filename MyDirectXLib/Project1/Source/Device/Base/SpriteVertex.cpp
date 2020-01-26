@@ -1,6 +1,5 @@
 #include "SpriteVertex.h"
 #include <d3d11.h>;
-#include <DirectXMath.h>
 
 void SpriteVertex::getInputDesc(D3D11_INPUT_ELEMENT_DESC layoutArray[2])
 {

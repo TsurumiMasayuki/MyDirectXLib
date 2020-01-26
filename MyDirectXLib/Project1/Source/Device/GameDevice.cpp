@@ -4,6 +4,7 @@
 
 #include "Device\Camera.h"
 #include "Device\Renderer.h"
+#include "Device\Resource\MeshManager.h"
 #include "Device\Input.h"
 
 GameDevice* GameDevice::instance = nullptr;
@@ -35,12 +36,23 @@ Renderer * GameDevice::getRenderer()
 	return instance->m_pRenderer;
 }
 
+MeshManager * GameDevice::getMeshManager()
+{
+#ifdef _DEBUG
+	assert(instance != nullptr);
+#endif
+
+	return instance->m_pMeshManager;
+}
+
 GameDevice::GameDevice()
-	:m_pRenderer(new Renderer())
+	:m_pRenderer(new Renderer()),
+	m_pMeshManager(new MeshManager())
 {
 }
 
 GameDevice::~GameDevice()
 {
 	delete m_pRenderer;
+	delete m_pMeshManager;
 }

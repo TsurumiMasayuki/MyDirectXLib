@@ -2,12 +2,15 @@
 #include <Windows.h>
 
 #include "Scene\SceneManager.h"
+#include "Scene\TestScene.h"
 
 #include "Device\GameDevice.h"
 #include "Device\Renderer.h"
 
-#include "Device\TextureManager.h"
-#include "Device\SoundManager.h"
+#include "Device\Resource\TextureManager.h"
+#include "Device\Resource\SoundManager.h"
+#include "Device\Resource\Shader\ShaderManager.h"
+#include "Device\Resource\MeshManager.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -37,9 +40,20 @@ void Game::init()
 	TextureManager::loadTexture(L"Assets/Textures/BoxFill.png", "BoxFill");
 	TextureManager::loadTexture(L"Assets/Textures/BoxOutline.png", "BoxOutline");
 
-	GameDevice::initialize();
+	//スプライト用シェーダーを読み込み
+	ShaderManager::LoadVertexShader_CSO("SpriteVS", "Assets/Shaders/SpriteVS.cso");
+	ShaderManager::LoadPixelShader_CSO("SpritePS", "Assets/Shaders/SpritePS.cso");
 
-	m_pSceneManager = new SceneManager();	
+	//3Dモデル用シェーダーを読み込み
+	ShaderManager::LoadVertexShader_CSO("MeshVS", "Assets/Shaders/MeshVS.cso");
+	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
+
+	GameDevice::initialize();
+	GameDevice::getMeshManager()->loadMesh("TestMesh", "Assets/Models/tekitou.fbx");
+
+	m_pSceneManager = new SceneManager();
+	m_pSceneManager->addScene("Test", new TestScene());
+	m_pSceneManager->changeScene("Test");
 }
 
 void Game::update()
@@ -64,5 +78,6 @@ void Game::shutdown()
 	delete m_pSceneManager;
 
 	TextureManager::unLoadAll();
+	ShaderManager::unLoadAll();
 	GameDevice::shutdown();
 }
