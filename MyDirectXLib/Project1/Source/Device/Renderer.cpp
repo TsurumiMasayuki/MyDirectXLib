@@ -38,8 +38,10 @@ Renderer::~Renderer()
 	m_pMeshInputLayout->Release();
 
 	m_pRenderTexDefault->Release();
-
 	m_pRTVDefault->Release();
+
+	m_pDepthStencilTexture->Release();
+	m_pDepthStencilView->Release();
 }
 
 void Renderer::init()
@@ -57,12 +59,12 @@ void Renderer::draw()
 
 	//レンダーターゲットをクリア
 	pDeviceContext->ClearRenderTargetView(m_pRTVDefault, clearColor);
+	//深度バッファをクリア
+	pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	//通常描画用レンダーターゲットをセット
-	pDeviceContext->OMSetRenderTargets(1, &m_pRTVDefault, NULL);
+	drawMeshes();
 
 	drawSprites();
-	drawMeshes();
 
 	DirectXManager::presentSwapChain();
 }
@@ -157,14 +159,14 @@ void Renderer::initBuffers()
 #pragma region Mesh用
 
 	//インプットレイアウトの作成
-	D3D11_INPUT_ELEMENT_DESC layout[1];
+	D3D11_INPUT_ELEMENT_DESC layout[2];
 	MeshVertex::getInputDesc(layout);
-	ShaderManager::GetVertexShader("MeshVS")->createInputLayout(pDevice, layout, 1, &m_pMeshInputLayout);
+	ShaderManager::GetVertexShader("MeshVS")->createInputLayout(pDevice, layout, 2, &m_pMeshInputLayout);
 
 	//ラスタライザの作成
 	D3D11_RASTERIZER_DESC rasterDesc;
 	ZeroMemory(&rasterDesc, sizeof(D3D11_RASTERIZER_DESC));
-	rasterDesc.CullMode = D3D11_CULL_BACK;
+	rasterDesc.CullMode = D3D11_CULL_NONE;
 	rasterDesc.FillMode = D3D11_FILL_SOLID;
 	rasterDesc.FrontCounterClockwise = TRUE;
 
@@ -223,6 +225,30 @@ void Renderer::initRenderTargets()
 
 	pDevice->CreateShaderResourceView(m_pRenderTexDefault, &viewDesc, &m_pSRVDefault);
 
+	//深度バッファ作成
+	D3D11_TEXTURE2D_DESC depthTexDesc;
+	ZeroMemory(&depthTexDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	depthTexDesc.Width = Screen::getWindowWidth();
+	depthTexDesc.Height = Screen::getWindowHeight();
+	depthTexDesc.MipLevels = 1;
+	depthTexDesc.ArraySize = 1;
+	depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthTexDesc.SampleDesc.Count = 1;
+	depthTexDesc.SampleDesc.Quality = 0;
+	depthTexDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthTexDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthTexDesc.CPUAccessFlags = 0;
+
+	pDevice->CreateTexture2D(&depthTexDesc, NULL, &m_pDepthStencilTexture);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthViewDesc;
+	ZeroMemory(&depthViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+	depthViewDesc.Format = depthTexDesc.Format;
+	depthViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthViewDesc.Texture2D.MipSlice = 0;
+
+	pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &depthViewDesc, &m_pDepthStencilView);
+
 	//SwapChainからバックバッファを取得
 	ID3D11Texture2D* pBack;
 	pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBack);
@@ -233,6 +259,9 @@ void Renderer::initRenderTargets()
 void Renderer::drawSprites()
 {
 	auto pDeviceContext = DirectXManager::getDeviceContext();
+
+	//通常描画用レンダーターゲットを深度バッファ無しでセット
+	pDeviceContext->OMSetRenderTargets(1, &m_pRTVDefault, NULL);
 
 	pDeviceContext->IASetInputLayout(m_pSpriteInputLayout);
 
@@ -252,6 +281,9 @@ void Renderer::drawMeshes()
 {
 	auto pDevice = DirectXManager::getDevice();
 	auto pDeviceContext = DirectXManager::getDeviceContext();
+
+	//通常描画用レンダーターゲットを深度バッファ付きでセット
+	pDeviceContext->OMSetRenderTargets(1, &m_pRTVDefault, m_pDepthStencilView);
 
 	pDeviceContext->IASetInputLayout(m_pMeshInputLayout);
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

@@ -65,7 +65,21 @@ void Mesh::init(const char * filePath)
 	}
 
 	//コントロールポイント(頂点)の数で配列生成
-	MeshVertex* vertices = new MeshVertex[pMesh->GetControlPointsCount()];
+	MeshVertex* vertices = new MeshVertex[pMesh->GetPolygonVertexCount()];
+	int count = 0;
+	for (int i = 0; i < pMesh->GetPolygonCount(); ++i)
+	{
+		for (int j = 0; j < pMesh->GetPolygonSize(i); ++j)
+		{
+			FbxVector4 normal;
+			pMesh->GetPolygonVertexNormal(i, j, normal);
+			vertices[count].m_Normal.x = (float)normal[0]; 
+			vertices[count].m_Normal.y = (float)normal[1]; 
+			vertices[count].m_Normal.z = (float)normal[2];
+			vertices[count].m_Normal.w = (float)normal[3];
+			count++;
+		}
+	}
 
 	//メッシュの頂点を全取得
 	for (int i = 0; i < pMesh->GetControlPointsCount(); ++i)
@@ -94,7 +108,7 @@ void Mesh::init(const char * filePath)
 	m_VertexCount = pMesh->GetPolygonVertexCount();
 
 	pFbxManager->Destroy();
-	delete vertices;
+	delete[] vertices;
 }
 
 const VertexBuffer & Mesh::getVertexBuffer()

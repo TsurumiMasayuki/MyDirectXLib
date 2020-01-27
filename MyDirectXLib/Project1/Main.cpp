@@ -53,7 +53,7 @@ void initXAudio()
 	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
 	UINT32 flags = 0;
-#if defined(_DEBUG)
+#ifdef _DEBUG
 	flags |= XAUDIO2_DEBUG_ENGINE;
 #endif
 	XAudio2Create(&g_pXAudio2, flags);

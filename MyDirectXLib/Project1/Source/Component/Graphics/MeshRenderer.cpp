@@ -77,12 +77,16 @@ void MeshRenderer::draw()
 	//ワールド行列作成
 	XMMATRIX world = scaling * rotation * translate;
 
+	//法線用変換行列
+	XMMATRIX worldInv = XMMatrixInverse(nullptr, world);
+
 	//変換行列の作成
 	XMMATRIX wvp = XMMatrixTranspose(world * Camera::getViewProjMatrix3D());
 
 	//定数バッファ作成
 	WVPConstantBuffer wvpCBuffer;
 	XMStoreFloat4x4(&wvpCBuffer.wvpMatrix, wvp);
+	XMStoreFloat4x4(&wvpCBuffer.world, worldInv);
 
 	ConstantBuffer cBuffer;
 	cBuffer.init(pDevice, sizeof(WVPConstantBuffer), &wvpCBuffer);

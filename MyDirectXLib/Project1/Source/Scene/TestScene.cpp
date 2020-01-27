@@ -5,9 +5,9 @@
 #include "Component\Graphics\MeshRenderer.h"
 #include "Math\MathUtility.h"
 #include "Device\GameTime.h"
+#include "Device\Input.h"
 
 GameObject* obj = nullptr;
-float angleZ;
 
 void TestScene::init()
 {
@@ -21,8 +21,10 @@ void TestScene::init()
 
 void TestScene::update()
 {
-	obj->setPosition(Vec3(angleZ, 0, 0));
-	obj->setAngleZ(MathUtility::toRadian(angleZ += 1 * GameTime::getDeltaTime()));
+	obj->setPosition(obj->getPosition() + Input::getLStickValue().toVec3() * 8 * GameTime::getDeltaTime());
+
+	Vec3 angles = Input::getRStickValue().toVec3();
+	obj->setAngles(obj->getAngles() + Vec3(angles.y, angles.x, 0) * 8 * GameTime::getDeltaTime());
 
 	m_pObjManager->update();
 	m_pPhysicsWorld->update();
