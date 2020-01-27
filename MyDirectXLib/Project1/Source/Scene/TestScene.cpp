@@ -3,6 +3,7 @@
 #include "Physics\PhysicsWorld.h"
 #include "Actor\GameObject.h"
 #include "Component\Graphics\MeshRenderer.h"
+#include "Component\Graphics\SpriteRenderer.h"
 #include "Math\MathUtility.h"
 #include "Device\GameTime.h"
 #include "Device\Input.h"
@@ -17,6 +18,14 @@ void TestScene::init()
 	obj = new GameObject(this);
 	auto renderer = new MeshRenderer(obj);
 	renderer->setMesh("TestMesh");
+
+	auto getComp = obj->getComponent<MeshRenderer>();
+	getComp->setMesh("Cube");
+
+	auto obj2 = new GameObject(this);
+	obj2->setSize(Vec3(64, 64, 0));
+	auto sprite = new SpriteRenderer(obj2);
+	sprite->setTextureName("BoxOutline");
 }
 
 void TestScene::update()

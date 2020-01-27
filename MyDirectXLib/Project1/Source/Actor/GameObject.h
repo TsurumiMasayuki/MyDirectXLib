@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 #include "Math/Vec3.h"
+#include "Component\ComponentManager.h"
 
 class AbstractComponent;
 class AbstractCollider2D;
-class ComponentManager;
 class IGameMediator;
 
 class GameObject
@@ -17,10 +17,6 @@ public:
 	void objUpdate();
 	void addComponent(AbstractComponent* pComponent);
 	void removeComponent(AbstractComponent* pComponent);
-
-	void addCollider(AbstractCollider2D* pCollider);
-	AbstractCollider2D* getCollider();
-	void removeCollider();
 
 	bool compareTag(std::string tag);
 
@@ -34,6 +30,10 @@ public:
 	void onCollisionExitCallBack(GameObject* pHit);
 
 	IGameMediator* getGameMediator();
+
+	//コンポーネントの取得
+	template<typename T>
+	T* getComponent();
 
 #pragma region getter/setter
 
@@ -89,3 +89,9 @@ private:
 	ComponentManager* m_pComponentManager;
 };
 
+template<typename T>
+inline T * GameObject::getComponent()
+{
+	T* pComponent = m_pComponentManager->getComponent<T>();
+	return pComponent;
+}

@@ -2,7 +2,8 @@
 #include "AbstractComponent.h"
 #include <vector>
 
-ComponentManager::ComponentManager()
+ComponentManager::ComponentManager(GameObject* pUser)
+	: m_pUser(pUser)
 {
 }
 

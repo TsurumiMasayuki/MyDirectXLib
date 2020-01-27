@@ -16,21 +16,19 @@ bool vectorContains(std::vector<CollisionHit2D*>& vector, CollisionHit2D* value)
 }
 
 AbstractCollider2D::AbstractCollider2D(GameObject * pUser)
-	: AbstractComponent(pUser),
+	: AbstractComponent(pUser, 200),
 	isTrigger(true),
 	isMove(true),
 	isPlayer(false),
 	m_pCollHit2D(new CollisionHit2D(this)),
 	layer(PhysicsLayer::None)
 {
-	pUser->addCollider(this);
 	pUser->getGameMediator()->getPhysicsWorld()->addCollider(this);
 }
 
 AbstractCollider2D::~AbstractCollider2D()
 {
 	m_pUser->getGameMediator()->getPhysicsWorld()->removeCollider(this);
-	m_pUser->removeCollider();
 
 	m_pCollHit2D->onDelete();
 

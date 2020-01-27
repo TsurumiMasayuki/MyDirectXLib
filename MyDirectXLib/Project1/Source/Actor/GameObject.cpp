@@ -16,7 +16,7 @@ GameObject::GameObject(IGameMediator* pGameMediator) :
 	m_DestroyFlag(false),
 	m_FirstUpdate(true),
 	m_pGameMediator(pGameMediator),
-	m_pComponentManager(new ComponentManager())
+	m_pComponentManager(new ComponentManager(this))
 {
 	m_pGameMediator->getGameObjectManager()->add(this);
 }
@@ -48,26 +48,6 @@ void GameObject::addComponent(AbstractComponent * pComponent)
 void GameObject::removeComponent(AbstractComponent * pComponent)
 {
 	m_pComponentManager->remove(pComponent);
-}
-
-void GameObject::addCollider(AbstractCollider2D * pCollider)
-{
-#ifdef _DEBUG
-	if (m_pCollider != nullptr)
-		assert("二つ以上のコライダーは対応してません！");
-#endif
-
-	m_pCollider = pCollider;
-}
-
-AbstractCollider2D* GameObject::getCollider()
-{
-	return m_pCollider;
-}
-
-void GameObject::removeCollider()
-{
-	m_pCollider = nullptr;
 }
 
 bool GameObject::compareTag(std::string tag)
