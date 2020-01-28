@@ -4,6 +4,7 @@
 #include <string>
 
 struct Mesh;
+struct Color;
 class VertexShader;
 class PixelShader;
 
@@ -18,13 +19,17 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	virtual void setMesh(std::string meshName);
+	void setMesh(std::string meshName);
 
 	int getDrawOrder();
 	void draw();
 
+	void setColor(const Color& color);
+	const Color& getColor() const;
+
 private:
 	Mesh* m_pMesh;
+	Color* m_pColor;
 	int m_DrawOrder;
 
 	VertexShader* m_pVertexShader;

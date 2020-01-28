@@ -7,34 +7,37 @@
 #include "Math\MathUtility.h"
 #include "Device\GameTime.h"
 #include "Device\Input.h"
+#include "Utility\Color.h"
+#include <DirectXColors.h>
 
-GameObject* obj = nullptr;
+#include "Actor\Test\Tester.h"
+#include "Component\Physics\SphereCollider3D.h"
 
 void TestScene::init()
 {
 	m_pObjManager = new GameObjectManager();
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
-	obj = new GameObject(this);
-	auto renderer = new MeshRenderer(obj);
-	renderer->setMesh("TestMesh");
-
-	auto getComp = obj->getComponent<MeshRenderer>();
-	getComp->setMesh("Cube");
+	auto tester = new Tester(this);
+	auto coll1 = new SphereCollider3D(tester);
+	coll1->setRadius(1.0f);
+	coll1->isTrigger = false;
 
 	auto obj2 = new GameObject(this);
-	obj2->setSize(Vec3(64, 64, 0));
-	auto sprite = new SpriteRenderer(obj2);
-	sprite->setTextureName("BoxOutline");
+	obj2->setPosition(Vec3(2, 1, 0));
+
+	auto renderer = new MeshRenderer(obj2);
+	renderer->setMesh("Sphere");
+	renderer->setColor(Color(DirectX::Colors::White));
+	
+	auto coll2 = new SphereCollider3D(obj2);
+	coll2->setRadius(1.0f);
+	coll2->isTrigger = false;
+	coll2->isMove = false;
 }
 
 void TestScene::update()
 {
-	obj->setPosition(obj->getPosition() + Input::getLStickValue().toVec3() * 8 * GameTime::getDeltaTime());
-
-	Vec3 angles = Input::getRStickValue().toVec3();
-	obj->setAngles(obj->getAngles() + Vec3(angles.y, angles.x, 0) * 8 * GameTime::getDeltaTime());
-
 	m_pObjManager->update();
 	m_pPhysicsWorld->update();
 }

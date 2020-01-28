@@ -27,7 +27,6 @@ void GameObjectManager::update()
 		if (!gameObject->isActive()) continue;
 
 		gameObject->objUpdate();
-		gameObject->checkCollision();
 	}
 
 	addObjects();

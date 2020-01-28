@@ -7,19 +7,15 @@
 		{
 			None = 0,
 			Player = 1,
-			Block = 2,
-			Magnet = 3,
 		};
 
 		static bool isHitLayer(LayerEnum layer1, LayerEnum layer2)
 		{
-			static const bool layerHitList[4][4] =
+			static const bool layerHitList[2][2] =
 			{
-				// None, Player, Block, Magnet,
-				{ true, true, true, true },	//None
-				{ true, false, true, true },	//Player
-				{ true, true, false, true },	//Block
-				{ true, true, true, true},	//Magnet
+							// None, Player
+				/*None*/	{ true, true, },
+				/*Player*/	{ true, false,}	
 			};
 
 			return layerHitList[(int)layer1][(int)layer2];

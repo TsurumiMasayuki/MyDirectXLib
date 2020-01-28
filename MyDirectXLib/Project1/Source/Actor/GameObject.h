@@ -5,7 +5,6 @@
 #include "Component\ComponentManager.h"
 
 class AbstractComponent;
-class AbstractCollider2D;
 class IGameMediator;
 
 class GameObject
@@ -22,8 +21,6 @@ public:
 
 	void destroy();
 	bool isDestroy();
-
-	void checkCollision();
 
 	void onCollisionEnterCallBack(GameObject* pHit);
 	void onCollisionStayCallBack(GameObject* pHit);
@@ -67,6 +64,13 @@ protected:
 	virtual void onCollisionStay(GameObject* pHit) {};
 	virtual void onCollisionExit(GameObject* pHit) {};
 
+	//座標が変更された時
+	virtual void onPositionChanged(const Vec3& currentPos) {};
+	//角度が変更された時
+	virtual void onAngleChanged(const Vec3& currentAngle) {};
+	//サイズが変更された時
+	virtual void onSizeChanged(const Vec3& currentSize) {};
+
 private:
 	void objStart();
 	void objOnDestroy();
@@ -85,7 +89,6 @@ private:
 
 	std::string m_Tag;
 
-	AbstractCollider2D* m_pCollider;
 	ComponentManager* m_pComponentManager;
 };
 

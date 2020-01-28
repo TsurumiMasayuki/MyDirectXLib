@@ -38,6 +38,9 @@ void GameObject::objUpdate()
 	m_pComponentManager->update();
 
 	update();
+
+	m_pComponentManager->checkCollision2D();
+	m_pComponentManager->checkCollision3D();
 }
 
 void GameObject::addComponent(AbstractComponent * pComponent)
@@ -102,12 +105,6 @@ bool GameObject::isDestroy()
 	return m_DestroyFlag;
 }
 
-void GameObject::checkCollision()
-{
-	if (m_pCollider != nullptr)
-		m_pGameMediator->getPhysicsWorld()->checkCollision(m_pCollider);
-}
-
 void GameObject::onCollisionEnterCallBack(GameObject* pHit)
 {
 	onCollisionEnter(pHit);
@@ -136,6 +133,8 @@ IGameMediator * GameObject::getGameMediator()
 void GameObject::setPosition(Vec3 position)
 {
 	m_Position = position;
+	onPositionChanged(m_Position);
+	m_pComponentManager->onPositionChanged(m_Position);
 }
 
 Vec3 GameObject::getPosition()
@@ -146,6 +145,8 @@ Vec3 GameObject::getPosition()
 void GameObject::setAngleZ(float angle)
 {
 	m_Angles.z = angle;
+	onAngleChanged(m_Angles);
+	m_pComponentManager->onAngleChanged(m_Angles);
 }
 
 float GameObject::getAngleZ()
@@ -156,6 +157,8 @@ float GameObject::getAngleZ()
 void GameObject::setAngles(Vec3 angles)
 {
 	m_Angles = angles;
+	onAngleChanged(m_Angles);
+	m_pComponentManager->onAngleChanged(m_Angles);
 }
 
 Vec3 GameObject::getAngles()
@@ -166,11 +169,15 @@ Vec3 GameObject::getAngles()
 void GameObject::setSize(float size)
 {
 	m_Size = Vec3(size, size, size);
+	onSizeChanged(m_Size);
+	m_pComponentManager->onSizeChanged(m_Size);
 }
 
 void GameObject::setSize(Vec3 size)
 {
 	m_Size = size;
+	onSizeChanged(m_Size);
+	m_pComponentManager->onSizeChanged(m_Size);
 }
 
 Vec3 GameObject::getSize()

@@ -23,12 +23,12 @@ AbstractCollider2D::AbstractCollider2D(GameObject * pUser)
 	m_pCollHit2D(new CollisionHit2D(this)),
 	layer(PhysicsLayer::None)
 {
-	pUser->getGameMediator()->getPhysicsWorld()->addCollider(this);
+	pUser->getGameMediator()->getPhysicsWorld()->addCollider2D(this);
 }
 
 AbstractCollider2D::~AbstractCollider2D()
 {
-	m_pUser->getGameMediator()->getPhysicsWorld()->removeCollider(this);
+	m_pUser->getGameMediator()->getPhysicsWorld()->removeCollider2D(this);
 
 	m_pCollHit2D->onDelete();
 
@@ -118,11 +118,6 @@ Vec3 AbstractCollider2D::angles()
 	return m_pUser->getAngles();
 }
 
-GameObject * AbstractCollider2D::getUser()
-{
-	return m_pUser;
-}
-
 void AbstractCollider2D::onCollisionEnter(AbstractCollider2D * pHit)
 {
 	m_pUser->onCollisionEnterCallBack(pHit->m_pUser);
@@ -149,5 +144,9 @@ void AbstractCollider2D::onStart()
 
 void AbstractCollider2D::onUpdate()
 {
+}
 
+void AbstractCollider2D::checkCollision2D()
+{
+	m_pUser->getGameMediator()->getPhysicsWorld()->checkCollision2D(this);
 }

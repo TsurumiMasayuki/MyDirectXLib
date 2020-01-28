@@ -153,3 +153,12 @@ void PhysicsCalc::fixPosition2D(CircleCollider2D * pCircle, BoxCollider2D * pBox
 {
 	fixPosition2D(pBox, pCircle);
 }
+
+bool PhysicsCalc::isIntersect3D(const Sphere3D & sphere1, const Sphere3D & sphere2)
+{
+	return false;
+}
+
+void PhysicsCalc::fixPosition3D(Sphere3D & sphere1, const Sphere3D & sphere2)
+{
+}

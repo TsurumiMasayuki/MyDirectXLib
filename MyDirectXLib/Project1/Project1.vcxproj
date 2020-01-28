@@ -158,11 +158,13 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Actor\Test\Tester.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="Source\Component\Physics\AbstractCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\BoxCollder2D.cpp" />
     <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Component\Physics\AbstractCollider3D.cpp" />
     <ClCompile Include="Source\Device\Base\MeshVertex.cpp" />
     <ClCompile Include="Source\Device\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Device\Buffer\IndexBuffer.cpp" />
@@ -174,9 +176,12 @@
     <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
     <ClCompile Include="Source\Math\RectF.cpp" />
+    <ClCompile Include="Source\Physics\Box2D.cpp" />
     <ClCompile Include="Source\Physics\CollisionHit2D.cpp" />
+    <ClCompile Include="Source\Physics\CollisionHit3D.cpp" />
     <ClCompile Include="Source\Physics\PhysicsCalc.cpp" />
     <ClCompile Include="Source\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="Source\Physics\Sphere3D.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Component\AbstractComponent.cpp" />
     <ClCompile Include="Source\Component\ComponentManager.cpp" />
@@ -210,15 +215,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Actor\IGameMediator.h" />
+    <ClInclude Include="Source\Actor\Test\Tester.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
     <ClInclude Include="Source\Component\Physics\AbstractCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\CircleCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider2D.h" />
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
+    <ClInclude Include="Source\Component\Physics\AbstractCollider3D.h" />
+    <ClInclude Include="Source\Component\Physics\SphereCollider3D.h" />
     <ClInclude Include="Source\Device\Base\MeshVertex.h" />
     <ClInclude Include="Source\Device\Buffer\ConstantBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Source\Device\Buffer\MeshPSBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\SpriteConstantBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\VertexBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\WVPConstantBuffer.h" />
@@ -229,11 +238,16 @@
     <ClInclude Include="Source\Device\Renderer.h" />
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
+    <ClInclude Include="Source\Physics\Box2D.h" />
+    <ClInclude Include="Source\Physics\CollisionHit3D.h" />
+    <ClInclude Include="Source\Physics\IShape2D.h" />
     <ClInclude Include="Source\Math\RectF.h" />
     <ClInclude Include="Source\Physics\CollisionHit2D.h" />
+    <ClInclude Include="Source\Physics\IShape3D.h" />
     <ClInclude Include="Source\Physics\PhysicsCalc.h" />
     <ClInclude Include="Source\Physics\PhysicsLayer.h" />
     <ClInclude Include="Source\Physics\PhysicsWorld.h" />
+    <ClInclude Include="Source\Physics\Sphere3D.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\Component\AbstractComponent.h" />
     <ClInclude Include="Source\Component\ComponentManager.h" />

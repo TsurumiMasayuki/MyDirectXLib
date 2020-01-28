@@ -1,6 +1,7 @@
 #pragma once
 class GameObject;
 class RenderManager;
+struct Vec3;
 
 class AbstractComponent
 {
@@ -20,9 +21,22 @@ public:
 	virtual void onEnable() {};
 	virtual void onDisable() {};
 
+	//衝突判定用関数(物理コンポーネントでのみ使用)
+	virtual void checkCollision2D() {};
+
+	//衝突判定用関数(物理コンポーネントでのみ使用)
+	virtual void checkCollision3D() {};
+
 	virtual void onCollisionEnter(GameObject* pHit) {};
 	virtual void onCollisionStay(GameObject* pHit) {};
 	virtual void onCollisionExit(GameObject* pHit) {};
+
+	//座標が変更された時
+	virtual void onPositionChanged(const Vec3& currentPos) {};
+	//角度が変更された時
+	virtual void onAngleChanged(const Vec3& currentAngle) {};
+	//サイズが変更された時
+	virtual void onSizeChanged(const Vec3& currentSize) {};
 
 	int getUpdateOrder() const;
 	GameObject* getUser();

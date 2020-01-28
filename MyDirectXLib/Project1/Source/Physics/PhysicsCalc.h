@@ -3,6 +3,9 @@ class AbstractCollider2D;
 class BoxCollider2D;
 class CircleCollider2D;
 
+class Box3D;
+class Sphere3D;
+
 namespace PhysicsCalc
 {
 	bool isCollision2D(BoxCollider2D* pBox1, BoxCollider2D* pBox2);
@@ -17,5 +20,7 @@ namespace PhysicsCalc
 	void fixPosition2D(BoxCollider2D* pBox, CircleCollider2D* pCircle);
 	void fixPosition2D(CircleCollider2D* pCircle, BoxCollider2D* pBox);
 
-	bool boxIntersect2D(float x1, float y1, float x2, float y2);
+	bool isIntersect3D(const Sphere3D& sphere1, const Sphere3D& sphere2);
+
+	void fixPosition3D(Sphere3D& sphere1, const Sphere3D& sphere2);
 }

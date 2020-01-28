@@ -50,6 +50,11 @@
     <ClCompile Include="Source\Device\Resource\Shader\ShaderManager.cpp" />
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
     <ClCompile Include="Source\Scene\TestScene.cpp" />
+    <ClCompile Include="Source\Physics\Box2D.cpp" />
+    <ClCompile Include="Source\Physics\Sphere3D.cpp" />
+    <ClCompile Include="Source\Physics\CollisionHit3D.cpp" />
+    <ClCompile Include="Source\Component\Physics\AbstractCollider3D.cpp" />
+    <ClCompile Include="Source\Actor\Test\Tester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -109,6 +114,15 @@
     <ClInclude Include="Source\Device\Resource\Shader\VertexShader.h" />
     <ClInclude Include="Source\Device\Resource\Shader\ShaderManager.h" />
     <ClInclude Include="Source\Scene\TestScene.h" />
+    <ClInclude Include="Source\Physics\IShape2D.h" />
+    <ClInclude Include="Source\Physics\Box2D.h" />
+    <ClInclude Include="Source\Device\Buffer\MeshPSBuffer.h" />
+    <ClInclude Include="Source\Physics\IShape3D.h" />
+    <ClInclude Include="Source\Physics\Sphere3D.h" />
+    <ClInclude Include="Source\Physics\CollisionHit3D.h" />
+    <ClInclude Include="Source\Component\Physics\AbstractCollider3D.h" />
+    <ClInclude Include="Source\Actor\Test\Tester.h" />
+    <ClInclude Include="Source\Component\Physics\SphereCollider3D.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

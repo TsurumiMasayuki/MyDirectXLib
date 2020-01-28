@@ -22,6 +22,8 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
+	virtual void checkCollision2D() override;
+
 	virtual bool contains(const Vec3 point) = 0;
 
 	virtual bool isCollision(AbstractCollider2D* pCollider) = 0;
@@ -40,8 +42,6 @@ public:
 	Vec3 position();
 	Vec3 size();
 	Vec3 angles();
-
-	GameObject* getUser();
 
 private:
 	void onCollisionEnter(AbstractCollider2D* pHit);

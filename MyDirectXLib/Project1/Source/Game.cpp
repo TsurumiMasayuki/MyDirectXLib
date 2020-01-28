@@ -51,6 +51,7 @@ void Game::init()
 	GameDevice::initialize();
 	GameDevice::getMeshManager()->loadMesh("TestMesh", "Assets/Models/tekitou.fbx");
 	GameDevice::getMeshManager()->loadMesh("Cube", "Assets/Models/cube.fbx");
+	GameDevice::getMeshManager()->loadMesh("Sphere", "Assets/Models/sphere.fbx");
 
 	m_pSceneManager = new SceneManager();
 	m_pSceneManager->addScene("Test", new TestScene());
