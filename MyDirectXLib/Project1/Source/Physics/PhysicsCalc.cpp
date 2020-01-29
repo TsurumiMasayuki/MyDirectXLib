@@ -101,7 +101,7 @@ bool PhysicsCalc::isCollision2D(BoxCollider2D * pBox, CircleCollider2D * pCircle
 	else if (yPrime < down)
 		y = down;
 
-	return pCircle->getRadius() > MathUtility::distance(xPrime, yPrime, x, y);;
+	return pCircle->getRadius() > MathUtility::distance(xPrime, yPrime, x, y);
 }
 
 bool PhysicsCalc::isCollision2D(CircleCollider2D * pCircle, BoxCollider2D * pBox)

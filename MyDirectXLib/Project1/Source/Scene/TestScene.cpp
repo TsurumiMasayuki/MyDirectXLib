@@ -20,19 +20,21 @@ void TestScene::init()
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
 	auto tester = new Tester(this);
-	auto coll1 = new BoxCollider3D(tester);
-	coll1->setSize(Vec3(1, 1, 1));
+	tester->setSize(3.0f);
+	auto coll1 = new SphereCollider3D(tester);
+	coll1->setRadius(3.0f);
 	coll1->isTrigger = false;
 
 	auto obj2 = new GameObject(this);
-	obj2->setPosition(Vec3(2, 1, 0));
+	obj2->setSize(Vec3(1, 3, 1));
+	obj2->setPosition(Vec3(4, 0, 0));
 
 	auto renderer = new MeshRenderer(obj2);
 	renderer->setMesh("Cube");
 	renderer->setColor(Color(DirectX::Colors::White));
 	
 	auto coll2 = new BoxCollider3D(obj2);
-	coll2->setSize(Vec3(1, 1, 1));
+	coll2->setSize(Vec3(1, 3, 1));
 	coll2->isTrigger = false;
 	coll2->isMove = false;
 }

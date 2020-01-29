@@ -15,7 +15,7 @@ Tester::Tester(IGameMediator * pGameMediator)
 void Tester::start()
 {
 	auto renderer = new MeshRenderer(this);
-	renderer->setMesh("Cube");
+	renderer->setMesh("Sphere");
 	renderer->setColor(Color(DirectX::Colors::White));
 }
 

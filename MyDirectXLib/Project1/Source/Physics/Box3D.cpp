@@ -15,15 +15,15 @@ bool Box3D::isIntersect(const IShape3D & shape3D) const
 bool Box3D::isIntersect(const Box3D & box3D) const
 {
 	Vec3 myPosition = getPosition();
-	Vec3 otherPos = box3D.getPosition();
+	Vec3 otherPosition = box3D.getPosition();
 
 	Vec3 mySize = getSize();
 	Vec3 otherSize = getSize();
 
 	//現在のX,Y,Zそれぞれの距離の絶対値を算出
-	const float xDiff = std::fabsf(myPosition.x - otherPos.x);
-	const float yDiff = std::fabsf(myPosition.y - otherPos.y);
-	const float zDiff = std::fabsf(myPosition.z - otherPos.z);
+	const float xDiff = std::fabsf(myPosition.x - otherPosition.x);
+	const float yDiff = std::fabsf(myPosition.y - otherPosition.y);
+	const float zDiff = std::fabsf(myPosition.z - otherPosition.z);
 
 	//衝突までの最短距離と現在の距離の比較をX,Y,Zそれぞれで行う
 	return
@@ -34,7 +34,19 @@ bool Box3D::isIntersect(const Box3D & box3D) const
 
 bool Box3D::isIntersect(const Sphere3D & sphere3D) const
 {
-	return false;
+	Vec3 myPosition = getPosition();
+	Vec3 otherPosition = sphere3D.getPosition();
+
+	Vec3 mySize = getSize();
+
+	//X, Y, Zでそれぞれ一番近い座標を取る
+	Vec3 closestPos(
+		MathUtility::clamp(otherPosition.x, myPosition.x - mySize.x, myPosition.x + mySize.x),
+		MathUtility::clamp(otherPosition.y, myPosition.y - mySize.y, myPosition.y + mySize.y),
+		MathUtility::clamp(otherPosition.z, myPosition.z - mySize.z, myPosition.z + mySize.z)
+	);
+
+	return closestPos.distance(otherPosition) <= sphere3D.getRadius();
 }
 
 Vec3 Box3D::getFixPosition(const IShape3D & shape3D) const
@@ -89,5 +101,20 @@ Vec3 Box3D::getFixPosition(const Box3D & box3D) const
 
 Vec3 Box3D::getFixPosition(const Sphere3D & sphere3D) const
 {
-	return sphere3D.getPosition();
+	Vec3 myPosition = getPosition();
+	Vec3 otherPosition = sphere3D.getPosition();
+
+	Vec3 mySize = getSize();
+
+	//X, Y, Zでそれぞれ一番近い座標を取る
+	Vec3 closestPos(
+		MathUtility::clamp(otherPosition.x, myPosition.x - mySize.x, myPosition.x + mySize.x),
+		MathUtility::clamp(otherPosition.y, myPosition.y - mySize.y, myPosition.y + mySize.y),
+		MathUtility::clamp(otherPosition.z, myPosition.z - mySize.z, myPosition.z + mySize.z)
+	);
+
+	//押し出し結果
+	Vec3 fixPosLocal = (otherPosition - closestPos).normalized() * sphere3D.getRadius();
+
+	return closestPos + fixPosLocal;
 }
