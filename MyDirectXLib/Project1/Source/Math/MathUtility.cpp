@@ -57,6 +57,17 @@ float MathUtility::distance(float x1, float y1, float x2, float y2)
 	return sqrtf(a * a + b * b);
 }
 
+float MathUtility::sign(float value)
+{
+	if (value > 0.0f)
+		return 1.0f;
+	
+	if (value < 0.0f)
+		return -1.0f;
+
+	return 0.0f;
+}
+
 bool MathUtility::isInRange(const float compareValue, const float value1, const float value2)
 {
 	float min = fminf(value1, value2);

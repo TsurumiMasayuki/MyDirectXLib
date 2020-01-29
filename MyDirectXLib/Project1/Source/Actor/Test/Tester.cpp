@@ -4,7 +4,6 @@
 #include <DirectXColors.h>
 #include "Device\Input.h"
 #include "Device\GameTime.h"
-//#include "Component\Physics\"
 
 float deathTimer = 0.0f;
 
@@ -16,7 +15,7 @@ Tester::Tester(IGameMediator * pGameMediator)
 void Tester::start()
 {
 	auto renderer = new MeshRenderer(this);
-	renderer->setMesh("Sphere");
+	renderer->setMesh("Cube");
 	renderer->setColor(Color(DirectX::Colors::White));
 }
 
@@ -34,12 +33,12 @@ void Tester::onCollisionStay(GameObject * pHit)
 {
 	getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow));
 
-	deathTimer += GameTime::getDeltaTime();
-	if (deathTimer >= 3)
-	{
-		destroy();
-		pHit->destroy();
-	}
+	//deathTimer += GameTime::getDeltaTime();
+	//if (deathTimer >= 3)
+	//{
+	//	destroy();
+	//	pHit->destroy();
+	//}
 }
 
 void Tester::onCollisionExit(GameObject * pHit)

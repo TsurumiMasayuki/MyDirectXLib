@@ -177,6 +177,7 @@
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
     <ClCompile Include="Source\Math\RectF.cpp" />
     <ClCompile Include="Source\Physics\Box2D.cpp" />
+    <ClCompile Include="Source\Physics\Box3D.cpp" />
     <ClCompile Include="Source\Physics\CollisionHit2D.cpp" />
     <ClCompile Include="Source\Physics\CollisionHit3D.cpp" />
     <ClCompile Include="Source\Physics\PhysicsCalc.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
     <ClInclude Include="Source\Component\Physics\AbstractCollider2D.h" />
+    <ClInclude Include="Source\Component\Physics\BoxCollider3D.h" />
     <ClInclude Include="Source\Component\Physics\CircleCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider2D.h" />
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
@@ -239,6 +241,7 @@
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
     <ClInclude Include="Source\Physics\Box2D.h" />
+    <ClInclude Include="Source\Physics\Box3D.h" />
     <ClInclude Include="Source\Physics\CollisionHit3D.h" />
     <ClInclude Include="Source\Physics\IShape2D.h" />
     <ClInclude Include="Source\Math\RectF.h" />

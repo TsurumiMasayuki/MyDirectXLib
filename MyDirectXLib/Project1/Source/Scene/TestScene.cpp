@@ -12,6 +12,7 @@
 
 #include "Actor\Test\Tester.h"
 #include "Component\Physics\SphereCollider3D.h"
+#include "Component\Physics\BoxCollider3D.h"
 
 void TestScene::init()
 {
@@ -19,19 +20,19 @@ void TestScene::init()
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
 	auto tester = new Tester(this);
-	auto coll1 = new SphereCollider3D(tester);
-	coll1->setRadius(1.0f);
+	auto coll1 = new BoxCollider3D(tester);
+	coll1->setSize(Vec3(1, 1, 1));
 	coll1->isTrigger = false;
 
 	auto obj2 = new GameObject(this);
 	obj2->setPosition(Vec3(2, 1, 0));
 
 	auto renderer = new MeshRenderer(obj2);
-	renderer->setMesh("Sphere");
+	renderer->setMesh("Cube");
 	renderer->setColor(Color(DirectX::Colors::White));
 	
-	auto coll2 = new SphereCollider3D(obj2);
-	coll2->setRadius(1.0f);
+	auto coll2 = new BoxCollider3D(obj2);
+	coll2->setSize(Vec3(1, 1, 1));
 	coll2->isTrigger = false;
 	coll2->isMove = false;
 }
