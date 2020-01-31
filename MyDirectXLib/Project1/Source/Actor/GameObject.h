@@ -6,6 +6,7 @@
 
 class AbstractComponent;
 class IGameMediator;
+class Transform;
 
 class GameObject
 {
@@ -17,6 +18,19 @@ public:
 	void addComponent(AbstractComponent* pComponent);
 	void removeComponent(AbstractComponent* pComponent);
 
+	//親オブジェクトを設定(nullptrで解除)
+	void setParent(GameObject* parent);
+	//親オブジェクトを取得
+	GameObject* getParent();
+
+	//子オブジェクトを登録
+	void addChild(GameObject& child);
+	//子オブジェクトを登録解除
+	void removeChild(GameObject& child);
+	//子オブジェクトを全取得
+	const std::vector<GameObject*>* getChildren() const { return &m_Children; }
+
+	//タグの比較
 	bool compareTag(std::string tag);
 
 	void destroy();
@@ -28,24 +42,13 @@ public:
 
 	IGameMediator* getGameMediator();
 
+	Transform* getTransform() { return m_pTransform; };
+
 	//コンポーネントの取得
 	template<typename T>
 	T* getComponent();
 
 #pragma region getter/setter
-
-	void setPosition(Vec3 position);
-	Vec3 getPosition();
-
-	void setAngleZ(float angle);
-	float getAngleZ();
-
-	void setAngles(Vec3 angles);
-	Vec3 getAngles();
-
-	void setSize(float size);
-	void setSize(Vec3 size);
-	Vec3 getSize();
 
 	void setActive(bool value);
 	bool isActive();
@@ -64,13 +67,6 @@ protected:
 	virtual void onCollisionStay(GameObject* pHit) {};
 	virtual void onCollisionExit(GameObject* pHit) {};
 
-	//座標が変更された時
-	virtual void onPositionChanged(const Vec3& currentPos) {};
-	//角度が変更された時
-	virtual void onAngleChanged(const Vec3& currentAngle) {};
-	//サイズが変更された時
-	virtual void onSizeChanged(const Vec3& currentSize) {};
-
 private:
 	void objStart();
 	void objOnDestroy();
@@ -79,10 +75,6 @@ protected:
 	IGameMediator* m_pGameMediator;
 
 private:
-	Vec3 m_Position;
-	Vec3 m_Angles;
-	Vec3 m_Size;
-
 	bool m_Enabled;
 	bool m_DestroyFlag;
 	bool m_FirstUpdate;
@@ -90,6 +82,13 @@ private:
 	std::string m_Tag;
 
 	ComponentManager* m_pComponentManager;
+
+	//親オブジェクト
+	GameObject* m_pParent;
+	//子オブジェクト
+	std::vector<GameObject*> m_Children;
+
+	Transform* m_pTransform;
 };
 
 template<typename T>

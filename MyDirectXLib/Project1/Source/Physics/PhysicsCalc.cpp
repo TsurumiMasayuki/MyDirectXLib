@@ -1,6 +1,7 @@
 #include "PhysicsCalc.h"
 #include "Actor\GameObject.h"
 #include "Math\MathUtility.h"
+#include "Component\Transform.h"
 #include "Component\Physics\CircleCollider2D.h"
 #include "Component\Physics\BoxCollider2D.h"
 #include "Math\Vec2.h"
@@ -17,7 +18,7 @@ HitDirection getHitDirection(BoxCollider2D* pBox1, BoxCollider2D* pBox2)
 {
 	HitDirection hitDir = HitDirection::UP;
 
-	Vec3 direction = pBox2->position() - pBox1->position();
+	Vec3 direction = pBox2->getUser()->getTransform()->getPosition() - pBox1->getUser()->getTransform()->getPosition();
 
 	float curXDistance = std::fabsf(direction.x);
 	float curYDisntace = std::fabsf(direction.y);
@@ -48,8 +49,8 @@ HitDirection getHitDirection(BoxCollider2D* pBox1, BoxCollider2D* pBox2)
 
 bool PhysicsCalc::isCollision2D(BoxCollider2D * pBox1, BoxCollider2D * pBox2)
 {
-	Vec3 position = pBox1->getUser()->getPosition();
-	Vec3 otherPos = pBox2->getUser()->getPosition();
+	Vec3 position = pBox1->getUser()->getTransform()->getPosition();
+	Vec3 otherPos = pBox2->getUser()->getTransform()->getPosition();
 
 	//Œ»Ý‚ÌX,Y‚»‚ê‚¼‚ê‚Ì‹——£‚Ìâ‘Î’l‚ðŽZo
 	const float xDiff = std::fabsf(position.x - otherPos.x);
@@ -63,7 +64,7 @@ bool PhysicsCalc::isCollision2D(BoxCollider2D * pBox1, BoxCollider2D * pBox2)
 
 bool PhysicsCalc::isCollision2D(CircleCollider2D * pCircle1, CircleCollider2D * pCircle2)
 {
-	float sqrDistance = pCircle1->position().sqrDistance(pCircle2->position());
+	float sqrDistance = pCircle1->getUser()->getTransform()->getPosition().sqrDistance(pCircle2->getUser()->getTransform()->getPosition());
 	float minRadius2 = std::powf(pCircle1->getRadius() + pCircle2->getRadius(), 2);
 	return sqrDistance < minRadius2;
 }
@@ -73,20 +74,24 @@ bool PhysicsCalc::isCollision2D(BoxCollider2D * pBox, CircleCollider2D * pCircle
 	float compareValue = fmaxf(pBox->getWidth(), pBox->getHeight()) / 2;
 	compareValue = std::powf(compareValue + pCircle->getRadius(), 2);
 
-	if (!(pCircle->position().sqrDistance(pBox->position()) < compareValue))
+	if (!(pCircle->getUser()->getTransform()->getPosition().sqrDistance(pBox->getUser()->getTransform()->getPosition()) < compareValue))
 	{
 		return false;
 	}
 
-	Vec2 rotate = Vec2::rotateBy(pCircle->position().toVec2(), pBox->position().toVec2(), -pBox->angles().z);
+	Vec2 rotate = 
+		Vec2::rotateBy(
+			pCircle->getUser()->getTransform()->getPosition().toVec2(),
+			pBox->getUser()->getTransform()->getPosition().toVec2(),
+			-pBox->getUser()->getTransform()->getAngles().z);
 	float xPrime = rotate.x;
 	float yPrime = rotate.y;
 
-	float left = pBox->position().x - pBox->getWidth() / 2;
-	float right = pBox->position().x + pBox->getWidth() / 2;
+	float left = pBox->getUser()->getTransform()->getPosition().x - pBox->getWidth() / 2;
+	float right = pBox->getUser()->getTransform()->getPosition().x + pBox->getWidth() / 2;
 
-	float up = pBox->position().y + pBox->getHeight() / 2;
-	float down = pBox->position().y - pBox->getHeight() / 2;
+	float up = pBox->getUser()->getTransform()->getPosition().y + pBox->getHeight() / 2;
+	float down = pBox->getUser()->getTransform()->getPosition().y - pBox->getHeight() / 2;
 
 	float x = xPrime;
 	float y = yPrime;
@@ -115,8 +120,8 @@ void PhysicsCalc::fixPosition2D(CircleCollider2D * pCircle1, CircleCollider2D * 
 
 void PhysicsCalc::fixPosition2D(BoxCollider2D * pBox1, BoxCollider2D * pBox2)
 {
-	Vec3 box1Pos = pBox1->position();
-	Vec3 box2Pos = pBox2->position();
+	Vec3 box1Pos = pBox1->getUser()->getTransform()->getPosition();
+	Vec3 box2Pos = pBox2->getUser()->getTransform()->getPosition();
 
 	HitDirection hitDir = getHitDirection(pBox1, pBox2);
 
@@ -142,7 +147,7 @@ void PhysicsCalc::fixPosition2D(BoxCollider2D * pBox1, BoxCollider2D * pBox2)
 		break;
 	}
 
-	pBox2->getUser()->setPosition(box2FixPos);
+	pBox2->getUser()->getTransform()->setPosition(box2FixPos);
 }
 
 void PhysicsCalc::fixPosition2D(BoxCollider2D * pBox, CircleCollider2D * pCircle)

@@ -1,14 +1,15 @@
 #include "BoxCollider2D.h"
 #include "Actor\GameObject.h"
 #include "Physics\PhysicsCalc.h"
+#include "Component\Transform.h"
 
 using namespace DirectX;
 
 BoxCollider2D::BoxCollider2D(GameObject* pUser)
-	: AbstractCollider2D(pUser)
+	: AbstractCollider2D(pUser),
+	m_Width(0),
+	m_Height(0)
 {
-	m_Width = pUser->getSize().x;
-	m_Height = pUser->getSize().y;
 }
 
 BoxCollider2D::~BoxCollider2D()
@@ -20,7 +21,7 @@ bool BoxCollider2D::contains(const Vec3 point)
 	float x = point.x;
 	float y = point.y;
 
-	Vec3 position = getUser()->getPosition();
+	Vec3 position = getUser()->getTransform()->getPosition();
 
 	bool isX = position.x - m_Width / 2 < x && position.x + m_Width / 2 > x;
 	bool isY = position.y - m_Height / 2 < y && position.y + m_Height / 2 > y;

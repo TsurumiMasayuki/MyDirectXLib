@@ -1,8 +1,10 @@
 #include "MeshRenderer.h"
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include <DirectXColors.h>
 
 #include "Actor\GameObject.h"
+#include "Component\Transform.h"
 
 #include "Device\Resource\Mesh.h"
 #include "Device\Resource\MeshManager.h"
@@ -24,8 +26,6 @@
 #include "Device\Camera.h"
 
 #include "Utility\Color.h"
-
-#include <DirectXColors.h>
 
 using namespace DirectX;
 
@@ -76,14 +76,8 @@ void MeshRenderer::draw()
 	auto pDevice = DirectXManager::getDevice();
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
-	//移動
-	XMMATRIX translate = XMMatrixTranslationFromVector(m_pUser->getPosition().toXMVector());
-	//回転
-	XMMATRIX rotation = XMMatrixRotationRollPitchYawFromVector(m_pUser->getAngles().toXMVector());
-	//拡大縮小
-	XMMATRIX scaling = XMMatrixScalingFromVector(m_pUser->getSize().toXMVector());
-	//ワールド行列作成
-	XMMATRIX world = scaling * rotation * translate;
+	//ワールド行列
+	XMMATRIX world = m_pUser->getTransform()->getWorldMatrix();
 
 	//法線用変換行列
 	XMMATRIX worldInv = XMMatrixInverse(nullptr, world);

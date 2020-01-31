@@ -39,10 +39,6 @@ public:
 
 	void onCollision(AbstractCollider2D* pHit);
 
-	Vec3 position();
-	Vec3 size();
-	Vec3 angles();
-
 private:
 	void onCollisionEnter(AbstractCollider2D* pHit);
 	void onCollisionStay(AbstractCollider2D* pHit);

@@ -1,5 +1,7 @@
 #include "CircleCollider2D.h"
 #include "Physics\PhysicsCalc.h"
+#include "Actor\GameObject.h"
+#include "Component\Transform.h"
 
 CircleCollider2D::CircleCollider2D(GameObject * pUser, float radius)
 	:AbstractCollider2D(pUser), m_Radius(radius)
@@ -12,7 +14,7 @@ CircleCollider2D::~CircleCollider2D()
 
 bool CircleCollider2D::contains(const Vec3 point)
 {
-	return point.sqrDistance(position());
+	return point.sqrDistance(getUser()->getTransform()->getPosition()) <= getRadius();
 }
 
 float CircleCollider2D::getRadius()

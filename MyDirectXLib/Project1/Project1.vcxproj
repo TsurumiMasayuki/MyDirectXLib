@@ -165,6 +165,7 @@
     <ClCompile Include="Source\Component\Physics\BoxCollder2D.cpp" />
     <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
     <ClCompile Include="Source\Component\Physics\AbstractCollider3D.cpp" />
+    <ClCompile Include="Source\Component\Transform.cpp" />
     <ClCompile Include="Source\Device\Base\MeshVertex.cpp" />
     <ClCompile Include="Source\Device\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Device\Buffer\IndexBuffer.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
     <ClInclude Include="Source\Component\Physics\AbstractCollider3D.h" />
     <ClInclude Include="Source\Component\Physics\SphereCollider3D.h" />
+    <ClInclude Include="Source\Component\Transform.h" />
     <ClInclude Include="Source\Device\Base\MeshVertex.h" />
     <ClInclude Include="Source\Device\Buffer\ConstantBuffer.h" />
     <ClInclude Include="Source\Device\Buffer\IndexBuffer.h" />

@@ -40,7 +40,7 @@ void GameObjectManager::add(GameObject * pGameObject)
 
 void GameObjectManager::remove(GameObject * pGameObject)
 {
-	//––”ö‚Éíœ‘ÎÛ‚ğˆÚ“®‚µ‚Äpopback;
+	//––”ö‚Éíœ‘ÎÛ‚ğˆÚ“®‚µ‚Äpopback
 	auto itr = std::find(m_AddObjects.begin(), m_AddObjects.end(), pGameObject);
 	if (itr != m_AddObjects.end())
 	{
@@ -48,7 +48,7 @@ void GameObjectManager::remove(GameObject * pGameObject)
 		m_AddObjects.pop_back();
 	}
 
-	//––”ö‚Éíœ‘ÎÛ‚ğˆÚ“®‚µ‚Äpopback;
+	//––”ö‚Éíœ‘ÎÛ‚ğˆÚ“®‚µ‚Äpopback
 	itr = std::find(m_GameObjects.begin(), m_GameObjects.end(), pGameObject);
 	if (itr != m_GameObjects.end())
 	{

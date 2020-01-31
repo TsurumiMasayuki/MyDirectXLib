@@ -4,6 +4,7 @@
 #include "Physics\PhysicsWorld.h"
 #include "Physics\IShape3D.h"
 #include "Physics\CollisionHit3D.h"
+#include "Component\Transform.h"
 
 bool vectorContains(std::vector<CollisionHit3D*>& vector, CollisionHit3D* value)
 {
@@ -115,7 +116,7 @@ bool AbstractCollider3D::isCollision(AbstractCollider3D * pCollider)
 void AbstractCollider3D::fixPosition(AbstractCollider3D * pHit)
 {
 	Vec3 fixPos = getShape()->getFixPosition(*pHit->getShape());
-	m_pUser->setPosition(fixPos);
+	m_pUser->getTransform()->setPosition(fixPos);
 }
 
 void AbstractCollider3D::onCollision(AbstractCollider3D * pHit)

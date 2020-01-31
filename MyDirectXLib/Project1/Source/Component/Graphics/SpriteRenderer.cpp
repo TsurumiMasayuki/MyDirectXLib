@@ -15,6 +15,7 @@
 #include "Device\Buffer\ConstantBuffer.h"
 
 #include "Actor\GameObject.h"
+#include "Component\Transform.h"
 
 using namespace DirectX;
 
@@ -82,14 +83,9 @@ void SpriteRenderer::draw()
 	pDeviceContext->PSSetShader(ShaderManager::GetPixelShaderInstance(m_PSName), NULL, 0);
 
 	SpriteConstantBuffer constantBuffer;
-	//移動
-	XMMATRIX translate = XMMatrixTranslationFromVector(m_pUser->getPosition().toXMVector());
-	//回転
-	XMMATRIX rotation = XMMatrixRotationRollPitchYawFromVector(m_pUser->getAngles().toXMVector());
-	//拡大縮小
-	XMMATRIX scaling = XMMatrixScalingFromVector(m_pUser->getSize().toXMVector());
-	//ワールド行列作成
-	XMMATRIX world = scaling * rotation * translate;
+
+	//ワールド行列
+	XMMATRIX world = m_pUser->getTransform()->getWorldMatrix();
 
 	//行列を合成+転置
 	XMMATRIX wvp = XMMatrixTranspose(world * Camera::getViewProjMatrix2D());

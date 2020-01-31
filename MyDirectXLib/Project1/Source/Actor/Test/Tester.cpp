@@ -4,6 +4,7 @@
 #include <DirectXColors.h>
 #include "Device\Input.h"
 #include "Device\GameTime.h"
+#include "Component\Transform.h"
 
 float deathTimer = 0.0f;
 
@@ -21,7 +22,8 @@ void Tester::start()
 
 void Tester::update()
 {
-	setPosition(getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
+	getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
+	getTransform()->setAngles(getTransform()->getAngles() + Vec3(0, 30 * GameTime::getDeltaTime(), 0));
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)

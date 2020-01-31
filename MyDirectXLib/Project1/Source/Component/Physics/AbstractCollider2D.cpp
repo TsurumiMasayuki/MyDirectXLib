@@ -4,6 +4,7 @@
 #include "Physics\PhysicsWorld.h"
 #include "Physics\CollisionHit2D.h"
 #include "BoxCollider2D.h"
+#include "Component\Transform.h"
 #include <algorithm>
 #include <Windows.h>
 
@@ -101,21 +102,6 @@ void AbstractCollider2D::onCollision(AbstractCollider2D * pHit)
 {
 	m_CurrentHits.emplace_back(pHit->getCollHit2D());
 	pHit->getCollHit2D()->onAddRef();
-}
-
-Vec3 AbstractCollider2D::position()
-{
-	return m_pUser->getPosition();
-}
-
-Vec3 AbstractCollider2D::size()
-{
-	return m_pUser->getSize();
-}
-
-Vec3 AbstractCollider2D::angles()
-{
-	return m_pUser->getAngles();
 }
 
 void AbstractCollider2D::onCollisionEnter(AbstractCollider2D * pHit)

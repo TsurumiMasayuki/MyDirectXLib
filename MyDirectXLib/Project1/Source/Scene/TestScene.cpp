@@ -11,6 +11,7 @@
 #include <DirectXColors.h>
 
 #include "Actor\Test\Tester.h"
+#include "Component\Transform.h"
 #include "Component\Physics\SphereCollider3D.h"
 #include "Component\Physics\BoxCollider3D.h"
 
@@ -20,14 +21,14 @@ void TestScene::init()
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
 	auto tester = new Tester(this);
-	tester->setSize(3.0f);
+	tester->getTransform()->setSize(1.0f);
 	auto coll1 = new SphereCollider3D(tester);
-	coll1->setRadius(3.0f);
+	coll1->setRadius(1.0f);
 	coll1->isTrigger = false;
 
 	auto obj2 = new GameObject(this);
-	obj2->setSize(Vec3(1, 3, 1));
-	obj2->setPosition(Vec3(4, 0, 0));
+	obj2->getTransform()->setSize(Vec3(1, 3, 1));
+	obj2->getTransform()->setLocalPosition(Vec3(3, 0, 0));
 
 	auto renderer = new MeshRenderer(obj2);
 	renderer->setMesh("Cube");
@@ -37,6 +38,8 @@ void TestScene::init()
 	coll2->setSize(Vec3(1, 3, 1));
 	coll2->isTrigger = false;
 	coll2->isMove = false;
+
+	tester->addChild(*obj2);
 }
 
 void TestScene::update()

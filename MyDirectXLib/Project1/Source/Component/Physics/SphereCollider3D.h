@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractCollider3D.h"
 #include "Actor\GameObject.h"
+#include "Component\Transform.h"
 #include "Physics\Sphere3D.h"
 
 class SphereCollider3D
@@ -19,7 +20,7 @@ public:
 
 	virtual IShape3D * getShape() override
 	{
-		m_pBox->setPosition(m_pUser->getPosition());
+		m_pBox->setPosition(m_pUser->getTransform()->getPosition());
 		return m_pBox;
 	}
 
