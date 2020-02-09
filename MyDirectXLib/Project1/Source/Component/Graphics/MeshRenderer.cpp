@@ -8,6 +8,7 @@
 
 #include "Device\Resource\Mesh.h"
 #include "Device\Resource\MeshManager.h"
+#include "Device\Resource\TextureManager.h"
 #include "Device\Resource\Shader\VertexShader.h"
 #include "Device\Resource\Shader\PixelShader.h"
 #include "Device\Resource\Shader\ShaderManager.h"
@@ -107,10 +108,15 @@ void MeshRenderer::draw()
 	auto pVertexBuffer = m_pMesh->getVertexBuffer().getBuffer();
 	pDeviceContext->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
 	pDeviceContext->IASetIndexBuffer(m_pMesh->getIndexBuffer().getBuffer(), DXGI_FORMAT_R32_UINT, 0);
+
 	pDeviceContext->VSSetShader(m_pVertexShader->getShader(), NULL, 0);
 	pDeviceContext->PSSetShader(m_pPixelShader->getShader(), NULL, 0);
+
 	pDeviceContext->VSSetConstantBuffers(0, 1, &pVSBuffer);
 	pDeviceContext->PSSetConstantBuffers(0, 1, &pPSBuffer);
+
+	auto texture = TextureManager::getTextureView(m_pMesh->getTextureName());
+	pDeviceContext->PSSetShaderResources(0, 1, &texture);
 
 	//•`‰æ
 	pDeviceContext->DrawIndexed(m_pMesh->getVertexCount(), 0, 0);

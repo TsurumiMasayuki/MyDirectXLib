@@ -5,8 +5,9 @@ struct D3D11_INPUT_ELEMENT_DESC;
 
 struct MeshVertex
 {
-	DirectX::XMFLOAT4 m_Pos;
-	DirectX::XMFLOAT4 m_Normal;
+	DirectX::XMFLOAT3 m_Pos;
+	DirectX::XMFLOAT3 m_Normal;
+	DirectX::XMFLOAT2 m_UV;
 
-	static void getInputDesc(D3D11_INPUT_ELEMENT_DESC layoutArray[2]);
+	static void getInputDesc(D3D11_INPUT_ELEMENT_DESC layoutArray[3]);
 };

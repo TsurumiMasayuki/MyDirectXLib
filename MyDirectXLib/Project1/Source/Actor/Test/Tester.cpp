@@ -16,14 +16,15 @@ Tester::Tester(IGameMediator * pGameMediator)
 void Tester::start()
 {
 	auto renderer = new MeshRenderer(this);
-	renderer->setMesh("Sphere");
+	renderer->setMesh("Cube");
 	renderer->setColor(Color(DirectX::Colors::White));
 }
 
 void Tester::update()
 {
 	getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
-	getTransform()->setAngles(getTransform()->getAngles() + Vec3(0, 30 * GameTime::getDeltaTime(), 0));
+	getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
+	getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)

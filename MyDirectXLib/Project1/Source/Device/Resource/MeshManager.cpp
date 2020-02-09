@@ -10,10 +10,10 @@ MeshManager::~MeshManager()
 	unLoadAll();
 }
 
-void MeshManager::loadMesh(std::string key, std::string filePath)
+void MeshManager::loadMesh(const std::string key, const std::string filePath, const std::wstring textureName)
 {
 	auto pMesh = new Mesh();
-	pMesh->init(filePath.c_str());
+	pMesh->init(filePath, textureName);
 	m_Meshes.emplace(key, pMesh);
 }
 

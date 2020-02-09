@@ -36,6 +36,7 @@ Renderer::~Renderer()
 	delete m_pSpriteIndices;
 
 	m_pMeshInputLayout->Release();
+	m_pMeshSampler->Release();
 
 	m_pRenderTexDefault->Release();
 	m_pRTVDefault->Release();
@@ -159,18 +160,27 @@ void Renderer::initBuffers()
 #pragma region Mesh用
 
 	//インプットレイアウトの作成
-	D3D11_INPUT_ELEMENT_DESC layout[2];
+	D3D11_INPUT_ELEMENT_DESC layout[3];
 	MeshVertex::getInputDesc(layout);
-	ShaderManager::GetVertexShader("MeshVS")->createInputLayout(pDevice, layout, 2, &m_pMeshInputLayout);
+	ShaderManager::GetVertexShader("MeshVS")->createInputLayout(pDevice, layout, 3, &m_pMeshInputLayout);
 
 	//ラスタライザの作成
 	D3D11_RASTERIZER_DESC rasterDesc;
 	ZeroMemory(&rasterDesc, sizeof(D3D11_RASTERIZER_DESC));
-	rasterDesc.CullMode = D3D11_CULL_NONE;
+	rasterDesc.CullMode = D3D11_CULL_FRONT;
 	rasterDesc.FillMode = D3D11_FILL_SOLID;
 	rasterDesc.FrontCounterClockwise = TRUE;
 
 	pDevice->CreateRasterizerState(&rasterDesc, &m_pRasterizer);
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	pDevice->CreateSamplerState(&samplerDesc, &m_pMeshSampler);
 
 #pragma endregion
 }
@@ -288,6 +298,7 @@ void Renderer::drawMeshes()
 	pDeviceContext->IASetInputLayout(m_pMeshInputLayout);
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pDeviceContext->RSSetState(m_pRasterizer);
+	pDeviceContext->PSSetSamplers(0, 1, &m_pMeshSampler);
 
 	for (auto mesh : m_Meshes)
 	{

@@ -13,6 +13,7 @@ struct ID3D11RenderTargetView;
 struct ID3D11DepthStencilView;
 struct ID3D11ShaderResourceView;
 struct ID3D11RasterizerState;
+struct ID3D11SamplerState;
 
 class Renderer
 {
@@ -57,6 +58,7 @@ private:
 
 	//3Dモデル用
 	ID3D11InputLayout* m_pMeshInputLayout;
+	ID3D11SamplerState* m_pMeshSampler;
 
 	//レンダーターゲット
 	ID3D11Texture2D* m_pRenderTexDefault;

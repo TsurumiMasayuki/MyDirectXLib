@@ -27,11 +27,11 @@ void TestScene::init()
 	coll1->isTrigger = false;
 
 	auto obj2 = new GameObject(this);
-	obj2->getTransform()->setSize(Vec3(1, 3, 1));
+	obj2->getTransform()->setSize(Vec3(1, 1, 1));
 	obj2->getTransform()->setLocalPosition(Vec3(3, 0, 0));
 
 	auto renderer = new MeshRenderer(obj2);
-	renderer->setMesh("Cube");
+	renderer->setMesh("Vox");
 	renderer->setColor(Color(DirectX::Colors::White));
 	
 	auto coll2 = new BoxCollider3D(obj2);

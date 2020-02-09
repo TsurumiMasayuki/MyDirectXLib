@@ -39,6 +39,7 @@ void Game::init()
 	TextureManager::loadTexture(L"Assets/Textures/CircleOutline.png", "CircleOutline");
 	TextureManager::loadTexture(L"Assets/Textures/BoxFill.png", "BoxFill");
 	TextureManager::loadTexture(L"Assets/Textures/BoxOutline.png", "BoxOutline");
+	TextureManager::loadTexture(L"Assets/Textures/Default.png", "Default");
 
 	//スプライト用シェーダーを読み込み
 	ShaderManager::LoadVertexShader_CSO("SpriteVS", "Assets/Shaders/SpriteVS.cso");
@@ -49,6 +50,7 @@ void Game::init()
 	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
 
 	GameDevice::initialize();
+	GameDevice::getMeshManager()->loadMesh("Vox", "Assets/Models/testVox.fbx", L"Assets/Models/testVox.png");
 	GameDevice::getMeshManager()->loadMesh("TestMesh", "Assets/Models/tekitou.fbx");
 	GameDevice::getMeshManager()->loadMesh("Cube", "Assets/Models/cube.fbx");
 	GameDevice::getMeshManager()->loadMesh("Sphere", "Assets/Models/sphere.fbx");

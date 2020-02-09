@@ -10,7 +10,7 @@ public:
 	MeshManager();
 	~MeshManager();
 
-	void loadMesh(std::string key, std::string filePath);
+	void loadMesh(std::string key, const std::string filePath, const std::wstring textureName = L"Default");
 	Mesh* getMesh(std::string key);
 
 	void unLoadAll();
