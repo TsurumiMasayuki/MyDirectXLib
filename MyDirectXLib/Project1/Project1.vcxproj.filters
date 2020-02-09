@@ -57,6 +57,7 @@
     <ClCompile Include="Source\Actor\Test\Tester.cpp" />
     <ClCompile Include="Source\Physics\Box3D.cpp" />
     <ClCompile Include="Source\Component\Transform.cpp" />
+    <ClCompile Include="Source\Math\Easing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\Physics\Box3D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider3D.h" />
     <ClInclude Include="Source\Component\Transform.h" />
+    <ClInclude Include="Source\Math\Easing.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

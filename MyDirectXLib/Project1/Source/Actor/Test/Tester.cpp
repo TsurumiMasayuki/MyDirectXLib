@@ -5,8 +5,11 @@
 #include "Device\Input.h"
 #include "Device\GameTime.h"
 #include "Component\Transform.h"
+#include "Math\Easing.h"
+#include "Utility\Timer.h"
 
 float deathTimer = 0.0f;
+Timer timer;
 
 Tester::Tester(IGameMediator * pGameMediator)
 	: GameObject(pGameMediator)
@@ -16,15 +19,27 @@ Tester::Tester(IGameMediator * pGameMediator)
 void Tester::start()
 {
 	auto renderer = new MeshRenderer(this);
-	renderer->setMesh("Cube");
+	renderer->setMesh("Vox");
 	renderer->setColor(Color(DirectX::Colors::White));
+	timer = Timer(3.0f);
 }
 
 void Tester::update()
 {
-	getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
-	getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
-	getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
+	//表示テスト用
+	//getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
+	//getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
+	//getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
+
+	timer.update();
+
+	const Vec3 start(-4.0f, 0, 0);
+	const Vec3 dest(4.0f, 0, 0);
+	float easing = Easing::easeInOutCirc(timer.getRatioClamped());
+	getTransform()->setPosition(Vec3::moveTowards(start, dest, easing));
+
+	if (timer.isTime())
+		timer.reset();
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)

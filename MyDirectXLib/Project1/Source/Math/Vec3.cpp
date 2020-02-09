@@ -27,7 +27,7 @@ XMVECTOR Vec3::toXMVector() const
 	return xmVector;
 }
 
-Vec3 Vec3::normalized()
+const Vec3 Vec3::normalized() const
 {
 	float length = this->length();
 	if (length == 0) return Vec3::zero();
@@ -35,7 +35,7 @@ Vec3 Vec3::normalized()
 	return *this / this->length();
 }
 
-float Vec3::length()const
+float Vec3::length() const
 {
 	XMVECTOR result = XMVector3Length(this->toXMVector());
 	return result.m128_f32[0];
@@ -64,6 +64,12 @@ float Vec3::sqrDistance(const Vec3 & other) const
 Vec3 Vec3::zero()
 {
 	return Vec3(0.0f, 0.0f, 0.0f);
+}
+
+Vec3 Vec3::moveTowards(const Vec3 & from, const Vec3 & to, float t)
+{
+	Vec3 diff = to - from;
+	return from + diff * t;
 }
 
 Vec2 Vec3::toVec2()

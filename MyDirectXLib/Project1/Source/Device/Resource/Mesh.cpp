@@ -123,7 +123,7 @@ void Mesh::initVertices(FbxMesh* pMesh)
 			FbxVector2 uv;
 			bool isUnMapped = true;
 			pMesh->GetPolygonVertexUV(i, j, uvSetList.GetStringAt(0), uv, isUnMapped);
-			vertices[vertexCount].m_UV.x = (float)uv[0];	//UV‚ÌX¬•ª‚ğæ“¾
+			vertices[vertexCount].m_UV.x = (float)uv[0];		//UV‚ÌX¬•ª‚ğæ“¾
 			vertices[vertexCount].m_UV.y = 1 - (float)uv[1];	//UV‚ÌY¬•ª‚ğæ“¾
 
 			vertexCount--;

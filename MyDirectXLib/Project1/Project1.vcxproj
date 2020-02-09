@@ -176,6 +176,7 @@
     <ClCompile Include="Source\Device\Renderer.cpp" />
     <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
+    <ClCompile Include="Source\Math\Easing.cpp" />
     <ClCompile Include="Source\Math\RectF.cpp" />
     <ClCompile Include="Source\Physics\Box2D.cpp" />
     <ClCompile Include="Source\Physics\Box3D.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Source\Device\Renderer.h" />
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
+    <ClInclude Include="Source\Math\Easing.h" />
     <ClInclude Include="Source\Physics\Box2D.h" />
     <ClInclude Include="Source\Physics\Box3D.h" />
     <ClInclude Include="Source\Physics\CollisionHit3D.h" />

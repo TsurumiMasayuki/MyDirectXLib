@@ -25,21 +25,6 @@ void TestScene::init()
 	auto coll1 = new SphereCollider3D(tester);
 	coll1->setRadius(1.0f);
 	coll1->isTrigger = false;
-
-	auto obj2 = new GameObject(this);
-	obj2->getTransform()->setSize(Vec3(1, 1, 1));
-	obj2->getTransform()->setLocalPosition(Vec3(3, 0, 0));
-
-	auto renderer = new MeshRenderer(obj2);
-	renderer->setMesh("Vox");
-	renderer->setColor(Color(DirectX::Colors::White));
-	
-	auto coll2 = new BoxCollider3D(obj2);
-	coll2->setSize(Vec3(1, 3, 1));
-	coll2->isTrigger = false;
-	coll2->isMove = false;
-
-	tester->addChild(*obj2);
 }
 
 void TestScene::update()
