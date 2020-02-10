@@ -40,7 +40,7 @@ void Tester::update()
 
 	const Vec3 start(-4.0f, 0, 0);
 	const Vec3 dest(4.0f, 0, 0);
-	float easing = Easing::easeInOutCirc(timer.getRatioClamped());
+	float easing = Easing::easeInOutElastic(timer.getRatioClamped());
 	getTransform()->setPosition(Vec3::moveTowards(start, dest, easing));
 
 	if (timer.isTime())

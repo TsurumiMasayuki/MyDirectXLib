@@ -144,3 +144,73 @@ float Easing::easeInOutCirc(float t)
 		return (1 + sqrtf(2 * t - 1)) * 0.5f;
 	}
 }
+
+float Easing::easeInBack(float t)
+{
+	return t * t * (2.70158f * t - 1.70158f);
+}
+
+float Easing::easeOutBack(float t)
+{
+	return 1 + (--t) * t * (2.70158f * t + 1.70158f);
+}
+
+float Easing::easeInOutBack(float t)
+{
+	if (t < 0.5f)
+	{
+		return t * t * (7 * t - 2.5f) * 2;
+	}
+	else
+	{
+		return 1 + (--t) * t * 2 * (7 * t + 2.5f);
+	}
+}
+
+float Easing::easeInElastic(float t)
+{
+	return powf(t, 4) * sinf(t * PI * 4.5f);
+}
+
+float Easing::easeOutElastic(float t)
+{
+	return 1 - powf(t - 1, 4) * cosf(t * PI * 4.5f);
+}
+
+float Easing::easeInOutElastic(float t)
+{
+	if (t < 0.45f)
+	{
+		return 8 * powf(t, 4) * sinf(t * PI * 9);
+	}
+	else if (t < 0.55f)
+	{
+		return 0.5f + 0.75f * sinf(t * PI * 4);
+	}
+	else
+	{
+		return 1 - 8 * powf(t - 1, 4) * sinf(t * PI * 9);
+	}
+}
+
+float Easing::easeInBounce(float t)
+{
+	return powf(2, 6 * (t - 1)) * fabsf(sinf(t * PI * 3.5f));
+}
+
+float Easing::easeOutBounce(float t)
+{
+	return 1 - powf(2, -6 * t) * fabsf(cosf(t * PI * 3.5f));
+}
+
+float Easing::easeInOutBounce(float t)
+{
+	if (t < 0.5f)
+	{
+		return 8 * powf(2, 8 * (t - 1)) * fabsf(sinf(t * PI * 7));
+	}
+	else
+	{
+		return 1 - 8 * powf(2, -8 * t) * fabsf(sinf(t * PI * 7));
+	}
+}

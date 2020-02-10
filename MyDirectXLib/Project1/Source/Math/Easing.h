@@ -1,7 +1,7 @@
 #pragma once
 
 //とりあえず良い感じにしてくれるEasing集です。
-//挙動はeasing.net参照
+//挙動はeasings.net参照
 namespace Easing
 {
 	float easeInSine(float t);
@@ -32,15 +32,15 @@ namespace Easing
 	float easeOutCirc(float t);
 	float easeInOutCirc(float t);
 
-	//float easeInBack(float t);
-	//float easeOutBack(float t);
-	//float easeInOutBack(float t);
+	float easeInBack(float t);
+	float easeOutBack(float t);
+	float easeInOutBack(float t);
 
-	//float easeInElastic(float t);
-	//float easeOutElastic(float t);
-	//float easeInOutElastic(float t);
+	float easeInElastic(float t);
+	float easeOutElastic(float t);
+	float easeInOutElastic(float t);
 
-	//float easeInBounce(float t);
-	//float easeOutBounce(float t);
-	//float easeInOutBounce(float t);
+	float easeInBounce(float t);
+	float easeOutBounce(float t);
+	float easeInOutBounce(float t);
 }
