@@ -55,6 +55,36 @@ void GameObject::removeComponent(AbstractComponent * pComponent)
 	m_pComponentManager->remove(pComponent);
 }
 
+void GameObject::setPosition(Vec3 position)
+{
+	m_pTransform->setPosition(position);
+}
+
+Vec3 GameObject::getPosition()
+{
+	return m_pTransform->getPosition();
+}
+
+void GameObject::setAngles(Vec3 angles)
+{
+	m_pTransform->setAngles(angles);
+}
+
+Vec3 GameObject::getAngles()
+{
+	return m_pTransform->getAngles();
+}
+
+void GameObject::setSize(Vec3 size)
+{
+	m_pTransform->setSize(size);
+}
+
+Vec3 GameObject::getSize()
+{
+	return m_pTransform->getSize();
+}
+
 void GameObject::setParent(GameObject* parent)
 {
 #if _DEBUG

@@ -18,6 +18,15 @@ public:
 	void addComponent(AbstractComponent* pComponent);
 	void removeComponent(AbstractComponent* pComponent);
 
+	void setPosition(Vec3 position);
+	Vec3 getPosition();
+
+	void setAngles(Vec3 angles);
+	Vec3 getAngles();
+
+	void setSize(Vec3 size);
+	Vec3 getSize();
+
 	//親オブジェクトを設定(nullptrで解除)
 	void setParent(GameObject* parent);
 	//親オブジェクトを取得
