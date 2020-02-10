@@ -33,10 +33,6 @@ void TestScene::update()
 	m_pPhysicsWorld->update();
 }
 
-void TestScene::draw()
-{
-}
-
 void TestScene::shutdown()
 {
 	delete m_pObjManager;

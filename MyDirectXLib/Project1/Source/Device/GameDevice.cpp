@@ -5,6 +5,7 @@
 #include "Device\Camera.h"
 #include "Device\Renderer.h"
 #include "Device\Resource\MeshManager.h"
+#include "Device\Resource\AudioManager.h"
 #include "Device\Input.h"
 
 GameDevice* GameDevice::instance = nullptr;
@@ -45,9 +46,15 @@ MeshManager * GameDevice::getMeshManager()
 	return instance->m_pMeshManager;
 }
 
+AudioManager * GameDevice::getAudioManager()
+{
+	return instance->m_pAudioManager;
+}
+
 GameDevice::GameDevice()
 	:m_pRenderer(new Renderer()),
-	m_pMeshManager(new MeshManager())
+	m_pMeshManager(new MeshManager()),
+	m_pAudioManager(new AudioManager())
 {
 }
 
@@ -55,4 +62,5 @@ GameDevice::~GameDevice()
 {
 	delete m_pRenderer;
 	delete m_pMeshManager;
+	delete m_pAudioManager;
 }

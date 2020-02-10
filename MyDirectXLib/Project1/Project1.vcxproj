@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Actor\Test\Tester.cpp" />
+    <ClCompile Include="Source\Component\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="Source\Component\Physics\AbstractCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
@@ -174,6 +175,9 @@
     <ClCompile Include="Source\Device\GameDevice.cpp" />
     <ClCompile Include="Source\Device\GameTime.cpp" />
     <ClCompile Include="Source\Device\Renderer.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioData.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioInstance.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioManager.cpp" />
     <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
     <ClCompile Include="Source\Math\Easing.cpp" />
@@ -198,10 +202,7 @@
     <ClCompile Include="Source\Device\CameraEffect\CameraEffectManager.cpp" />
     <ClCompile Include="Source\Device\CameraEffect\CameraShake.cpp" />
     <ClCompile Include="Source\Device\Camera.cpp" />
-    <ClCompile Include="Source\Device\Resource\SoundInstance.cpp" />
-    <ClCompile Include="Source\Device\Resource\SoundManager.cpp" />
     <ClCompile Include="Source\Device\DirectXManager.cpp" />
-    <ClCompile Include="Source\Scene\AbstractScene.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Device\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Source\Actor\IGameMediator.h" />
     <ClInclude Include="Source\Actor\Test\Tester.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
+    <ClInclude Include="Source\Component\Audio\AudioSource.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
     <ClInclude Include="Source\Component\Physics\AbstractCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider3D.h" />
@@ -241,6 +243,9 @@
     <ClInclude Include="Source\Device\GameTime.h" />
     <ClInclude Include="Source\Device\IRenderable2D.h" />
     <ClInclude Include="Source\Device\Renderer.h" />
+    <ClInclude Include="Source\Device\Resource\AudioData.h" />
+    <ClInclude Include="Source\Device\Resource\AudioInstance.h" />
+    <ClInclude Include="Source\Device\Resource\AudioManager.h" />
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
     <ClInclude Include="Source\Math\Easing.h" />
@@ -269,8 +274,6 @@
     <ClInclude Include="Source\Device\CameraEffect\CameraShake.h" />
     <ClInclude Include="Source\Device\CameraEffect\ICameraEffect.h" />
     <ClInclude Include="Source\Device\Camera.h" />
-    <ClInclude Include="Source\Device\Resource\SoundInstance.h" />
-    <ClInclude Include="Source\Device\Resource\SoundManager.h" />
     <ClInclude Include="Source\Device\DirectXManager.h" />
     <ClInclude Include="Source\Scene\AbstractScene.h" />
     <ClInclude Include="Source\Game.h" />

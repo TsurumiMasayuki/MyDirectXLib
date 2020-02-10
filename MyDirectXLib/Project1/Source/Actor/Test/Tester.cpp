@@ -5,6 +5,7 @@
 #include "Device\Input.h"
 #include "Device\GameTime.h"
 #include "Component\Transform.h"
+#include "Component\Audio\AudioSource.h"
 #include "Math\Easing.h"
 #include "Utility\Timer.h"
 
@@ -22,6 +23,10 @@ void Tester::start()
 	renderer->setMesh("Vox");
 	renderer->setColor(Color(DirectX::Colors::White));
 	timer = Timer(3.0f);
+
+	auto audio = new AudioSource(this);
+	audio->setAudio("MusicMono");
+	audio->play();
 }
 
 void Tester::update()

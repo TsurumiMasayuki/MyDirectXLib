@@ -6,9 +6,11 @@ class TestScene
 	: public AbstractScene, public IGameMediator
 {
 public:
+	TestScene() {};
+	~TestScene() {};
+
 	virtual void init() override;
 	virtual void update() override;
-	virtual void draw() override;
 	virtual void shutdown() override;
 	virtual std::string nextScene() override;
 	virtual bool isEnd() override;

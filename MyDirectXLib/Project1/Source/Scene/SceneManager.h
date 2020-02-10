@@ -13,8 +13,6 @@ public:
 
 	//更新処理
 	void update();
-	//描画処理
-	void draw();
 
 	//シーン管理にシーン追加
 	void addScene(std::string key, AbstractScene* pAbstractScene);

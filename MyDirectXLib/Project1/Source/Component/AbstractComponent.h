@@ -44,6 +44,11 @@ public:
 protected:
 	AbstractComponent(GameObject* pUser, int updateOrder = 100);
 
+private:
+	//ÉRÉsÅ[ã÷é~
+	AbstractComponent(const AbstractComponent&) = delete;
+	AbstractComponent& operator = (const AbstractComponent&) = delete;
+
 protected:
 	GameObject* m_pUser;
 	int m_UpdateOrder;

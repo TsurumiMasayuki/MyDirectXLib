@@ -8,9 +8,9 @@
 #include "Device\Renderer.h"
 
 #include "Device\Resource\TextureManager.h"
-#include "Device\Resource\SoundManager.h"
 #include "Device\Resource\Shader\ShaderManager.h"
 #include "Device\Resource\MeshManager.h"
+#include "Device\Resource\AudioManager.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -55,6 +55,8 @@ void Game::init()
 	GameDevice::getMeshManager()->loadMesh("Cube", "Assets/Models/cube.fbx");
 	GameDevice::getMeshManager()->loadMesh("Sphere", "Assets/Models/sphere.fbx");
 
+	GameDevice::getAudioManager()->loadWavFile("MusicMono", L"Assets/Sounds/MusicMono.wav");
+
 	m_pSceneManager = new SceneManager();
 	m_pSceneManager->addScene("Test", new TestScene());
 	m_pSceneManager->changeScene("Test");
@@ -64,16 +66,12 @@ void Game::update()
 {
 	GameDevice::update();
 
-	SoundManager::update();
-
 	//シーンの更新
 	m_pSceneManager->update();
 }
 
 void Game::draw()
 {
-	m_pSceneManager->draw();
-
 	GameDevice::getRenderer()->draw();
 }
 

@@ -4,12 +4,6 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-#include <xaudio2.h>
-#pragma comment(lib,"xaudio2.lib")
-
-#include <DirectXMath.h>
-#include <DirectXPackedVector.h>
-
 #include <stdlib.h>
 #include <sstream>
 
@@ -17,8 +11,6 @@
 
 #include "WindowInstance.h"
 #include "Device\DirectXManager.h"
-#include "Device\Resource\Shader\ShaderManager.h"
-#include "Device\Resource\SoundManager.h"
 #include "Device\GameTime.h"
 
 #include "Game.h"
@@ -43,47 +35,16 @@ void app()
 	g_pGame->draw();
 }
 
-#pragma region XAudio2
-
-IXAudio2* g_pXAudio2;
-IXAudio2MasteringVoice* g_pMasteringVoice;
-
-void initXAudio()
+INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ INT nCmdShow)
 {
 	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
-	UINT32 flags = 0;
-#ifdef _DEBUG
-	flags |= XAUDIO2_DEBUG_ENGINE;
-#endif
-	XAudio2Create(&g_pXAudio2, flags);
-
-	g_pXAudio2->CreateMasteringVoice(&g_pMasteringVoice);
-
-	SoundManager::initialize(g_pXAudio2, g_pMasteringVoice);
-}
-
-void shutdownXAudio()
-{
-	SoundManager::shutdown();
-	g_pMasteringVoice->DestroyVoice();
-	g_pXAudio2->Release();
-	g_pXAudio2 = nullptr;
-	CoUninitialize();
-}
-
-#pragma endregion
-
-INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ INT nCmdShow)
-{
 	g_pWindowInstance = new WindowInstance(&hInstance, "Project1", 0, 0);
 	g_pWindowInstance->show(SW_SHOW);
 	g_pWindowInstance->update();
 	g_pWindowInstance->adjustWindowSize();
 
 	DirectXManager::initialize(g_pWindowInstance->getHWND());
-
-	initXAudio();
 
 	MSG msg = { 0 };
 
@@ -103,9 +64,10 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ 
 	delete(g_pGame);
 
 	DirectXManager::shutdown();
-	shutdownXAudio();
 
 	delete(g_pWindowInstance);
+
+	CoUninitialize();
 
 	return 0;
 }

@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Source\Scene\AbstractScene.cpp" />
     <ClCompile Include="Source\Math\Vec2.cpp" />
     <ClCompile Include="Source\Math\Vec3.cpp" />
     <ClCompile Include="Source\Device\Camera.cpp" />
@@ -39,9 +38,7 @@
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Utility\StringUtility.cpp" />
     <ClCompile Include="Source\Component\Graphics\SpriteRenderer.cpp" />
-    <ClCompile Include="Source\Device\Resource\SoundManager.cpp" />
     <ClCompile Include="Source\Device\Resource\TextureManager.cpp" />
-    <ClCompile Include="Source\Device\Resource\SoundInstance.cpp" />
     <ClCompile Include="Source\Device\Base\MeshVertex.cpp" />
     <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
@@ -58,6 +55,10 @@
     <ClCompile Include="Source\Physics\Box3D.cpp" />
     <ClCompile Include="Source\Component\Transform.cpp" />
     <ClCompile Include="Source\Math\Easing.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioData.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioInstance.cpp" />
+    <ClCompile Include="Source\Device\Resource\AudioManager.cpp" />
+    <ClCompile Include="Source\Component\Audio\AudioSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -107,9 +108,7 @@
     <ClInclude Include="Source\Physics\PhysicsLayer.h" />
     <ClInclude Include="Source\Component\Graphics\SpriteRenderer.h" />
     <ClInclude Include="Source\Device\Base\MeshVertex.h" />
-    <ClInclude Include="Source\Device\Resource\SoundManager.h" />
     <ClInclude Include="Source\Device\Resource\TextureManager.h" />
-    <ClInclude Include="Source\Device\Resource\SoundInstance.h" />
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
@@ -130,6 +129,10 @@
     <ClInclude Include="Source\Component\Physics\BoxCollider3D.h" />
     <ClInclude Include="Source\Component\Transform.h" />
     <ClInclude Include="Source\Math\Easing.h" />
+    <ClInclude Include="Source\Device\Resource\AudioManager.h" />
+    <ClInclude Include="Source\Device\Resource\AudioData.h" />
+    <ClInclude Include="Source\Device\Resource\AudioInstance.h" />
+    <ClInclude Include="Source\Component\Audio\AudioSource.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

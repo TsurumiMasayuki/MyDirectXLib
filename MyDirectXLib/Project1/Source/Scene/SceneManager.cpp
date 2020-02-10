@@ -24,14 +24,6 @@ void SceneManager::update()
 	m_Scenes.at(m_CurrentScene)->update();
 }
 
-void SceneManager::draw()
-{
-	if (m_CurrentScene.empty())
-		return;
-
-	m_Scenes.at(m_CurrentScene)->draw();
-}
-
 void SceneManager::addScene(std::string key, AbstractScene * pAbstractScene)
 {
 	m_Scenes.emplace(key, pAbstractScene);

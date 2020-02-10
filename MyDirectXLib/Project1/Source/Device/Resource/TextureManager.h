@@ -13,6 +13,7 @@ public:
 	static void unLoadAll();
 
 private:
-	TextureManager();
+	TextureManager() {};
+	~TextureManager() {};
 };
 
