@@ -25,7 +25,7 @@ void Camera::init()
 
 	//2D用
 	//カメラの座標
-	vEyePt = { position.x, position.y, -10.0f, 0 };
+	vEyePt = { position.x, position.y, -10.0f, 0.0f };
 	//カメラが見る座標
 	vLookatPt = DirectX::XMVectorSet(position.x, position.y, 0.0f, 0.0f);
 	//カメラの回転の軸
@@ -38,7 +38,8 @@ void Camera::init()
 
 	//3D用
 	//カメラの座標
-	vEyePt = { 0.0f, 0.0f, -10.0f, 1.0f };
+	position.z = -10.0f;
+	vEyePt = { position.x, position.y, position.z, 0.0f };
 	//カメラが見る座標
 	vLookatPt = { 0.0f, 0.0f, 0.0f, 1.0f };
 	//カメラの回転の軸
@@ -59,13 +60,24 @@ void Camera::update()
 {
 	//2D用
 	//カメラの座標
-	DirectX::XMVECTOR vEyePt = { position.x, position.y, -10.0f, 0 };
+	DirectX::XMVECTOR vEyePt = { position.x, position.y, -10.0f, 0.0f };
 	//カメラが見る座標
 	DirectX::XMVECTOR vLookatPt = DirectX::XMVectorSet(position.x, position.y, 0.0f, 0.0f);
 	//カメラの回転の軸
 	DirectX::XMVECTOR vUpVec = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	//視野行列
 	viewMatrix2D = DirectX::XMMatrixLookAtLH(vEyePt, vLookatPt, vUpVec);
+
+	//3D用
+	//カメラの座標
+	DirectX::XMVECTOR vEyePt3D = { position.x, position.y, position.z, 0.0f };
+	//カメラが見る座標
+	DirectX::XMVECTOR vLookatPt3D = DirectX::XMVectorSet(position.x, position.y, 0.0f, 0.0f);
+	//カメラの回転の軸
+	DirectX::XMVECTOR vUpVec3D = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	//視野行列
+	viewMatrix3D = DirectX::XMMatrixLookAtLH(vEyePt3D, vLookatPt3D, vUpVec3D);
+
 }
 
 void Camera::reset()

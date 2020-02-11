@@ -96,10 +96,11 @@ void MeshRenderer::draw()
 
 	//ピクセルシェーダー用定数バッファ作成
 	MeshPSBuffer meshCBuffer;
+	XMStoreFloat4(&meshCBuffer.cameraPos, Camera::getPosition().toXMVector());
 	XMStoreFloat4(&meshCBuffer.color, m_pColor->toXMVECTOR());
 	XMStoreFloat4(&meshCBuffer.lightPos, Vec3(0.0f, 1.0f, 0.0f).toXMVector());
 	XMStoreFloat4(&meshCBuffer.lightAttenuation, Vec3(0.0f, 0.0f, 0.02f).toXMVector());
-	XMStoreFloat4(&meshCBuffer.lightColor, Vec3(0.0f, 0.0f, 0.5f).toXMVector());
+	XMStoreFloat4(&meshCBuffer.lightColor, Vec3(1.0f, 1.0f, 1.0f).toXMVector());
 
 	ConstantBuffer psBuffer;
 	psBuffer.init(pDevice, sizeof(MeshPSBuffer), &meshCBuffer);

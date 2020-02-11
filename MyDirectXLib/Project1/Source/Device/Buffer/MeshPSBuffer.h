@@ -3,6 +3,7 @@
 
 struct MeshPSBuffer
 {
+	DirectX::XMFLOAT4 cameraPos;
 	DirectX::XMFLOAT4 color;
 	DirectX::XMFLOAT4 lightPos;
 	DirectX::XMFLOAT4 lightAttenuation;
