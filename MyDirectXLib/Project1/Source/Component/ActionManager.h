@@ -1,18 +1,23 @@
 #pragma once
 #include <queue>
+#include "AbstractComponent.h"
 
 class GameObject;
+
 namespace Action
 {
 	class AbstractAction;
 
 	class ActionManager
+		: public AbstractComponent
 	{
 	public:
 		ActionManager(GameObject* pUser);
 		~ActionManager();
 
-		void update();
+		virtual void onStart() override;
+		virtual void onUpdate() override;
+
 		void enqueueAction(AbstractAction* action);
 		void forceNext();
 		int actionCount();
@@ -22,6 +27,5 @@ namespace Action
 
 	private:
 		std::queue<AbstractAction*> m_ActionQueue;
-		GameObject* m_pUser;
 	};
-};
+}

@@ -210,7 +210,7 @@
     <ClCompile Include="Source\Device\Resource\TextureManager.cpp" />
     <ClCompile Include="Source\Scene\TestScene.cpp" />
     <ClCompile Include="Source\Utility\Action\AbstractAction.cpp" />
-    <ClCompile Include="Source\Utility\Action\ActionManager.cpp" />
+    <ClCompile Include="Source\Component\ActionManager.cpp" />
     <ClCompile Include="Source\Utility\Action\MoveBy.cpp" />
     <ClCompile Include="Source\Utility\Action\MoveTo.cpp" />
     <ClCompile Include="Source\Utility\Action\Repeat.cpp" />
@@ -293,7 +293,7 @@
     <ClInclude Include="Source\Device\Resource\TextureManager.h" />
     <ClInclude Include="Source\Scene\TestScene.h" />
     <ClInclude Include="Source\Utility\Action\AbstractAction.h" />
-    <ClInclude Include="Source\Utility\Action\ActionManager.h" />
+    <ClInclude Include="Source\Component\ActionManager.h" />
     <ClInclude Include="Source\Utility\Action\Actions.h" />
     <ClInclude Include="Source\Utility\Action\EasingActions.h" />
     <ClInclude Include="Source\Utility\Action\MoveBy.h" />

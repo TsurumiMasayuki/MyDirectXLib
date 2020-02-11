@@ -1,5 +1,4 @@
 #include "Sequence.h"
-#include "ActionManager.h"
 #include <stdarg.h>
 
 Action::Sequence::Sequence(std::queue<AbstractAction*> actionQueue)

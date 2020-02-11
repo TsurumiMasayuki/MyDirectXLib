@@ -8,12 +8,11 @@
 #include "Component\Audio\AudioSource.h"
 #include "Math\Easing.h"
 #include "Utility\Timer.h"
-#include "Utility\Action\ActionManager.h"
+#include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
 
 float deathTimer = 0.0f;
 Timer timer;
-Action::ActionManager* pActionManager;
 
 using namespace Action;
 
@@ -24,7 +23,6 @@ Tester::Tester(IGameMediator * pGameMediator)
 
 Tester::~Tester()
 {
-	delete pActionManager;
 }
 
 void Tester::start()
@@ -38,8 +36,8 @@ void Tester::start()
 	audio->setAudio("MusicMono");
 	audio->play();
 
-	pActionManager = new Action::ActionManager(this);
-	pActionManager->enqueueAction(new Repeat(new EaseInBack(new MoveBy(Vec3(1, 0, 0), 1.0f)), 3));
+	auto actionManager = new Action::ActionManager(this);
+	actionManager->enqueueAction(new Repeat(new EaseInBack(new MoveBy(Vec3(1, 0, 0), 1.0f)), 3));
 }
 
 void Tester::update()
@@ -48,8 +46,6 @@ void Tester::update()
 	//getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
 	//getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
 	//getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
-
-	pActionManager->update();
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)

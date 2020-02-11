@@ -1,8 +1,8 @@
 #include "ActionManager.h"
-#include "AbstractAction.h"
+#include "Utility\Action\AbstractAction.h"
 
 Action::ActionManager::ActionManager(GameObject* pUser)
-	: m_pUser(pUser)
+	: AbstractComponent(pUser)
 {
 }
 
@@ -18,7 +18,11 @@ Action::ActionManager::~ActionManager()
 	}
 }
 
-void Action::ActionManager::update()
+void Action::ActionManager::onStart()
+{
+}
+
+void Action::ActionManager::onUpdate()
 {
 	if (m_ActionQueue.size() <= 0)
 		return;

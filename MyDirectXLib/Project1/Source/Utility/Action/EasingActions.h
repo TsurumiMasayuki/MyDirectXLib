@@ -12,7 +12,7 @@ namespace Action
 	{
 	public:
 		EaseAction(AbstractAction* pTargetAction) : m_pTargetAction(pTargetAction) {};
-		virtual ~EaseAction() { delete m_pTargetAction; }
+		~EaseAction() { delete m_pTargetAction; }
 
 		virtual void init() override
 		{
