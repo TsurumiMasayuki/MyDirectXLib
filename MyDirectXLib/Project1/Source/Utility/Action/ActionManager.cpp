@@ -23,7 +23,7 @@ void Action::ActionManager::update()
 	if (m_ActionQueue.size() <= 0)
 		return;
 
-	m_ActionQueue.front()->update();
+	m_ActionQueue.front()->baseUpdate();
 
 	if (m_ActionQueue.front()->isEnd())
 	{
@@ -36,7 +36,10 @@ void Action::ActionManager::enqueueAction(AbstractAction* action)
 	m_ActionQueue.push(action);
 
 	if (m_ActionQueue.size() == 1)
-		m_ActionQueue.front()->init();
+	{
+		m_ActionQueue.front()->setUser(m_pUser);
+		m_ActionQueue.front()->baseInit();
+	}
 }
 
 void Action::ActionManager::forceNext()
@@ -65,7 +68,6 @@ void Action::ActionManager::actionChange()
 
 	if (m_ActionQueue.size() != 0)
 	{
-		m_ActionQueue.front()->baseInit(m_pUser);
-		m_ActionQueue.front()->init();
+		m_ActionQueue.front()->baseInit();
 	}
 }

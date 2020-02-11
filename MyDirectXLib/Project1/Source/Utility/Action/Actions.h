@@ -7,3 +7,4 @@
 #include "Utility\Action\RepeatTime.h"
 #include "Utility\Action\RepeatForever.h"
 #include "Utility\Action\Sequence.h"
+#include "Utility\Action\EasingActions.h"

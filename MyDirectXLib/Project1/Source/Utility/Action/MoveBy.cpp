@@ -2,7 +2,7 @@
 #include "Actor\GameObject.h"
 
 Action::MoveBy::MoveBy(Vec3 moveValue, float time)
-	: m_MoveValue(moveValue), m_MoveTimer(time)
+	: AbstractAction(time), m_MoveValue(moveValue)
 {
 }
 
@@ -14,21 +14,14 @@ void Action::MoveBy::init()
 {
 	m_Origin = m_pUser->getPosition();
 	m_Destination = m_Origin + m_MoveValue;
-	m_MoveTimer.reset();
 }
 
-void Action::MoveBy::update()
+void Action::MoveBy::update(float time)
 {
-	m_MoveTimer.update();
-	Vec3 newPosition = Vec3::moveTowards(m_Origin, m_Destination, m_MoveTimer.getRatioClamped());
+	Vec3 newPosition = Vec3::moveTowards(m_Origin, m_Destination, time);
 	m_pUser->setPosition(newPosition);
 }
 
 void Action::MoveBy::onSuspend()
 {
-}
-
-bool Action::MoveBy::isEnd()
-{
-	return m_MoveTimer.isTime();
 }

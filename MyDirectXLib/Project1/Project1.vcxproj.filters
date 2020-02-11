@@ -68,6 +68,7 @@
     <ClCompile Include="Source\Utility\Action\Sequence.cpp" />
     <ClCompile Include="Source\Utility\Action\Spawn.cpp" />
     <ClCompile Include="Source\Utility\Action\WaitForSeconds.cpp" />
+    <ClCompile Include="Source\Utility\Action\AbstractAction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Source\Utility\Action\Sequence.h" />
     <ClInclude Include="Source\Utility\Action\Spawn.h" />
     <ClInclude Include="Source\Utility\Action\WaitForSeconds.h" />
+    <ClInclude Include="Source\Utility\Action\EasingActions.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

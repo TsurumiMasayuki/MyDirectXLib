@@ -1,23 +1,30 @@
 #pragma once
 
 class GameObject;
+class Timer;
 
 namespace Action
 {
 	class AbstractAction
 	{
 	public:
-		AbstractAction() : m_pUser(nullptr) {};
-		virtual ~AbstractAction() {};
+		AbstractAction(float time = 0.0f);
+		virtual ~AbstractAction();
 
-		void baseInit(GameObject* pUser) { m_pUser = pUser; }
+		void setUser(GameObject* pUser) { m_pUser = pUser; }
+
+		void baseInit();
+		void baseUpdate();
+
+		float getActionTime();
 
 		virtual void init() = 0;
-		virtual void update() = 0;
+		virtual void update(float time) = 0;
 		virtual void onSuspend() = 0;
-		virtual bool isEnd() = 0;
+		virtual bool isEnd();
 
 	protected:
 		GameObject* m_pUser;
+		Timer* m_pTimer;
 	};
 };

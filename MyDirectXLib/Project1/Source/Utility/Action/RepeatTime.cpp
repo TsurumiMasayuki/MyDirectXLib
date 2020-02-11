@@ -1,7 +1,8 @@
 #include "RepeatTime.h"
+#include "Utility\Timer.h"
 
 Action::RepeatTime::RepeatTime(AbstractAction * pAction, float repeatTime)
-	: m_pAction(pAction), m_Timer(repeatTime)
+	: AbstractAction(repeatTime), m_pAction(pAction)
 {
 }
 
@@ -12,28 +13,21 @@ Action::RepeatTime::~RepeatTime()
 
 void Action::RepeatTime::init()
 {
-	m_Timer.reset();
-	m_pAction->init();
+	m_pAction->setUser(m_pUser);
+	m_pAction->baseInit();
 }
 
-void Action::RepeatTime::update()
+void Action::RepeatTime::update(float time)
 {
-	m_Timer.update();
-
-	if (m_pAction->isEnd() && !m_Timer.isTime())
+	if (m_pAction->isEnd() && !m_pTimer->isTime())
 	{
-		m_pAction->init();
+		m_pAction->baseInit();
 	}
 
-	m_pAction->update();
+	m_pAction->baseUpdate();
 }
 
 void Action::RepeatTime::onSuspend()
 {
 	m_pAction->onSuspend();
-}
-
-bool Action::RepeatTime::isEnd()
-{
-	return m_Timer.isTime();
 }

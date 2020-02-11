@@ -6,6 +6,7 @@ class Tester
 {
 public:
 	Tester(IGameMediator* pGameMediator);
+	~Tester();
 
 	virtual void start() override;
 	virtual void update() override;

@@ -14,17 +14,18 @@ Action::RepeatForever::~RepeatForever()
 
 void Action::RepeatForever::init()
 {
-	m_pAction->init();
+	m_pAction->setUser(m_pUser);
+	m_pAction->baseInit();
 }
 
-void Action::RepeatForever::update()
+void Action::RepeatForever::update(float time)
 {
 	if (m_pAction->isEnd())
 	{
-		m_pAction->init();
+		m_pAction->baseInit();
 	}
 
-	m_pAction->update();
+	m_pAction->baseUpdate();
 }
 
 void Action::RepeatForever::onSuspend()

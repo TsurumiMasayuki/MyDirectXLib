@@ -33,22 +33,25 @@ Action::Sequence::~Sequence()
 void Action::Sequence::init()
 {
 	m_ActionQueue = m_ActionQueueOrigin;
-	m_ActionQueue.front()->init();
+	m_ActionQueue.front()->setUser(m_pUser);
+	m_ActionQueue.front()->baseInit();
 }
 
-void Action::Sequence::update()
+void Action::Sequence::update(float time)
 {
 	if (m_ActionQueue.size() <= 0)
 		return;
 
-	m_ActionQueue.front()->update();
+	m_ActionQueue.front()->baseUpdate();
 
 	if (m_ActionQueue.front()->isEnd())
 	{
 		m_ActionQueue.pop();
 
-		if (m_ActionQueue.size() != 0)
-			m_ActionQueue.front()->init();
+		if (m_ActionQueue.size() == 0) return;
+
+		m_ActionQueue.front()->setUser(m_pUser);
+		m_ActionQueue.front()->baseInit();
 	}
 }
 

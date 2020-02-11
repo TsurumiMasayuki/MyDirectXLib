@@ -209,6 +209,7 @@
     <ClCompile Include="Source\Device\Resource\Shader\ShaderManager.cpp" />
     <ClCompile Include="Source\Device\Resource\TextureManager.cpp" />
     <ClCompile Include="Source\Scene\TestScene.cpp" />
+    <ClCompile Include="Source\Utility\Action\AbstractAction.cpp" />
     <ClCompile Include="Source\Utility\Action\ActionManager.cpp" />
     <ClCompile Include="Source\Utility\Action\MoveBy.cpp" />
     <ClCompile Include="Source\Utility\Action\MoveTo.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="Source\Utility\Action\AbstractAction.h" />
     <ClInclude Include="Source\Utility\Action\ActionManager.h" />
     <ClInclude Include="Source\Utility\Action\Actions.h" />
+    <ClInclude Include="Source\Utility\Action\EasingActions.h" />
     <ClInclude Include="Source\Utility\Action\MoveBy.h" />
     <ClInclude Include="Source\Utility\Action\MoveTo.h" />
     <ClInclude Include="Source\Utility\Action\Repeat.h" />

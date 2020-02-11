@@ -3,7 +3,7 @@
 #include "Actor\GameObject.h"
 
 Action::Repeat::Repeat(AbstractAction* pAction, int repeatCount)
-	:m_pAction(pAction), m_RepeatCount(repeatCount), m_RepeatCountOrigin(repeatCount - 1)
+	:m_pAction(pAction), m_RepeatCount(repeatCount), m_RepeatCountOrigin(repeatCount)
 {
 }
 
@@ -15,18 +15,19 @@ Action::Repeat::~Repeat()
 void Action::Repeat::init()
 {
 	m_RepeatCount = m_RepeatCountOrigin;
-	m_pAction->init();
+	m_pAction->setUser(m_pUser);
+	m_pAction->baseInit();
 }
 
-void Action::Repeat::update()
+void Action::Repeat::update(float time)
 {
 	if (m_pAction->isEnd() && m_RepeatCount > 0)
 	{
-		m_pAction->init();
+		m_pAction->baseInit();
 		m_RepeatCount--;
 	}
 
-	m_pAction->update();
+	m_pAction->baseUpdate();
 }
 
 void Action::Repeat::onSuspend()

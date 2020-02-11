@@ -12,7 +12,7 @@ namespace Action
 		~RepeatForever();
 
 		virtual void init() override;
-		virtual void update() override;
+		virtual void update(float time) override;
 		virtual void onSuspend() override;
 		virtual bool isEnd() override;
 

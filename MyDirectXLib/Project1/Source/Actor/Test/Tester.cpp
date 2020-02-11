@@ -8,13 +8,23 @@
 #include "Component\Audio\AudioSource.h"
 #include "Math\Easing.h"
 #include "Utility\Timer.h"
+#include "Utility\Action\ActionManager.h"
+#include "Utility\Action\Actions.h"
 
 float deathTimer = 0.0f;
 Timer timer;
+Action::ActionManager* pActionManager;
+
+using namespace Action;
 
 Tester::Tester(IGameMediator * pGameMediator)
 	: GameObject(pGameMediator)
 {
+}
+
+Tester::~Tester()
+{
+	delete pActionManager;
 }
 
 void Tester::start()
@@ -27,6 +37,9 @@ void Tester::start()
 	auto audio = new AudioSource(this);
 	audio->setAudio("MusicMono");
 	audio->play();
+
+	pActionManager = new Action::ActionManager(this);
+	pActionManager->enqueueAction(new Repeat(new EaseInBack(new MoveBy(Vec3(1, 0, 0), 1.0f)), 3));
 }
 
 void Tester::update()
@@ -36,15 +49,7 @@ void Tester::update()
 	//getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
 	//getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
 
-	timer.update();
-
-	const Vec3 start(-4.0f, 0, 0);
-	const Vec3 dest(4.0f, 0, 0);
-	float easing = Easing::easeInOutElastic(timer.getRatioClamped());
-	getTransform()->setPosition(Vec3::moveTowards(start, dest, easing));
-
-	if (timer.isTime())
-		timer.reset();
+	pActionManager->update();
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)

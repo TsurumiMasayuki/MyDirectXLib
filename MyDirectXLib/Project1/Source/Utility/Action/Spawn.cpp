@@ -35,16 +35,17 @@ void Action::Spawn::init()
 {
 	for (auto action : m_ActionList)
 	{
-		action->init();
+		action->setUser(m_pUser);
+		action->baseInit();
 	}
 }
 
-void Action::Spawn::update()
+void Action::Spawn::update(float time)
 {
 	for (auto action : m_ActionList)
 	{
 		if (!action->isEnd())
-			action->update();
+			action->baseUpdate();
 	}
 }
 
