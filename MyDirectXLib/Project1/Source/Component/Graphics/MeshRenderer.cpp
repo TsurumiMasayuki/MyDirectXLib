@@ -78,18 +78,17 @@ void MeshRenderer::draw()
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
 	//ワールド行列
-	XMMATRIX world = m_pUser->getTransform()->getWorldMatrix();
-
+	XMMATRIX world = XMMatrixTranspose(m_pUser->getTransform()->getWorldMatrix());
+	//View * Projの行列
+	XMMATRIX viewProj = XMMatrixTranspose(Camera::getViewProjMatrix3D());
 	//法線用変換行列
-	XMMATRIX worldInv = XMMatrixInverse(nullptr, world);
-
-	//変換行列の作成
-	XMMATRIX wvp = XMMatrixTranspose(world * Camera::getViewProjMatrix3D());
+	XMMATRIX worldInv = XMMatrixTranspose(XMMatrixInverse(nullptr, world));
 
 	//頂点シェーダー用定数バッファ作成
 	WVPConstantBuffer wvpCBuffer;
-	XMStoreFloat4x4(&wvpCBuffer.wvpMatrix, wvp);
-	XMStoreFloat4x4(&wvpCBuffer.world, worldInv);
+	XMStoreFloat4x4(&wvpCBuffer.world, world);
+	XMStoreFloat4x4(&wvpCBuffer.viewProj, viewProj);
+	XMStoreFloat4x4(&wvpCBuffer.worldInv, worldInv);
 
 	ConstantBuffer vsBuffer;
 	vsBuffer.init(pDevice, sizeof(WVPConstantBuffer), &wvpCBuffer);
@@ -97,7 +96,10 @@ void MeshRenderer::draw()
 
 	//ピクセルシェーダー用定数バッファ作成
 	MeshPSBuffer meshCBuffer;
-	XMStoreFloat4(&meshCBuffer.color, m_pColor->toXMFLOAT4());
+	XMStoreFloat4(&meshCBuffer.color, m_pColor->toXMVECTOR());
+	XMStoreFloat4(&meshCBuffer.lightPos, Vec3(0.0f, 1.0f, 0.0f).toXMVector());
+	XMStoreFloat4(&meshCBuffer.lightAttenuation, Vec3(0.0f, 0.0f, 0.02f).toXMVector());
+	XMStoreFloat4(&meshCBuffer.lightColor, Vec3(0.0f, 0.0f, 0.5f).toXMVector());
 
 	ConstantBuffer psBuffer;
 	psBuffer.init(pDevice, sizeof(MeshPSBuffer), &meshCBuffer);

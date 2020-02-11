@@ -63,7 +63,6 @@ private:
 	//レンダーターゲット
 	ID3D11Texture2D* m_pRenderTexDefault;
 	ID3D11RenderTargetView* m_pRTVDefault;
-	ID3D11ShaderResourceView* m_pSRVDefault;
 
 	//深度バッファ
 	ID3D11Texture2D* m_pDepthStencilTexture;

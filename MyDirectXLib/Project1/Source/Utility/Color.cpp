@@ -19,7 +19,7 @@ Color::~Color()
 {
 }
 
-DirectX::XMVECTOR Color::toXMFLOAT4() const
+DirectX::XMVECTOR Color::toXMVECTOR() const
 {
 	return { r, g, b, a };
 }

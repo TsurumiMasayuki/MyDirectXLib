@@ -226,15 +226,6 @@ void Renderer::initRenderTargets()
 	//レンダーターゲット作成
 	pDevice->CreateRenderTargetView(m_pRenderTexDefault, &rtvDesc, &m_pRTVDefault);		//通常描画
 
-	//SRV作成
-	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc;
-	ZeroMemory(&viewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
-	viewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	viewDesc.Texture2D.MipLevels = 1;
-
-	pDevice->CreateShaderResourceView(m_pRenderTexDefault, &viewDesc, &m_pSRVDefault);
-
 	//深度バッファ作成
 	D3D11_TEXTURE2D_DESC depthTexDesc;
 	ZeroMemory(&depthTexDesc, sizeof(D3D11_TEXTURE2D_DESC));

@@ -36,16 +36,19 @@ void Tester::start()
 	audio->setAudio("MusicMono");
 	audio->play();
 
-	auto actionManager = new Action::ActionManager(this);
-	actionManager->enqueueAction(new Repeat(new EaseInBack(new MoveBy(Vec3(1, 0, 0), 1.0f)), 3));
+	//auto actionManager = new Action::ActionManager(this);
+	//actionManager->enqueueAction(new Repeat(new EaseInBack(new MoveBy(Vec3(1, 0, 0), 1.0f)), 3));
 }
 
 void Tester::update()
 {
 	//表示テスト用
-	//getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
-	//getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
-	//getTransform()->setAngles(getTransform()->getAngles() + Input::getRStickValue().toVec3() * 30 * GameTime::getDeltaTime());
+	getTransform()->setPosition(getTransform()->getPosition() + Input::getLStickValue().toVec3() * 3 * GameTime::getDeltaTime());
+	getTransform()->setPosition(getTransform()->getPosition() + Vec3(0, 0, -1 * Input::isPadButton(Input::PAD_BUTTON_A)) * 3 * GameTime::getDeltaTime());
+
+	Vec3 rStick = Input::getRStickValue().toVec3();
+	Vec3 rotate = Vec3(rStick.y, -rStick.x, 0) * 120 * GameTime::getDeltaTime();
+	getTransform()->setAngles(getTransform()->getAngles() + rotate);
 }
 
 void Tester::onCollisionEnter(GameObject * pHit)
@@ -56,13 +59,6 @@ void Tester::onCollisionEnter(GameObject * pHit)
 void Tester::onCollisionStay(GameObject * pHit)
 {
 	getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow));
-
-	//deathTimer += GameTime::getDeltaTime();
-	//if (deathTimer >= 3)
-	//{
-	//	destroy();
-	//	pHit->destroy();
-	//}
 }
 
 void Tester::onCollisionExit(GameObject * pHit)

@@ -96,7 +96,7 @@ void SpriteRenderer::draw()
 	//ピボット
 	constantBuffer.pivot = { m_ImagePivot.x, m_ImagePivot.y, 0.0f, 0.0f };
 	//色(仮置き)
-	XMStoreFloat4(&constantBuffer.color, m_Color.toXMFLOAT4());
+	XMStoreFloat4(&constantBuffer.color, m_Color.toXMVECTOR());
 	//UV設定の左上
 	constantBuffer.uvOffset = { m_UVRect.x, m_UVRect.y };
 	//UV設定の右下

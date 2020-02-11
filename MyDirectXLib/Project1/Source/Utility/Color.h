@@ -10,7 +10,7 @@ public:
 	Color(DirectX::XMVECTOR color);
 	~Color();
 
-	DirectX::XMVECTOR toXMFLOAT4() const;
+	DirectX::XMVECTOR toXMVECTOR() const;
 
 public:
 	float r;
