@@ -1,5 +1,6 @@
 #include "MoveBy.h"
 #include "Actor\GameObject.h"
+#include "Utility\Timer.h"
 
 Action::MoveBy::MoveBy(Vec3 moveValue, float time)
 	: AbstractAction(time), m_MoveValue(moveValue)
@@ -24,4 +25,9 @@ void Action::MoveBy::update(float time)
 
 void Action::MoveBy::onSuspend()
 {
+}
+
+Action::MoveBy * Action::MoveBy::clone()
+{
+	return new MoveBy(m_MoveValue, m_pTimer->getMaxTime());
 }

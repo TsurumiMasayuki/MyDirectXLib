@@ -17,6 +17,8 @@ namespace Action
 		virtual void onSuspend() override;
 		virtual bool isEnd() override;
 
+		virtual Action::Spawn* clone() override;
+
 	private:
 		std::vector<AbstractAction*> m_ActionList;
 	};

@@ -1,5 +1,6 @@
 #include "MoveTo.h"
 #include "Actor\GameObject.h"
+#include "Utility\Timer.h"
 
 Action::MoveTo::MoveTo(Vec3 destination, float time)
 	: AbstractAction(time), m_Destination(destination)
@@ -23,4 +24,9 @@ void Action::MoveTo::update(float time)
 
 void Action::MoveTo::onSuspend()
 {
+}
+
+Action::MoveTo * Action::MoveTo::clone()
+{
+	return new MoveTo(m_Destination, m_pTimer->getMaxTime());
 }

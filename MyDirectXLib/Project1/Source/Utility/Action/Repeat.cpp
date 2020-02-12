@@ -1,41 +1,45 @@
 #include "Repeat.h"
-#include <cstring>
 #include "Actor\GameObject.h"
 
-Action::Repeat::Repeat(AbstractAction* pAction, int repeatCount)
-	:m_pAction(pAction), m_RepeatCount(repeatCount), m_RepeatCountOrigin(repeatCount)
+Action::Repeat::Repeat(AbstractAction* pTargetAction, int repeatCount)
+	:m_pTargetAction(pTargetAction), m_RepeatCount(repeatCount), m_RepeatCountOrigin(repeatCount)
 {
 }
 
 Action::Repeat::~Repeat()
 {
-	delete m_pAction;
+	delete m_pTargetAction;
 }
 
 void Action::Repeat::init()
 {
 	m_RepeatCount = m_RepeatCountOrigin;
-	m_pAction->setUser(m_pUser);
-	m_pAction->baseInit();
+	m_pTargetAction->setUser(m_pUser);
+	m_pTargetAction->baseInit();
 }
 
 void Action::Repeat::update(float time)
 {
-	if (m_pAction->isEnd() && m_RepeatCount > 0)
+	if (m_pTargetAction->isEnd() && m_RepeatCount > 0)
 	{
-		m_pAction->baseInit();
+		m_pTargetAction->baseInit();
 		m_RepeatCount--;
 	}
 
-	m_pAction->baseUpdate();
+	m_pTargetAction->baseUpdate();
 }
 
 void Action::Repeat::onSuspend()
 {
-	m_pAction->onSuspend();
+	m_pTargetAction->onSuspend();
 }
 
 bool Action::Repeat::isEnd()
 {
 	return m_RepeatCount <= 0;
+}
+
+Action::Repeat * Action::Repeat::clone()
+{
+	return new Repeat(m_pTargetAction->clone(), m_RepeatCountOrigin);
 }

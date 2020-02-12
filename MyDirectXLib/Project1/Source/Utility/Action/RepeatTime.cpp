@@ -1,33 +1,38 @@
 #include "RepeatTime.h"
 #include "Utility\Timer.h"
 
-Action::RepeatTime::RepeatTime(AbstractAction * pAction, float repeatTime)
-	: AbstractAction(repeatTime), m_pAction(pAction)
+Action::RepeatTime::RepeatTime(AbstractAction * pTargetAction, float repeatTime)
+	: AbstractAction(repeatTime), m_pTargetAction(pTargetAction)
 {
 }
 
 Action::RepeatTime::~RepeatTime()
 {
-	delete m_pAction;
+	delete m_pTargetAction;
 }
 
 void Action::RepeatTime::init()
 {
-	m_pAction->setUser(m_pUser);
-	m_pAction->baseInit();
+	m_pTargetAction->setUser(m_pUser);
+	m_pTargetAction->baseInit();
 }
 
 void Action::RepeatTime::update(float time)
 {
-	if (m_pAction->isEnd() && !m_pTimer->isTime())
+	if (m_pTargetAction->isEnd() && !m_pTimer->isTime())
 	{
-		m_pAction->baseInit();
+		m_pTargetAction->baseInit();
 	}
 
-	m_pAction->baseUpdate();
+	m_pTargetAction->baseUpdate();
 }
 
 void Action::RepeatTime::onSuspend()
 {
-	m_pAction->onSuspend();
+	m_pTargetAction->onSuspend();
+}
+
+Action::RepeatTime * Action::RepeatTime::clone()
+{
+	return new RepeatTime(m_pTargetAction->clone(), m_pTimer->getMaxTime());
 }

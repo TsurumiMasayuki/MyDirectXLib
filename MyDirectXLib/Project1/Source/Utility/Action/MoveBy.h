@@ -15,6 +15,8 @@ namespace Action
 		virtual void update(float time) override;
 		virtual void onSuspend() override;
 
+		virtual Action::MoveBy* clone() override;
+
 	private:
 		Vec3 m_Origin;
 		Vec3 m_MoveValue;

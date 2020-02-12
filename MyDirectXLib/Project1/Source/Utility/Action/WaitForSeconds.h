@@ -13,5 +13,7 @@ namespace Action
 		virtual void init() override;
 		virtual void update(float time) override;
 		virtual void onSuspend() override;
+
+		virtual Action::WaitForSeconds* clone() override;
 	};
 }

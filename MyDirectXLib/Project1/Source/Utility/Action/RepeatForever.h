@@ -8,7 +8,7 @@ namespace Action
 		public AbstractAction
 	{
 	public:
-		RepeatForever(AbstractAction* pAction);
+		RepeatForever(AbstractAction* pTargetAction);
 		~RepeatForever();
 
 		virtual void init() override;
@@ -16,8 +16,10 @@ namespace Action
 		virtual void onSuspend() override;
 		virtual bool isEnd() override;
 
+		virtual Action::RepeatForever* clone() override;
+
 	private:
-		AbstractAction* m_pAction;
+		AbstractAction* m_pTargetAction;
 	};
 };
 

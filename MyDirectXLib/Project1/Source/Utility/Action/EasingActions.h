@@ -22,17 +22,25 @@ namespace Action
 			m_pTimer->setMaxTime(m_pTargetAction->getActionTime());
 			m_pTimer->reset();
 		}
+
 		virtual void update(float time) override
 		{
 			m_pTargetAction->update(EASE_FUNC(time));
 		}
+
 		virtual void onSuspend() override
 		{
 			m_pTargetAction->onSuspend();
 		}
+
 		virtual bool isEnd() override
 		{
 			return m_pTimer->isTime();
+		}
+
+		virtual EaseAction<EASE_FUNC>* clone() override
+		{
+			return new EaseAction<EASE_FUNC>(m_pTargetAction->clone());
 		}
 
 	private:

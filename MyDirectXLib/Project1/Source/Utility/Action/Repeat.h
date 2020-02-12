@@ -8,18 +8,19 @@ namespace Action
 		public AbstractAction
 	{
 	public:
-		Repeat(AbstractAction* pAction, int repeatCount);
+		Repeat(AbstractAction* pTargetAction, int repeatCount);
 		~Repeat();
 
 		virtual void init() override;
 		virtual void update(float time) override;
 		virtual void onSuspend() override;
 		virtual bool isEnd() override;
+		virtual Action::Repeat* clone() override;
 
 	private:
 		int m_RepeatCount;
 		int m_RepeatCountOrigin;
-		AbstractAction* m_pAction;
+		AbstractAction* m_pTargetAction;
 	};
 };
 

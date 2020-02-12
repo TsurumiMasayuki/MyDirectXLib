@@ -38,10 +38,10 @@ void Action::ActionManager::onUpdate()
 void Action::ActionManager::enqueueAction(AbstractAction* action)
 {
 	m_ActionQueue.push(action);
+	action->setUser(m_pUser);
 
 	if (m_ActionQueue.size() == 1)
 	{
-		m_ActionQueue.front()->setUser(m_pUser);
 		m_ActionQueue.front()->baseInit();
 	}
 }

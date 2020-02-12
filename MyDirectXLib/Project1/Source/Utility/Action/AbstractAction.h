@@ -1,5 +1,4 @@
 #pragma once
-
 class GameObject;
 class Timer;
 
@@ -18,10 +17,13 @@ namespace Action
 
 		float getActionTime();
 
-		virtual void init() = 0;
-		virtual void update(float time) = 0;
-		virtual void onSuspend() = 0;
-		virtual bool isEnd();
+		virtual void init() = 0;				//初期化
+		virtual void update(float time) = 0;	//更新
+		virtual void onSuspend() = 0;			//中止時
+		virtual bool isEnd();					//終了したかどうか
+
+		virtual AbstractAction* clone() = 0;	//自身をコピーする
+
 
 	protected:
 		GameObject* m_pUser;

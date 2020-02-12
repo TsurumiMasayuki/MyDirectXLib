@@ -66,3 +66,18 @@ bool Action::Sequence::isEnd()
 {
 	return m_ActionQueue.size() == 0;
 }
+
+Action::Sequence * Action::Sequence::clone()
+{
+	std::queue<AbstractAction*> cloneQueue;
+
+	//Queueの配列を逆向きにコピー
+	for (auto itr = m_ActionQueue._Get_container().begin();
+			itr != m_ActionQueue._Get_container().end();
+			++itr)
+	{
+		cloneQueue.push((*itr)->clone());
+	}
+
+	return new Sequence(cloneQueue);
+}

@@ -17,6 +17,8 @@ namespace Action
 		virtual void onSuspend() override;
 		virtual bool isEnd() override;
 
+		virtual Action::Sequence* clone() override;
+
 	private:
 		std::queue<AbstractAction*> m_ActionQueue;
 		std::queue<AbstractAction*> m_ActionQueueOrigin;

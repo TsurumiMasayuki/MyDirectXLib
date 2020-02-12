@@ -67,3 +67,16 @@ bool Action::Spawn::isEnd()
 
 	return true;
 }
+
+Action::Spawn * Action::Spawn::clone()
+{
+	std::vector<AbstractAction*> cloneVector;
+	cloneVector.reserve(m_ActionList.size());
+
+	for (int i = 0; i < m_ActionList.size(); ++i)
+	{
+		cloneVector.at(i) = m_ActionList.at(i)->clone();
+	}
+
+	return new Spawn(cloneVector);
+}
