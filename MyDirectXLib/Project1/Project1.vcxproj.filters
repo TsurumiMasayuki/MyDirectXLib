@@ -69,6 +69,7 @@
     <ClCompile Include="Source\Utility\Action\WaitForSeconds.cpp" />
     <ClCompile Include="Source\Utility\Action\AbstractAction.cpp" />
     <ClCompile Include="Source\Component\ActionManager.cpp" />
+    <ClCompile Include="Source\Utility\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Source\Utility\Action\WaitForSeconds.h" />
     <ClInclude Include="Source\Utility\Action\EasingActions.h" />
     <ClInclude Include="Source\Component\ActionManager.h" />
+    <ClInclude Include="Source\Utility\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

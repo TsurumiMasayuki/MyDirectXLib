@@ -220,6 +220,7 @@
     <ClCompile Include="Source\Utility\Action\Spawn.cpp" />
     <ClCompile Include="Source\Utility\Action\WaitForSeconds.cpp" />
     <ClCompile Include="Source\Utility\Color.cpp" />
+    <ClCompile Include="Source\Utility\Random.cpp" />
     <ClCompile Include="Source\Utility\State\StateManager.cpp" />
     <ClCompile Include="Source\Utility\StringUtility.cpp" />
     <ClCompile Include="Source\Utility\Timer.cpp" />
@@ -304,6 +305,7 @@
     <ClInclude Include="Source\Utility\Action\Spawn.h" />
     <ClInclude Include="Source\Utility\Action\WaitForSeconds.h" />
     <ClInclude Include="Source\Utility\Color.h" />
+    <ClInclude Include="Source\Utility\Random.h" />
     <ClInclude Include="Source\Utility\State\StateManager.h" />
     <ClInclude Include="Source\Utility\State\IState.h" />
     <ClInclude Include="Source\Utility\StringUtility.h" />

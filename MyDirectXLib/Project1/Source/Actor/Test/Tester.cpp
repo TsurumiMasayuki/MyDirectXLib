@@ -10,6 +10,7 @@
 #include "Utility\Timer.h"
 #include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
+#include "Utility\Random.h"
 
 float deathTimer = 0.0f;
 Timer timer;
@@ -36,13 +37,16 @@ void Tester::start()
 	audio->setAudio("MusicMono");
 	//audio->play();
 
+	Random random;
+
 	auto actionManager = new Action::ActionManager(this);
 	auto sequence = new Sequence(
 		3,
-		new EaseInSine(new MoveTo(Vec3(-3, 0, 0), 1)),
-		new EaseInSine(new MoveTo(Vec3(0, 3, 0), 1)),
-		new EaseInSine(new MoveTo(Vec3(3, 0, 0), 1))
+		new EaseInSine(new MoveTo(Vec3(random.getRandom(-10.0f, -3.0f), 0, 0), 1)),
+		new EaseInSine(new MoveTo(Vec3(0, random.getRandom(3.0f, 10.0f), 0), 1)),
+		new EaseInSine(new MoveTo(Vec3(random.getRandom(3.0f, 10.0f), 0, 0), 1))
 	);
+
 	actionManager->enqueueAction(sequence);
 	actionManager->enqueueAction(sequence->clone());
 }
