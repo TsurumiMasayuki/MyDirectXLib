@@ -251,7 +251,6 @@
     <ClInclude Include="Source\Device\File\CSVReader.h" />
     <ClInclude Include="Source\Device\GameDevice.h" />
     <ClInclude Include="Source\Device\GameTime.h" />
-    <ClInclude Include="Source\Device\IRenderable2D.h" />
     <ClInclude Include="Source\Device\Renderer.h" />
     <ClInclude Include="Source\Device\Resource\AudioData.h" />
     <ClInclude Include="Source\Device\Resource\AudioInstance.h" />

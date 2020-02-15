@@ -96,7 +96,6 @@
     <ClInclude Include="Source\Device\GameTime.h" />
     <ClInclude Include="Source\Actor\IGameMediator.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
-    <ClInclude Include="Source\Device\IRenderable2D.h" />
     <ClInclude Include="Source\Device\Renderer.h" />
     <ClInclude Include="Source\Device\GameDevice.h" />
     <ClInclude Include="Source\Device\Buffer\VertexBuffer.h" />

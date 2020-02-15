@@ -34,7 +34,7 @@ void Tester::start()
 
 	auto audio = new AudioSource(this);
 	audio->setAudio("MusicMono");
-	audio->play();
+	//audio->play();
 
 	auto actionManager = new Action::ActionManager(this);
 	auto sequence = new Sequence(

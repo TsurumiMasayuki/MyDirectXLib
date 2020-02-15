@@ -1,12 +1,18 @@
 #include "Renderer.h"
 #include <d3d11.h>
-#include <fbxsdk.h>
 #include <DirectXMath.h>
+#include <d2d1.h>
+#include <dwrite.h>
+
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
 
 #include "Def\Screen.h"
 
 #include "Component\Graphics\SpriteRenderer.h"
 #include "Component\Graphics\MeshRenderer.h"
+
+#include "WindowInstance.h"
 
 #include "Device\Camera.h"
 #include "Device\DirectXManager.h"
@@ -24,6 +30,12 @@
 #include "Device\Resource\TextureManager.h"
 
 #include "Math\MathUtility.h"
+
+IDWriteFactory* g_pFactory = nullptr;
+IDWriteTextFormat* g_pTextFormat = nullptr;
+ID2D1Factory* g_pD2DFactroy;
+ID2D1RenderTarget* g_pRT;
+ID2D1SolidColorBrush* g_pBrush;
 
 Renderer::Renderer()
 {
@@ -43,12 +55,53 @@ Renderer::~Renderer()
 
 	m_pDepthStencilTexture->Release();
 	m_pDepthStencilView->Release();
+
+	g_pD2DFactroy->Release();
+	g_pRT->Release();
+	g_pBrush->Release();
+	g_pFactory->Release();
+	g_pTextFormat->Release();
 }
 
 void Renderer::init()
 {
 	initBuffers();
 	initRenderTargets();
+
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &g_pD2DFactroy);
+	DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&g_pFactory));
+
+	g_pFactory->CreateTextFormat(
+		L"Meiryo",
+		NULL,
+		DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		72.0f,
+		L"en_us",
+		&g_pTextFormat
+	);
+
+	g_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	g_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	//SwapChainからバックバッファを取得
+	IDXGISurface* pBack;
+	DirectXManager::getSwapChain()->GetBuffer(0, __uuidof(IDXGISurface), (LPVOID*)&pBack);
+
+	FLOAT dpiX;
+	FLOAT dpiY;
+	g_pD2DFactroy->GetDesktopDpi(&dpiX, &dpiY);
+
+	D2D1_RENDER_TARGET_PROPERTIES rtProp =
+		D2D1::RenderTargetProperties(
+			D2D1_RENDER_TARGET_TYPE_DEFAULT,
+			D2D1::PixelFormat(DXGI_FORMAT_R8G8B8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+			dpiX, dpiY
+		);
+	g_pD2DFactroy->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &g_pRT);
+
+	g_pRT->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &g_pBrush);
 }
 
 void Renderer::draw()
@@ -66,6 +119,19 @@ void Renderer::draw()
 	drawMeshes();
 
 	drawSprites();
+
+	const WCHAR* wszText = L"DirectWrite Hello World!";
+	UINT32 cTextLength = (UINT32)wcslen(wszText);
+
+	g_pRT->BeginDraw();
+	g_pRT->DrawTextA(
+		wszText,
+		cTextLength,
+		g_pTextFormat,
+		D2D1::RectF(0.0f, 0.0f, 1280.0f, 720.0f),
+		g_pBrush,
+		D2D1_DRAW_TEXT_OPTIONS_NONE);
+	g_pRT->EndDraw();
 
 	DirectXManager::presentSwapChain();
 }

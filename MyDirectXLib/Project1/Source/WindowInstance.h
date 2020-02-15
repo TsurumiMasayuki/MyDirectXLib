@@ -14,7 +14,7 @@ public:
 	void update();
 	void adjustWindowSize();
 
-	HWND* getHWND();
+	static HWND* getHWND();
 	int getWidth();
 	int getHeight();
 
@@ -25,5 +25,7 @@ private:
 	HWND mHWND;
 	UINT m_Width;
 	UINT m_Height;
+
+	static WindowInstance* pInstance;
 };
 

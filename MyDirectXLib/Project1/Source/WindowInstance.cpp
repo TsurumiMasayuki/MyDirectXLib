@@ -1,6 +1,8 @@
 #include "WindowInstance.h"
 #include "Def\Screen.h"
 
+WindowInstance* WindowInstance::pInstance = nullptr;
+
 LRESULT DefWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
@@ -53,10 +55,13 @@ WindowInstance::WindowInstance(
 			x, y, m_Width, m_Height,
 			0, 0, *phInstance, 0);
 	}
+
+	pInstance = this;
 }
 
 WindowInstance::~WindowInstance()
 {
+	pInstance = nullptr;
 }
 
 void WindowInstance::show(int nCmdShow)
@@ -85,7 +90,7 @@ void WindowInstance::adjustWindowSize()
 
 HWND * WindowInstance::getHWND()
 {
-	return &mHWND;
+	return &pInstance->mHWND;
 }
 
 int WindowInstance::getWidth()
