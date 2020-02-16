@@ -75,28 +75,11 @@ void DirectXManager::initialize(HWND * pHWND)
 
 #pragma endregion
 
-#pragma region サンプラー作成
-
-	D3D11_SAMPLER_DESC samDesc;
-	ID3D11SamplerState* pSamplerState;
-
-	ZeroMemory(&samDesc, sizeof(D3D11_SAMPLER_DESC));
-	samDesc.Filter = D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT;
-	samDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	pDevice->CreateSamplerState(&samDesc, &pSamplerState);
-	pDeviceContext->PSSetSamplers(0, 1, &pSamplerState);
-
-#pragma endregion
-
 	//シングルトンのインスタンスを作成
 	pInstance = new DirectXManager(
 		pDevice,
 		pDeviceContext,
 		pSwapChain,
-		pSamplerState,
 		pBlendState
 	);
 }
@@ -121,11 +104,6 @@ ID3D11DeviceContext * DirectXManager::getDeviceContext()
 	return pInstance->m_pDeviceContext;
 }
 
-ID3D11SamplerState * DirectXManager::getSamplerState()
-{
-	return pInstance->getSamplerState();
-}
-
 void DirectXManager::clearScreen(const float clearColor[4])
 {
 }
@@ -139,12 +117,10 @@ DirectXManager::DirectXManager(
 	ID3D11Device * pDevice,
 	ID3D11DeviceContext * pDeviceContext,
 	IDXGISwapChain * pSwapChain,
-	ID3D11SamplerState * pSamplerState,
 	ID3D11BlendState * pBlendState)
 	:m_pDevice(pDevice),
 	m_pDeviceContext(pDeviceContext),
 	m_pSwapChain(pSwapChain),
-	m_pSamplerState(pSamplerState),
 	m_pBlendState(pBlendState)
 {
 }
@@ -154,6 +130,5 @@ DirectXManager::~DirectXManager()
 	SAFE_RELEASE(m_pDevice);
 	SAFE_RELEASE(m_pDeviceContext);
 	SAFE_RELEASE(m_pSwapChain);
-	SAFE_RELEASE(m_pSamplerState);
 	SAFE_RELEASE(m_pBlendState);
 }

@@ -50,6 +50,7 @@ private:
 
 	//スプライト用
 	ID3D11InputLayout* m_pSpriteInputLayout;
+	ID3D11SamplerState* m_pSpriteSampler;
 	VertexBuffer* m_pSpriteVertices;
 	IndexBuffer* m_pSpriteIndices;
 

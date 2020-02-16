@@ -44,6 +44,7 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
 	m_pSpriteInputLayout->Release();
+	m_pSpriteSampler->Release();
 	delete m_pSpriteVertices;
 	delete m_pSpriteIndices;
 
@@ -78,7 +79,7 @@ void Renderer::init()
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
 		72.0f,
-		L"en_us",
+		L"ja_jp",
 		&g_pTextFormat
 	);
 
@@ -221,6 +222,16 @@ void Renderer::initBuffers()
 
 	m_pSpriteIndices = new IndexBuffer();
 	m_pSpriteIndices->init(pDevice, sizeof(UINT) * 6, indices);
+
+	//サンプラーの作成(スプライト用)
+	D3D11_SAMPLER_DESC spriteSamDesc;
+	ZeroMemory(&spriteSamDesc, sizeof(D3D11_SAMPLER_DESC));
+	spriteSamDesc.Filter = D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT;
+	spriteSamDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	spriteSamDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	spriteSamDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	spriteSamDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	pDevice->CreateSamplerState(&spriteSamDesc, &m_pSpriteSampler);
 #pragma endregion
 
 #pragma region Mesh用
@@ -239,14 +250,15 @@ void Renderer::initBuffers()
 
 	pDevice->CreateRasterizerState(&rasterDesc, &m_pRasterizer);
 
-	D3D11_SAMPLER_DESC samplerDesc;
-	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-	pDevice->CreateSamplerState(&samplerDesc, &m_pMeshSampler);
+	//サンプラーの作成(3Dモデル用)
+	D3D11_SAMPLER_DESC meshSamDesc;
+	ZeroMemory(&meshSamDesc, sizeof(D3D11_SAMPLER_DESC));
+	meshSamDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	meshSamDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	meshSamDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	meshSamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	meshSamDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	pDevice->CreateSamplerState(&meshSamDesc, &m_pMeshSampler);
 
 #pragma endregion
 }
@@ -331,6 +343,7 @@ void Renderer::drawSprites()
 	pDeviceContext->OMSetRenderTargets(1, &m_pRTVDefault, NULL);
 
 	pDeviceContext->IASetInputLayout(m_pSpriteInputLayout);
+	pDeviceContext->PSSetSamplers(0, 1, &m_pSpriteSampler);
 
 	auto vertices = m_pSpriteVertices->getBuffer();
 	UINT stride = sizeof(SpriteVertex);
