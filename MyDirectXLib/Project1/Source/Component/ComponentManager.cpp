@@ -80,30 +80,6 @@ void ComponentManager::onCollisionExit(GameObject * pHit)
 	}
 }
 
-void ComponentManager::onPositionChanged(const Vec3 & currentPos)
-{
-	for (auto component : m_Components)
-	{
-		component->onPositionChanged(currentPos);
-	}
-}
-
-void ComponentManager::onAngleChanged(const Vec3 & currentAngle)
-{
-	for (auto component : m_Components)
-	{
-		component->onAngleChanged(currentAngle);
-	}
-}
-
-void ComponentManager::onSizeChanged(const Vec3 & currentSize)
-{
-	for (auto component : m_Components)
-	{
-		component->onSizeChanged(currentSize);
-	}
-}
-
 void ComponentManager::checkCollision2D()
 {
 	for (auto component : m_Components)

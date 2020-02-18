@@ -20,6 +20,36 @@ GameObject * AbstractComponent::getUser()
 	return m_pUser;
 }
 
+void AbstractComponent::setPosition(const Vec3 & position)
+{
+	m_pUser->setPosition(position);
+}
+
+Vec3 AbstractComponent::getPosition() const
+{
+	return m_pUser->getAngles();
+}
+
+void AbstractComponent::setAngles(const Vec3 & angles)
+{
+	m_pUser->setAngles(angles);
+}
+
+Vec3 AbstractComponent::getAngles() const
+{
+	return m_pUser->getAngles();
+}
+
+void AbstractComponent::setSize(const Vec3 & size)
+{
+	m_pUser->setSize(size);
+}
+
+Vec3 AbstractComponent::getSize() const
+{
+	return m_pUser->getSize();
+}
+
 void AbstractComponent::destroy()
 {
 	onDestroy();

@@ -1,7 +1,8 @@
 #pragma once
 #include "ICameraEffect.h"
 #include "Math\Vec3.h"
-#include "Utility\Timer.h"
+
+class Timer;
 
 class CameraShake
 	:public ICameraEffect

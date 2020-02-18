@@ -3,9 +3,14 @@
 
 class SpriteRenderer;
 class MeshRenderer;
+class TextRenderer;
+
 class VertexBuffer;
 class IndexBuffer;
 class ConstantBuffer;
+
+struct ID2D1Factory;
+struct ID2D1RenderTarget;
 
 struct ID3D11InputLayout;
 struct ID3D11Texture2D;
@@ -33,6 +38,13 @@ public:
 	void addMesh(MeshRenderer* pMesh);
 	//MeshRendererの登録を解除する。内部処理用なので基本使わない
 	void removeMesh(MeshRenderer* pMesh);
+
+	//TextRendererを登録する。内部処理用なので基本使わない
+	void addText(TextRenderer* pText);
+	//TextRendererの登録を解除する。内部処理用なので基本使わない
+	void removeText(TextRenderer* pText);
+
+	ID2D1RenderTarget* getD2DRenderTarget() { return m_pD2DRenderTarget; };
 
 private:
 	void initBuffers();
@@ -68,4 +80,11 @@ private:
 	//深度バッファ
 	ID3D11Texture2D* m_pDepthStencilTexture;
 	ID3D11DepthStencilView* m_pDepthStencilView;
+
+	//テキスト描画コンポーネント管理用vector
+	std::vector<TextRenderer*> m_TextRenderers;
+
+	//Direct2D系
+	ID2D1Factory* m_pD2DFactory;
+	ID2D1RenderTarget* m_pD2DRenderTarget;
 };

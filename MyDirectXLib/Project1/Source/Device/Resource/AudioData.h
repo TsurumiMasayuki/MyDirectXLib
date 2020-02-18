@@ -7,7 +7,7 @@ namespace DirectX
 	struct WAVData;
 }
 
-//音声データ構造体
+//音声データ保持用
 class AudioData
 {
 public:

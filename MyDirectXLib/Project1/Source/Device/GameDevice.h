@@ -3,6 +3,7 @@
 class Renderer;
 class MeshManager;
 class AudioManager;
+class FontManager;
 
 class GameDevice
 {
@@ -14,6 +15,7 @@ public:
 	static Renderer* getRenderer();
 	static MeshManager* getMeshManager();
 	static AudioManager* getAudioManager();
+	static FontManager* getFontManager();
 
 private:
 	GameDevice();
@@ -29,4 +31,5 @@ private:
 	Renderer* m_pRenderer;
 	MeshManager* m_pMeshManager;
 	AudioManager* m_pAudioManager;
+	FontManager* m_pFontManager;
 };

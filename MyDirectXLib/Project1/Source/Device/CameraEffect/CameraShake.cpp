@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "Utility\Timer.h"
 #include "Device\Camera.h"
 
 CameraShake::CameraShake(float strength, float time, Vec3 shakeDirection)

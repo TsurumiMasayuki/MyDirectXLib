@@ -22,6 +22,13 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::update()
 {
+	for (auto& gameObject : m_AddObjects)
+	{
+		if (!gameObject->isActive()) continue;
+
+		gameObject->objUpdate();
+	}
+
 	for (auto& gameObject : m_GameObjects)
 	{
 		if (!gameObject->isActive()) continue;

@@ -1,7 +1,8 @@
 #pragma once
+#include "Math\Vec3.h"
+
 class GameObject;
 class RenderManager;
-struct Vec3;
 
 class AbstractComponent
 {
@@ -31,15 +32,17 @@ public:
 	virtual void onCollisionStay(GameObject* pHit) {};
 	virtual void onCollisionExit(GameObject* pHit) {};
 
-	//座標が変更された時
-	virtual void onPositionChanged(const Vec3& currentPos) {};
-	//角度が変更された時
-	virtual void onAngleChanged(const Vec3& currentAngle) {};
-	//サイズが変更された時
-	virtual void onSizeChanged(const Vec3& currentSize) {};
-
 	int getUpdateOrder() const;
 	GameObject* getUser();
+
+	void setPosition(const Vec3& position);
+	Vec3 getPosition() const;
+
+	void setAngles(const Vec3& angles);
+	Vec3 getAngles() const;
+
+	void setSize(const Vec3& size);
+	Vec3 getSize() const;
 
 protected:
 	AbstractComponent(GameObject* pUser, int updateOrder = 100);

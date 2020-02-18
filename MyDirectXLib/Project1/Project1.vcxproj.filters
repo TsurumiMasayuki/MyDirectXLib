@@ -70,6 +70,8 @@
     <ClCompile Include="Source\Utility\Action\AbstractAction.cpp" />
     <ClCompile Include="Source\Component\ActionManager.cpp" />
     <ClCompile Include="Source\Utility\Random.cpp" />
+    <ClCompile Include="Source\Device\Resource\FontManager.cpp" />
+    <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -156,6 +158,9 @@
     <ClInclude Include="Source\Utility\Action\EasingActions.h" />
     <ClInclude Include="Source\Component\ActionManager.h" />
     <ClInclude Include="Source\Utility\Random.h" />
+    <ClInclude Include="Source\Device\Resource\FontManager.h" />
+    <ClInclude Include="Source\Component\Graphics\TextRenderer.h" />
+    <ClInclude Include="Source\Device\Resource\FontOption.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

@@ -4,6 +4,7 @@
 #include "Actor\GameObject.h"
 #include "Component\Graphics\MeshRenderer.h"
 #include "Component\Graphics\SpriteRenderer.h"
+#include "Component\Graphics\TextRenderer.h"
 #include "Math\MathUtility.h"
 #include "Device\GameTime.h"
 #include "Device\Input.h"
@@ -25,6 +26,13 @@ void TestScene::init()
 	auto coll1 = new SphereCollider3D(tester);
 	coll1->setRadius(1.0f);
 	coll1->isTrigger = false;
+
+	auto obj2 = new GameObject(this);
+	auto text1 = new TextRenderer(obj2);
+	text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
+	text1->setTextSize(32.0f);
+	text1->setText(L"Hello World!");
+	text1->setColor(Color(DirectX::Colors::Red));
 }
 
 void TestScene::update()

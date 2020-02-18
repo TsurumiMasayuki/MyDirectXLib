@@ -11,6 +11,7 @@
 
 #include "Component\Graphics\SpriteRenderer.h"
 #include "Component\Graphics\MeshRenderer.h"
+#include "Component\Graphics\TextRenderer.h"
 
 #include "WindowInstance.h"
 
@@ -30,12 +31,6 @@
 #include "Device\Resource\TextureManager.h"
 
 #include "Math\MathUtility.h"
-
-IDWriteFactory* g_pFactory = nullptr;
-IDWriteTextFormat* g_pTextFormat = nullptr;
-ID2D1Factory* g_pD2DFactroy;
-ID2D1RenderTarget* g_pRT;
-ID2D1SolidColorBrush* g_pBrush;
 
 Renderer::Renderer()
 {
@@ -57,11 +52,8 @@ Renderer::~Renderer()
 	m_pDepthStencilTexture->Release();
 	m_pDepthStencilView->Release();
 
-	g_pD2DFactroy->Release();
-	g_pRT->Release();
-	g_pBrush->Release();
-	g_pFactory->Release();
-	g_pTextFormat->Release();
+	m_pD2DFactory->Release();
+	m_pD2DRenderTarget->Release();
 }
 
 void Renderer::init()
@@ -69,22 +61,7 @@ void Renderer::init()
 	initBuffers();
 	initRenderTargets();
 
-	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &g_pD2DFactroy);
-	DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&g_pFactory));
-
-	g_pFactory->CreateTextFormat(
-		L"Meiryo",
-		NULL,
-		DWRITE_FONT_WEIGHT_REGULAR,
-		DWRITE_FONT_STYLE_NORMAL,
-		DWRITE_FONT_STRETCH_NORMAL,
-		72.0f,
-		L"ja_jp",
-		&g_pTextFormat
-	);
-
-	g_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	g_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pD2DFactory);
 
 	//SwapChainからバックバッファを取得
 	IDXGISurface* pBack;
@@ -92,7 +69,7 @@ void Renderer::init()
 
 	FLOAT dpiX;
 	FLOAT dpiY;
-	g_pD2DFactroy->GetDesktopDpi(&dpiX, &dpiY);
+	m_pD2DFactory->GetDesktopDpi(&dpiX, &dpiY);
 
 	D2D1_RENDER_TARGET_PROPERTIES rtProp =
 		D2D1::RenderTargetProperties(
@@ -100,9 +77,7 @@ void Renderer::init()
 			D2D1::PixelFormat(DXGI_FORMAT_R8G8B8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
 			dpiX, dpiY
 		);
-	g_pD2DFactroy->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &g_pRT);
-
-	g_pRT->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &g_pBrush);
+	m_pD2DFactory->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &m_pD2DRenderTarget);
 }
 
 void Renderer::draw()
@@ -118,21 +93,15 @@ void Renderer::draw()
 	pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	drawMeshes();
-
 	drawSprites();
 
-	const WCHAR* wszText = L"DirectWrite Hello World!";
-	UINT32 cTextLength = (UINT32)wcslen(wszText);
-
-	g_pRT->BeginDraw();
-	g_pRT->DrawTextA(
-		wszText,
-		cTextLength,
-		g_pTextFormat,
-		D2D1::RectF(0.0f, 0.0f, 1280.0f, 720.0f),
-		g_pBrush,
-		D2D1_DRAW_TEXT_OPTIONS_NONE);
-	g_pRT->EndDraw();
+	//文字の描画
+	m_pD2DRenderTarget->BeginDraw();
+	for (auto text : m_TextRenderers)
+	{
+		text->draw(m_pD2DRenderTarget);
+	}
+	m_pD2DRenderTarget->EndDraw();
 
 	DirectXManager::presentSwapChain();
 }
@@ -181,6 +150,29 @@ void Renderer::removeMesh(MeshRenderer * pMesh)
 {
 	auto itr = std::find(m_Meshes.begin(), m_Meshes.end(), pMesh);
 	m_Meshes.erase(itr);
+}
+
+void Renderer::addText(TextRenderer * pText)
+{
+	int myDrawOrder = pText->getDrawOrder();
+
+	auto itr = m_TextRenderers.begin();
+	//自分よりDrawOrderが高くなるまでループ
+	while (itr != m_TextRenderers.end())
+	{
+		if (myDrawOrder < (*itr)->getDrawOrder())
+			break;
+
+		++itr;
+	}
+
+	m_TextRenderers.insert(itr, pText);
+}
+
+void Renderer::removeText(TextRenderer * pText)
+{
+	auto itr = std::find(m_TextRenderers.begin(), m_TextRenderers.end(), pText);
+	m_TextRenderers.erase(itr);
 }
 
 void Renderer::initBuffers()

@@ -7,10 +7,7 @@
 #include "Device\Resource\TextureManager.h"
 #include "Utility\StringUtility.h"
 #include <vector>
-
-#ifdef _DEBUG
 #include <cassert>
-#endif // _DEBUG
 
 Mesh::Mesh()
 	: m_pVertexBuffer(nullptr),
@@ -73,6 +70,7 @@ void Mesh::init(const std::string filePath, const std::wstring textureName)
 
 	initVertices(pMesh);
 
+	pIOSetting->Destroy();
 	pFbxManager->Destroy();
 }
 
@@ -130,8 +128,6 @@ void Mesh::initVertices(FbxMesh* pMesh)
 		}
 	}
 
-	//頂点ごとの情報を取得
-
 	auto pDevice = DirectXManager::getDevice();
 
 	//頂点バッファの作成
@@ -141,7 +137,7 @@ void Mesh::initVertices(FbxMesh* pMesh)
 	m_pVertexBuffer->init(pDevice, sizeof(MeshVertex) * uvElem->GetIndexArray().GetCount(), vertices);
 
 	//不要になったので頂点データを解放
-	delete vertices;
+	delete[] vertices;
 
 	//インデックスバッファの作成
 	if (m_pIndexBuffer != nullptr)
@@ -150,7 +146,7 @@ void Mesh::initVertices(FbxMesh* pMesh)
 	m_pIndexBuffer->init(pDevice, sizeof(int) * uvElem->GetIndexArray().GetCount(), indices);
 
 	//不要になったのでインデックスデータを解放
-	delete indices;
+	delete[] indices;
 
 	//頂点数を取得
 	m_VertexCount = uvElem->GetIndexArray().GetCount();
