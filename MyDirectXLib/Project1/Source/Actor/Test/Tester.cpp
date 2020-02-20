@@ -12,9 +12,6 @@
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
 
-float deathTimer = 0.0f;
-Timer timer;
-
 using namespace Action;
 
 Tester::Tester(IGameMediator * pGameMediator)
@@ -31,7 +28,6 @@ void Tester::start()
 	auto renderer = new MeshRenderer(this);
 	renderer->setMesh("Vox");
 	renderer->setColor(Color(DirectX::Colors::White));
-	timer = Timer(3.0f);
 
 	auto audio = new AudioSource(this);
 	audio->setAudio("MusicMono");

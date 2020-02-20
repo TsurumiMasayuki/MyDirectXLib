@@ -61,7 +61,6 @@ WindowInstance::WindowInstance(
 
 WindowInstance::~WindowInstance()
 {
-	pInstance = nullptr;
 }
 
 void WindowInstance::show(int nCmdShow)

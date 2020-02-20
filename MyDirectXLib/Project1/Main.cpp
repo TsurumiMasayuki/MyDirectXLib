@@ -4,10 +4,8 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-#include <stdlib.h>
-#include <sstream>
-
-#include <chrono>
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
 
 #include "WindowInstance.h"
 #include "Device\DirectXManager.h"
@@ -38,6 +36,12 @@ void app()
 INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ INT nCmdShow)
 {
 	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+
+#ifdef _DEBUG
+	//デバッグ時ならメモリ追跡用オプションをオンにする
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+#endif
 
 	g_pWindowInstance = new WindowInstance(&hInstance, "Project1", 0, 0);
 	g_pWindowInstance->show(SW_SHOW);

@@ -12,10 +12,6 @@
 #include "Device\Resource\MeshManager.h"
 #include "Device\Resource\AudioManager.h"
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
 #include <DirectXColors.h>
 #include "Device\Camera.h"
 
@@ -29,12 +25,6 @@ Game::~Game()
 
 void Game::init()
 {
-#ifdef _DEBUG
-	//デバッグ時ならメモリ追跡用オプションをオンにする
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
-#endif
-
 	TextureManager::loadTexture(L"Assets/Textures/CircleFill.png", "CircleFill");
 	TextureManager::loadTexture(L"Assets/Textures/CircleOutline.png", "CircleOutline");
 	TextureManager::loadTexture(L"Assets/Textures/BoxFill.png", "BoxFill");

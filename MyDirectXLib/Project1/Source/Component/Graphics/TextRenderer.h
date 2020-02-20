@@ -10,6 +10,7 @@ struct IDWriteTextLayout;
 
 struct Color;
 
+//文字列描画用コンポーネント
 class TextRenderer
 	: public AbstractComponent
 {
@@ -23,17 +24,25 @@ public:
 	int getDrawOrder() { return m_DrawOrder; }
 	void draw(ID2D1RenderTarget* pRenderTarget);
 
-	void setFont(std::wstring fontName, FONT_WEIGHT fontWeight, FONT_STYLE fontStyle);	//フォント名の設定
-	std::wstring getFont() const;		//フォント名の取得
+	//フォント名の設定
+	void setFont(std::wstring fontName, FONT_WEIGHT fontWeight, FONT_STYLE fontStyle);
+	//フォント名の取得
+	std::wstring getFont() const;
 
-	void setText(std::wstring text);	//文字列の設定
-	std::wstring getText() const;		//文字列の取得
+	//文字列の設定
+	void setText(std::wstring text);
+	//文字列の取得
+	std::wstring getText() const;
 
-	void setColor(const Color& color);	//文字色の設定
-	const Color& getColor() const;		//文字色の取得
+	//文字色の設定
+	void setColor(const Color& color);
+	//文字色の取得
+	const Color& getColor() const;
 
-	void setTextSize(float size);		//文字サイズの設定
-	float getTextSize();				//文字サイズの取得
+	//文字サイズの設定
+	void setTextSize(float size);
+	//文字サイズの取得
+	float getTextSize();
 
 private:
 	IDWriteTextFormat* m_pTextFormat;

@@ -30,5 +30,5 @@ private:
 
 private:
 	GameTime();
-	~GameTime();
+	~GameTime() {};
 };
