@@ -5,7 +5,7 @@
 
 AudioSource::AudioSource(GameObject * m_pUser)
 	: AbstractComponent(m_pUser),
-	m_Distance(0.0f),
+	//m_Distance(0.0f),
 	m_pAudioInstance(nullptr),
 	m_AudioName("")
 {
@@ -91,4 +91,14 @@ float AudioSource::getVolume()
 	if (m_pAudioInstance == nullptr) return 0.0f;
 
 	return m_pAudioInstance->getVolume();
+}
+
+void AudioSource::setPitch(float pitch)
+{
+	m_pAudioInstance->setPitch(pitch);
+}
+
+float AudioSource::getPitch()
+{
+	return m_pAudioInstance->getPitch();
 }

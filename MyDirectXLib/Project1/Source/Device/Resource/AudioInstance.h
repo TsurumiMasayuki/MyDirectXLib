@@ -28,6 +28,11 @@ public:
 	//ボリュームを取得
 	float getVolume();
 
+	//ピッチ設定(1.0でデフォルト)
+	void setPitch(float pitch);
+	//ピッチを取得
+	float getPitch();
+
 private:
 	IXAudio2SourceVoice* m_pSourceVoice;
 };

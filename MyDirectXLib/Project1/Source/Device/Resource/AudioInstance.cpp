@@ -65,3 +65,15 @@ float AudioInstance::getVolume()
 	m_pSourceVoice->GetVolume(&volume);
 	return volume;
 }
+
+void AudioInstance::setPitch(float pitch)
+{
+	m_pSourceVoice->SetFrequencyRatio(pitch);
+}
+
+float AudioInstance::getPitch()
+{
+	float pitch = 0.0f;
+	m_pSourceVoice->GetFrequencyRatio(&pitch);
+	return pitch;
+}

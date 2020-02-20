@@ -25,13 +25,18 @@ public:
 	//音声を設定(ループ回数が255の場合無限ループ)
 	void setAudio(std::string audioName, int loopCount = 0);
 
-	//ボリューム設定(倍率)
+	//ボリューム設定(1.0fで通常)
 	void setVolume(float volume);
 	//ボリュームを取得
 	float getVolume();
 
+	//ピッチ設定(1.0fで通常)
+	void setPitch(float pitch);
+	//ピッチを取得
+	float getPitch();
+
 private:
-	float m_Distance;					//音声が聞こえる範囲
+	//float m_Distance;					//音声が聞こえる範囲
 	std::string m_AudioName;			//音声アセット名
 	AudioInstance* m_pAudioInstance;	//音声再生補助
 };
