@@ -43,8 +43,7 @@ void Tester::start()
 		new EaseInSine(new MoveTo(Vec3(random.getRandom(3.0f, 10.0f), 0, 0), 1))
 	);
 
-	actionManager->enqueueAction(sequence);
-	actionManager->enqueueAction(sequence->clone());
+	actionManager->enqueueAction(new RepeatForever(sequence));
 }
 
 void Tester::update()

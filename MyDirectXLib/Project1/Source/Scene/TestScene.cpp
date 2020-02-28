@@ -21,11 +21,14 @@ void TestScene::init()
 	m_pObjManager = new GameObjectManager();
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
-	auto tester = new Tester(this);
-	tester->getTransform()->setSize(1.0f);
-	auto coll1 = new SphereCollider3D(tester);
-	coll1->setRadius(1.0f);
-	coll1->isTrigger = false;
+	//for (int i = 0; i < 100; ++i)
+	//{
+		auto tester = new Tester(this);
+		tester->getTransform()->setSize(1.0f);
+		//auto coll1 = new BoxCollider3D(tester);
+		//coll1->setSize(Vec3(1.0f, 1.0f, 1.0f));
+		//coll1->isTrigger = true;
+	//}
 
 	auto obj2 = new GameObject(this);
 	auto text1 = new TextRenderer(obj2);

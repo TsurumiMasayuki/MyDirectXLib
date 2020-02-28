@@ -17,9 +17,9 @@ public:
 	static Vec3 getPosition();
 
 	//‹–ì * Ë‰e•ÏŠ·‚Ìs—ñ‚ğæ“¾(2D)
-	static DirectX::XMMATRIX getViewProjMatrix2D();
+	static const DirectX::XMMATRIX& getViewProjMatrix2D();
 	//‹–ì * Ë‰e•ÏŠ·‚Ìs—ñ‚ğæ“¾(3D)
-	static DirectX::XMMATRIX getViewProjMatrix3D();
+	static const DirectX::XMMATRIX& getViewProjMatrix3D();
 
 private:
 	static Vec3 position;

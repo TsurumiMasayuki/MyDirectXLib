@@ -95,12 +95,12 @@ Vec3 Camera::getPosition()
 	return position;
 }
 
-DirectX::XMMATRIX Camera::getViewProjMatrix2D()
+const DirectX::XMMATRIX& Camera::getViewProjMatrix2D()
 {
 	return viewMatrix2D * orthoMatrix;
 }
 
-DirectX::XMMATRIX Camera::getViewProjMatrix3D()
+const DirectX::XMMATRIX& Camera::getViewProjMatrix3D()
 {
 	return viewMatrix3D * projMatrix;
 }
