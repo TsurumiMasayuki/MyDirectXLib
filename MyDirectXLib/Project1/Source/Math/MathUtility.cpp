@@ -68,10 +68,7 @@ float MathUtility::sign(float value)
 	return 0.0f;
 }
 
-bool MathUtility::isInRange(const float compareValue, const float value1, const float value2)
+bool MathUtility::isInRange(const float compareValue, const float min, const float max)
 {
-	float min = fminf(value1, value2);
-	float max = fmaxf(value1, value2);
-
 	return compareValue >= min && compareValue <= max;
 }

@@ -21,6 +21,9 @@ public:
 	//視野 * 射影変換の行列を取得(3D)
 	static const DirectX::XMMATRIX& getViewProjMatrix3D();
 
+	//画面外のオブジェクトかどうかを判定する
+	static bool isCulling2D(const Vec3& position, const Vec3& size);
+
 private:
 	static Vec3 position;
 

@@ -75,6 +75,9 @@ void SpriteRenderer::draw()
 	if (!isActive())
 		return;
 
+	if (Camera::isCulling2D(getPosition(), getSize()))
+		return;
+
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
 	//VertexShader‚ðƒZƒbƒg

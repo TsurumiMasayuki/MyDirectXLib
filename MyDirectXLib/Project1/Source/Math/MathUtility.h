@@ -12,6 +12,6 @@ namespace MathUtility
 	float distance(float x1, float y1, float x2, float y2);
 	float sign(float value);
 
-	bool isInRange(const float compareValue, const float value1, const float value2);
+	bool isInRange(const float compareValue, const float min, const float max);
 };
 
