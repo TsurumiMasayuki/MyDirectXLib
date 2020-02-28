@@ -32,7 +32,7 @@ SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 	m_ImagePivot(0, 0)
 {
 	//Renderer‚É“o˜^
-	GameDevice::getRenderer()->addSprite(this);
+	GameDevice::getRenderer()->addRenderer2D(this);
 
 	if (componentCount == 0)
 	{
@@ -46,7 +46,7 @@ SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 SpriteRenderer::~SpriteRenderer()
 {
 	//Renderer‚©‚çíœ
-	GameDevice::getRenderer()->removeSprite(this);
+	GameDevice::getRenderer()->removeRenderer2D(this);
 
 	componentCount--;
 
@@ -63,11 +63,6 @@ void SpriteRenderer::onStart()
 
 void SpriteRenderer::onUpdate()
 {
-}
-
-int SpriteRenderer::getDrawOrder() const
-{
-	return m_DrawOrder;
 }
 
 void SpriteRenderer::draw()

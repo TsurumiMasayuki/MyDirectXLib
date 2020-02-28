@@ -22,7 +22,7 @@ public:
 	//fromからtoまでtの分移動した位置ベクトルを返します
 	static Vec3 moveTowards(const Vec3& from, const Vec3& to, float t);
 
-	Vec2 toVec2();
+	const Vec2 toVec2() const;
 
 #pragma region Operator
 

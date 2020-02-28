@@ -2,6 +2,7 @@
 #include "Def\Screen.h"
 #include <DirectXMath.h>
 #include "Math\MathUtility.h"
+#include "Math\Vec2.h"
 
 Vec3 Camera::position = Vec3::zero();
 DirectX::XMMATRIX Camera::viewMatrix2D;
@@ -110,9 +111,8 @@ bool Camera::isCulling2D(const Vec3 & position, const Vec3 & size)
 	float halfWidth = Screen::getWindowWidth() * 0.5f;
 	float halfHeight = Screen::getWindowHeight() * 0.5f;
 
-	float halfSizeX = size.x * 0.5f;
-	float halfSizeY = size.y * 0.5f;
+	float halfSize = position.toVec2().distance(size.toVec2()) * 0.5f;
 
-	return !(MathUtility::isInRange(position.x, -halfWidth - halfSizeX, halfWidth + halfSizeX) &&	//‰¡•ûŒü‚Ì”»’è
-		MathUtility::isInRange(position.y, -halfHeight - halfSizeY, halfHeight + halfSizeY));		//c•ûŒü‚Ì”»’è
+	return !(MathUtility::isInRange(position.x, -halfWidth - halfSize, halfWidth + halfSize) &&	//‰¡•ûŒü‚Ì”»’è
+		MathUtility::isInRange(position.y, -halfHeight - halfSize, halfHeight + halfSize));		//c•ûŒü‚Ì”»’è
 }

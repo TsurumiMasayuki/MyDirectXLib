@@ -21,17 +21,10 @@ void TestScene::init()
 	m_pObjManager = new GameObjectManager();
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
-	//for (int i = 0; i < 100; ++i)
-	//{
-		auto tester = new Tester(this);
-		tester->getTransform()->setSize(1.0f);
-		//auto coll1 = new BoxCollider3D(tester);
-		//coll1->setSize(Vec3(1.0f, 1.0f, 1.0f));
-		//coll1->isTrigger = true;
-	//}
+	auto obj1 = new Tester(this);
 
 	auto obj2 = new GameObject(this);
-	auto text1 = new TextRenderer(obj2);
+	auto text1 = new TextRenderer(obj2, 110);
 	text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
 	text1->setTextSize(32.0f);
 	text1->setText(L"Hello World!");

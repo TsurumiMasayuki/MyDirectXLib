@@ -1,5 +1,6 @@
 #include "Tester.h"
 #include "Component\Graphics\MeshRenderer.h"
+#include "Component\Graphics\SpriteRenderer.h"
 #include "Utility\Color.h"
 #include <DirectXColors.h>
 #include "Device\Input.h"
@@ -25,9 +26,14 @@ Tester::~Tester()
 
 void Tester::start()
 {
-	auto renderer = new MeshRenderer(this);
-	renderer->setMesh("Vox");
-	renderer->setColor(Color(DirectX::Colors::White));
+	//auto renderer = new MeshRenderer(this);
+	//renderer->setMesh("Vox");
+	//renderer->setColor(Color(DirectX::Colors::White));
+
+	setSize(Vec3(64, 64, 0));
+
+	auto renderer = new SpriteRenderer(this);
+	renderer->setTextureName("BoxFill");
 
 	auto audio = new AudioSource(this);
 	audio->setAudio("MusicMono");
@@ -38,9 +44,9 @@ void Tester::start()
 	auto actionManager = new Action::ActionManager(this);
 	auto sequence = new Sequence(
 		3,
-		new EaseInSine(new MoveTo(Vec3(random.getRandom(-10.0f, -3.0f), 0, 0), 1)),
-		new EaseInSine(new MoveTo(Vec3(0, random.getRandom(3.0f, 10.0f), 0), 1)),
-		new EaseInSine(new MoveTo(Vec3(random.getRandom(3.0f, 10.0f), 0, 0), 1))
+		new EaseInSine(new MoveTo(Vec3(random.getRandom(-640.0f, -320.0f), 0, 0), 1)),
+		new EaseInSine(new MoveTo(Vec3(0, random.getRandom(-360.0f, 360.0f), 0), 1)),
+		new EaseInSine(new MoveTo(Vec3(random.getRandom(320.0f, 640.0f), 0, 0), 1))
 	);
 
 	actionManager->enqueueAction(new RepeatForever(sequence));

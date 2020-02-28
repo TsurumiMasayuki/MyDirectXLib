@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Component\AbstractComponent.h"
+#include "Component\Graphics\IRenderer2D.h"
 #include "Device\Resource\FontOption.h"
 
 struct ID2D1RenderTarget;
@@ -12,7 +13,7 @@ struct Color;
 
 //文字列描画用コンポーネント
 class TextRenderer
-	: public AbstractComponent
+	: public AbstractComponent, public IRenderer2D
 {
 public:
 	TextRenderer(GameObject* pUser, int drawOrder = 100);
@@ -21,8 +22,8 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	int getDrawOrder() { return m_DrawOrder; }
-	void draw(ID2D1RenderTarget* pRenderTarget);
+	virtual int getDrawOrder() const override { return m_DrawOrder; }
+	virtual void draw() override;
 
 	//フォント名の設定
 	void setFont(std::wstring fontName, FONT_WEIGHT fontWeight, FONT_STYLE fontStyle);

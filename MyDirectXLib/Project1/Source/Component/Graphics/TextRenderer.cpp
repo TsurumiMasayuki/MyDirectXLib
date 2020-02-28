@@ -14,12 +14,12 @@ TextRenderer::TextRenderer(GameObject * pUser, int drawOrder)
 	m_pBrush(nullptr),
 	m_DrawOrder(drawOrder)
 {
-	GameDevice::getRenderer()->addText(this);
+	GameDevice::getRenderer()->addRenderer2D(this);
 }
 
 TextRenderer::~TextRenderer()
 {
-	GameDevice::getRenderer()->removeText(this);
+	GameDevice::getRenderer()->removeRenderer2D(this);
 	if (m_pTextFormat != nullptr)
 		m_pTextFormat->Release();
 
@@ -38,14 +38,14 @@ void TextRenderer::onUpdate()
 {
 }
 
-void TextRenderer::draw(ID2D1RenderTarget * pRenderTarget)
+void TextRenderer::draw()
 {
 	if (!m_Enabled) return;
 	if (m_pTextFormat == nullptr) return;
 	if (m_pTextLayout == nullptr) return;
 
 	D2D1_POINT_2F d2dPoint = { getPosition().x + Screen::getWindowWidth() / 2, -getPosition().y + Screen::getWindowHeight() / 2 };
-	pRenderTarget->DrawTextLayout(d2dPoint, m_pTextLayout, m_pBrush);
+	GameDevice::getRenderer()->getD2DRenderTarget()->DrawTextLayout(d2dPoint, m_pTextLayout, m_pBrush);
 }
 
 void TextRenderer::setFont(std::wstring fontName, FONT_WEIGHT fontWeight, FONT_STYLE fontStyle)

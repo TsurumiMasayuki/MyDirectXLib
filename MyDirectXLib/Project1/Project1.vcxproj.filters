@@ -161,6 +161,7 @@
     <ClInclude Include="Source\Device\Resource\FontManager.h" />
     <ClInclude Include="Source\Component\Graphics\TextRenderer.h" />
     <ClInclude Include="Source\Device\Resource\FontOption.h" />
+    <ClInclude Include="Source\Component\Graphics\IRenderer2D.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

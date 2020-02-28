@@ -1,9 +1,8 @@
 #pragma once
 #include <vector>
 
-class SpriteRenderer;
+class IRenderer2D;
 class MeshRenderer;
-class TextRenderer;
 
 class VertexBuffer;
 class IndexBuffer;
@@ -29,20 +28,13 @@ public:
 	void init();
 	void draw();
 
-	//SpriteRendererを登録する。内部処理用なので基本使わない
-	void addSprite(SpriteRenderer* pSprite);
-	//SpriteRendererの登録を解除する。内部処理用なので基本使わない
-	void removeSprite(SpriteRenderer* pSprite);
+	void addRenderer2D(IRenderer2D* pRenderer);
+	void removeRenderer2D(IRenderer2D* pRenderer);
 
 	//MeshRendererを登録する。内部処理用なので基本使わない
 	void addMesh(MeshRenderer* pMesh);
 	//MeshRendererの登録を解除する。内部処理用なので基本使わない
 	void removeMesh(MeshRenderer* pMesh);
-
-	//TextRendererを登録する。内部処理用なので基本使わない
-	void addText(TextRenderer* pText);
-	//TextRendererの登録を解除する。内部処理用なので基本使わない
-	void removeText(TextRenderer* pText);
 
 	ID2D1RenderTarget* getD2DRenderTarget() { return m_pD2DRenderTarget; };
 
@@ -50,21 +42,21 @@ private:
 	void initBuffers();
 	void initRenderTargets();
 
-	void drawSprites();
+	void draw2D();
 	void drawMeshes();
 
 private:
 	//ラスタライザ
 	ID3D11RasterizerState* m_pRasterizer;
 
-	//スプライト管理用vector
-	std::vector<SpriteRenderer*> m_Sprites;
-
 	//スプライト用
 	ID3D11InputLayout* m_pSpriteInputLayout;
 	ID3D11SamplerState* m_pSpriteSampler;
 	VertexBuffer* m_pSpriteVertices;
 	IndexBuffer* m_pSpriteIndices;
+
+	//2Dコンポーネント管理用vector
+	std::vector<IRenderer2D*> m_Renderer2DList;
 
 	//3Dモデル管理用vector
 	std::vector<MeshRenderer*> m_Meshes;
@@ -80,9 +72,6 @@ private:
 	//深度バッファ
 	ID3D11Texture2D* m_pDepthStencilTexture;
 	ID3D11DepthStencilView* m_pDepthStencilView;
-
-	//テキスト描画コンポーネント管理用vector
-	std::vector<TextRenderer*> m_TextRenderers;
 
 	//Direct2D系
 	ID2D1Factory* m_pD2DFactory;

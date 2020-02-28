@@ -72,7 +72,7 @@ Vec3 Vec3::moveTowards(const Vec3 & from, const Vec3 & to, float t)
 	return from + diff * t;
 }
 
-Vec2 Vec3::toVec2()
+const Vec2 Vec3::toVec2() const
 {
 	return Vec2(x, y);
 }

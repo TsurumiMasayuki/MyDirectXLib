@@ -1,5 +1,6 @@
 #pragma once
 #include "Component\AbstractComponent.h"
+#include "Component\Graphics\IRenderer2D.h"
 #include "Utility\Color.h"
 #include "Math\Vec2.h"
 #include "Math\RectF.h"
@@ -9,7 +10,7 @@ class Renderer;
 class ConstantBuffer;
 
 class SpriteRenderer
-	: public AbstractComponent
+	: public AbstractComponent, public IRenderer2D
 {
 public:
 	SpriteRenderer(GameObject* pUser, int drawOrder = 100);
@@ -18,8 +19,8 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	int getDrawOrder() const;
-	void draw();
+	virtual int getDrawOrder() const override { return m_DrawOrder; }
+	virtual void draw() override;
 
 	void setTextureName(const std::string textureName);
 	std::string getTextureName();

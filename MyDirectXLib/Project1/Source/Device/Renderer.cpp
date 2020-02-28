@@ -9,9 +9,8 @@
 
 #include "Def\Screen.h"
 
-#include "Component\Graphics\SpriteRenderer.h"
 #include "Component\Graphics\MeshRenderer.h"
-#include "Component\Graphics\TextRenderer.h"
+#include "Component\Graphics\IRenderer2D.h"
 
 #include "WindowInstance.h"
 
@@ -93,26 +92,18 @@ void Renderer::draw()
 	pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	drawMeshes();
-	drawSprites();
-
-	//文字の描画
-	m_pD2DRenderTarget->BeginDraw();
-	for (auto text : m_TextRenderers)
-	{
-		text->draw(m_pD2DRenderTarget);
-	}
-	m_pD2DRenderTarget->EndDraw();
+	draw2D();
 
 	DirectXManager::presentSwapChain();
 }
 
-void Renderer::addSprite(SpriteRenderer * pSprite)
+void Renderer::addRenderer2D(IRenderer2D * pRenderer)
 {
-	int myDrawOrder = pSprite->getDrawOrder();
+	int myDrawOrder = pRenderer->getDrawOrder();
 
-	auto itr = m_Sprites.begin();
+	auto itr = m_Renderer2DList.begin();
 	//自分よりDrawOrderが高くなるまでループ
-	while (itr != m_Sprites.end())
+	while (itr != m_Renderer2DList.end())
 	{
 		if (myDrawOrder < (*itr)->getDrawOrder())
 			break;
@@ -120,13 +111,13 @@ void Renderer::addSprite(SpriteRenderer * pSprite)
 		++itr;
 	}
 
-	m_Sprites.insert(itr, pSprite);
+	m_Renderer2DList.insert(itr, pRenderer);
 }
 
-void Renderer::removeSprite(SpriteRenderer * pSprite)
+void Renderer::removeRenderer2D(IRenderer2D * pRenderer)
 {
-	auto itr = std::find(m_Sprites.begin(), m_Sprites.end(), pSprite);
-	m_Sprites.erase(itr);
+	auto itr = std::find(m_Renderer2DList.begin(), m_Renderer2DList.end(), pRenderer);
+	m_Renderer2DList.erase(itr);
 }
 
 void Renderer::addMesh(MeshRenderer * pMesh)
@@ -150,29 +141,6 @@ void Renderer::removeMesh(MeshRenderer * pMesh)
 {
 	auto itr = std::find(m_Meshes.begin(), m_Meshes.end(), pMesh);
 	m_Meshes.erase(itr);
-}
-
-void Renderer::addText(TextRenderer * pText)
-{
-	int myDrawOrder = pText->getDrawOrder();
-
-	auto itr = m_TextRenderers.begin();
-	//自分よりDrawOrderが高くなるまでループ
-	while (itr != m_TextRenderers.end())
-	{
-		if (myDrawOrder < (*itr)->getDrawOrder())
-			break;
-
-		++itr;
-	}
-
-	m_TextRenderers.insert(itr, pText);
-}
-
-void Renderer::removeText(TextRenderer * pText)
-{
-	auto itr = std::find(m_TextRenderers.begin(), m_TextRenderers.end(), pText);
-	m_TextRenderers.erase(itr);
 }
 
 void Renderer::initBuffers()
@@ -327,7 +295,7 @@ void Renderer::initRenderTargets()
 	pDevice->CreateRenderTargetView(pBack, NULL, &m_pRTVDefault);
 }
 
-void Renderer::drawSprites()
+void Renderer::draw2D()
 {
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
@@ -343,10 +311,13 @@ void Renderer::drawSprites()
 	pDeviceContext->IASetVertexBuffers(0, 1, &vertices, &stride, &offset);
 	pDeviceContext->IASetIndexBuffer(m_pSpriteIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
-	for (auto sprite : m_Sprites)
+	//文字の描画
+	m_pD2DRenderTarget->BeginDraw();
+	for (auto renderer2D : m_Renderer2DList)
 	{
-		sprite->draw();
+		renderer2D->draw();
 	}
+	m_pD2DRenderTarget->EndDraw();
 }
 
 void Renderer::drawMeshes()
