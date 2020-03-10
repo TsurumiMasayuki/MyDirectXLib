@@ -39,6 +39,8 @@ void Game::init()
 	ShaderManager::LoadVertexShader_CSO("MeshVS", "Assets/Shaders/MeshVS.cso");
 	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
 
+	ShaderManager::LoadPixelShader_CSO("BlurPS", "Assets/Shaders/BlurPS.cso");
+
 	GameDevice::initialize();
 	GameDevice::getMeshManager()->loadMesh("Vox", "Assets/Models/testVox.fbx", L"Assets/Models/testVox.png");
 	GameDevice::getMeshManager()->loadMesh("TestMesh", "Assets/Models/tekitou.fbx");

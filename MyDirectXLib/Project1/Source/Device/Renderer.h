@@ -1,8 +1,12 @@
 #pragma once
 #include <vector>
+#include <DirectXMath.h>
+#include <array>
 
 class IRenderer2D;
 class MeshRenderer;
+
+class RenderTarget;
 
 class VertexBuffer;
 class IndexBuffer;
@@ -12,10 +16,6 @@ struct ID2D1Factory;
 struct ID2D1RenderTarget;
 
 struct ID3D11InputLayout;
-struct ID3D11Texture2D;
-struct ID3D11RenderTargetView;
-struct ID3D11DepthStencilView;
-struct ID3D11ShaderResourceView;
 struct ID3D11RasterizerState;
 struct ID3D11SamplerState;
 
@@ -46,6 +46,10 @@ private:
 	void drawMeshes();
 
 private:
+	//レンダーターゲット
+	RenderTarget* m_pRenderTargetDefault;
+	RenderTarget* m_pRenderTargetFinal;
+
 	//ラスタライザ
 	ID3D11RasterizerState* m_pRasterizer;
 
@@ -65,15 +69,12 @@ private:
 	ID3D11InputLayout* m_pMeshInputLayout;
 	ID3D11SamplerState* m_pMeshSampler;
 
-	//レンダーターゲット
-	ID3D11Texture2D* m_pRenderTexDefault;
-	ID3D11RenderTargetView* m_pRTVDefault;
-
-	//深度バッファ
-	ID3D11Texture2D* m_pDepthStencilTexture;
-	ID3D11DepthStencilView* m_pDepthStencilView;
-
 	//Direct2D系
 	ID2D1Factory* m_pD2DFactory;
 	ID2D1RenderTarget* m_pD2DRenderTarget;
+
+	struct BlurConstantBuffer
+	{
+		DirectX::XMFLOAT4 texelSize;
+	};
 };

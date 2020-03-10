@@ -2,7 +2,6 @@
 #include "Math\Vec3.h"
 
 class GameObject;
-class RenderManager;
 
 class AbstractComponent
 {

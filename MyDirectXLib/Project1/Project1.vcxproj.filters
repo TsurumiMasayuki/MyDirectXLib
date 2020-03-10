@@ -72,6 +72,7 @@
     <ClCompile Include="Source\Utility\Random.cpp" />
     <ClCompile Include="Source\Device\Resource\FontManager.cpp" />
     <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
+    <ClCompile Include="Source\Device\Resource\RenderTarget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -162,11 +163,13 @@
     <ClInclude Include="Source\Component\Graphics\TextRenderer.h" />
     <ClInclude Include="Source\Device\Resource\FontOption.h" />
     <ClInclude Include="Source\Component\Graphics\IRenderer2D.h" />
+    <ClInclude Include="Source\Device\Resource\RenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
     <FxCompile Include="Assets\Shaders\SpriteVS.hlsl" />
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MeshVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\BlurPS.hlsl" />
   </ItemGroup>
 </Project>

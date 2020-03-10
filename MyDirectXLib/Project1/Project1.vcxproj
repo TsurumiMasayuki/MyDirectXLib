@@ -182,6 +182,7 @@
     <ClCompile Include="Source\Device\Resource\FontManager.cpp" />
     <ClCompile Include="Source\Device\Resource\Mesh.cpp" />
     <ClCompile Include="Source\Device\Resource\MeshManager.cpp" />
+    <ClCompile Include="Source\Device\Resource\RenderTarget.cpp" />
     <ClCompile Include="Source\Math\Easing.cpp" />
     <ClCompile Include="Source\Math\RectF.cpp" />
     <ClCompile Include="Source\Physics\Box2D.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Source\Device\Resource\FontOption.h" />
     <ClInclude Include="Source\Device\Resource\Mesh.h" />
     <ClInclude Include="Source\Device\Resource\MeshManager.h" />
+    <ClInclude Include="Source\Device\Resource\RenderTarget.h" />
     <ClInclude Include="Source\Math\Easing.h" />
     <ClInclude Include="Source\Physics\Box2D.h" />
     <ClInclude Include="Source\Physics\Box3D.h" />
@@ -321,6 +323,10 @@
     <ClInclude Include="Source\WindowInstance.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Assets\Shaders\BlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
