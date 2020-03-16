@@ -73,6 +73,7 @@
     <ClCompile Include="Source\Device\Resource\FontManager.cpp" />
     <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
     <ClCompile Include="Source\Device\Resource\RenderTarget.cpp" />
+    <ClCompile Include="Source\Component\Test\SimpleMove.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -164,6 +165,8 @@
     <ClInclude Include="Source\Device\Resource\FontOption.h" />
     <ClInclude Include="Source\Component\Graphics\IRenderer2D.h" />
     <ClInclude Include="Source\Device\Resource\RenderTarget.h" />
+    <ClInclude Include="Source\Component\Test\SimpleMove.h" />
+    <ClInclude Include="Source\Component\Test\MetaBallRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
@@ -171,5 +174,6 @@
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MeshVS.hlsl" />
     <FxCompile Include="Assets\Shaders\BlurPS.hlsl" />
+    <FxCompile Include="Assets\Shaders\MetaBallPS.hlsl" />
   </ItemGroup>
 </Project>

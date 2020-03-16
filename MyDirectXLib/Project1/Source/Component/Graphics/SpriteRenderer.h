@@ -8,6 +8,7 @@
 
 class Renderer;
 class ConstantBuffer;
+class RenderTarget;
 
 class SpriteRenderer
 	: public AbstractComponent, public IRenderer2D
@@ -36,6 +37,8 @@ public:
 	void setUVRect(RectF uvRect);
 
 private:
+	RenderTarget* m_pRenderTarget;
+
 	int m_DrawOrder;
 
 	std::string m_TextureName;

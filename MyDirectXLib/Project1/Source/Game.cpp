@@ -30,6 +30,7 @@ void Game::init()
 	TextureManager::loadTexture(L"Assets/Textures/BoxFill.png", "BoxFill");
 	TextureManager::loadTexture(L"Assets/Textures/BoxOutline.png", "BoxOutline");
 	TextureManager::loadTexture(L"Assets/Textures/Default.png", "Default");
+	TextureManager::loadTexture(L"Assets/Textures/MetaBall.png", "MetaBall");
 
 	//スプライト用シェーダーを読み込み
 	ShaderManager::LoadVertexShader_CSO("SpriteVS", "Assets/Shaders/SpriteVS.cso");
@@ -40,6 +41,7 @@ void Game::init()
 	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
 
 	ShaderManager::LoadPixelShader_CSO("BlurPS", "Assets/Shaders/BlurPS.cso");
+	ShaderManager::LoadPixelShader_CSO("MetaBallPS", "Assets/Shaders/MetaBallPS.cso");
 
 	GameDevice::initialize();
 	GameDevice::getMeshManager()->loadMesh("Vox", "Assets/Models/testVox.fbx", L"Assets/Models/testVox.png");

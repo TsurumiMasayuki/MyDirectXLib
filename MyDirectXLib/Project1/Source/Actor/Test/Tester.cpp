@@ -12,6 +12,7 @@
 #include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
+#include "Component\Test\SimpleMove.h"
 
 using namespace Action;
 
@@ -26,15 +27,17 @@ Tester::~Tester()
 
 void Tester::start()
 {
-	//auto renderer = new MeshRenderer(this);
-	//renderer->setMesh("Vox");
-	//renderer->setColor(Color(DirectX::Colors::White));
+	new SimpleMove(this);
 
-	setSize(Vec3(256, 256, 0));
+	auto renderer = new MeshRenderer(this);
+	renderer->setMesh("Sphere");
+	renderer->setColor(Color(DirectX::Colors::White));
+	setSize(Vec3(1, 1, 1));
 
-	auto renderer = new SpriteRenderer(this);
-	renderer->setTextureName("CircleFill");
-	renderer->setColor(Color(0.8f, 0.5f, 0.5f, 1.0f));
+	//setSize(Vec3(256, 256, 0));
+	//auto renderer = new SpriteRenderer(this);
+	//renderer->setTextureName("CircleFill");
+	//renderer->setColor(Color(0.8f, 0.5f, 0.5f, 1.0f));
 
 	auto audio = new AudioSource(this);
 	audio->setAudio("MusicMono");

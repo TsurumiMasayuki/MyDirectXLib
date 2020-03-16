@@ -44,6 +44,8 @@ private:
 
 	void draw2D();
 	void drawMeshes();
+	void postEffect();
+	void postEffect2();
 
 private:
 	//レンダーターゲット
@@ -76,5 +78,11 @@ private:
 	struct BlurConstantBuffer
 	{
 		DirectX::XMFLOAT4 texelSize;
+	};
+
+	struct MetaBallConstantBuffer
+	{
+		DirectX::XMFLOAT4 baseColor;
+		DirectX::XMFLOAT4 outlineColor;
 	};
 };
