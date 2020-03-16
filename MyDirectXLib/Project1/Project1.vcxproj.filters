@@ -74,6 +74,8 @@
     <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
     <ClCompile Include="Source\Device\Resource\RenderTarget.cpp" />
     <ClCompile Include="Source\Component\Test\SimpleMove.cpp" />
+    <ClCompile Include="Source\Utility\Action\ScaleTo.cpp" />
+    <ClCompile Include="Source\Utility\Action\ScaleBy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -167,6 +169,8 @@
     <ClInclude Include="Source\Device\Resource\RenderTarget.h" />
     <ClInclude Include="Source\Component\Test\SimpleMove.h" />
     <ClInclude Include="Source\Component\Test\MetaBallRenderer.h" />
+    <ClInclude Include="Source\Utility\Action\ScaleTo.h" />
+    <ClInclude Include="Source\Utility\Action\ScaleBy.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />

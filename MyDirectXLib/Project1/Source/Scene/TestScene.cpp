@@ -15,6 +15,8 @@
 #include "Component\Transform.h"
 #include "Component\Physics\SphereCollider3D.h"
 #include "Component\Physics\BoxCollider3D.h"
+#include "Component\ActionManager.h"
+#include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
 
 void TestScene::init()
@@ -44,6 +46,9 @@ void TestScene::init()
 
 			auto sprite = new SpriteRenderer(newObj);
 			sprite->setTextureName("MetaBall");
+
+			auto action = new Action::ActionManager(newObj);
+			action->enqueueAction(new Action::EaseInOutBounce(new Action::ScaleBy(Vec3(size * 3, size * 3, 0), 5.0f)));
 		}
 	}
 }

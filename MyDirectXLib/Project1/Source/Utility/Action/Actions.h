@@ -1,6 +1,8 @@
 #pragma once
 #include "Utility\Action\MoveTo.h"
 #include "Utility\Action\MoveBy.h"
+#include "Utility\Action\ScaleTo.h"
+#include "Utility\Action\ScaleBy.h"
 #include "Utility\Action\WaitForSeconds.h"
 #include "Utility\Action\Spawn.h"
 #include "Utility\Action\Repeat.h"

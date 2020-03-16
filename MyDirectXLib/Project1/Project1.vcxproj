@@ -220,6 +220,8 @@
     <ClCompile Include="Source\Utility\Action\Repeat.cpp" />
     <ClCompile Include="Source\Utility\Action\RepeatForever.cpp" />
     <ClCompile Include="Source\Utility\Action\RepeatTime.cpp" />
+    <ClCompile Include="Source\Utility\Action\ScaleBy.cpp" />
+    <ClCompile Include="Source\Utility\Action\ScaleTo.cpp" />
     <ClCompile Include="Source\Utility\Action\Sequence.cpp" />
     <ClCompile Include="Source\Utility\Action\Spawn.cpp" />
     <ClCompile Include="Source\Utility\Action\WaitForSeconds.cpp" />
@@ -307,11 +309,13 @@
     <ClInclude Include="Source\Component\ActionManager.h" />
     <ClInclude Include="Source\Utility\Action\Actions.h" />
     <ClInclude Include="Source\Utility\Action\EasingActions.h" />
+    <ClInclude Include="Source\Utility\Action\ScaleBy.h" />
     <ClInclude Include="Source\Utility\Action\MoveBy.h" />
     <ClInclude Include="Source\Utility\Action\MoveTo.h" />
     <ClInclude Include="Source\Utility\Action\Repeat.h" />
     <ClInclude Include="Source\Utility\Action\RepeatForever.h" />
     <ClInclude Include="Source\Utility\Action\RepeatTime.h" />
+    <ClInclude Include="Source\Utility\Action\ScaleTo.h" />
     <ClInclude Include="Source\Utility\Action\Sequence.h" />
     <ClInclude Include="Source\Utility\Action\Spawn.h" />
     <ClInclude Include="Source\Utility\Action\WaitForSeconds.h" />
