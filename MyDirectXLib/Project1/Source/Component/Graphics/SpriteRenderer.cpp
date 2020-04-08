@@ -40,6 +40,7 @@ SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 		SpriteConstantBuffer buffer;
 		pSpriteCB->init(DirectXManager::getDevice(), sizeof(SpriteConstantBuffer), &buffer);
 	}
+
 	componentCount++;
 }
 

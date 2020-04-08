@@ -44,8 +44,12 @@ Renderer::~Renderer()
 	delete m_pSpriteVertices;
 	delete m_pSpriteIndices;
 
-	delete m_pRenderTargetDefault;
-	delete m_pRenderTargetFinal;
+	for (auto layer : m_RTLayers)
+	{
+		delete layer.second;
+	}
+
+	m_RTLayers.clear();
 
 	m_pMeshInputLayout->Release();
 	m_pMeshSampler->Release();
@@ -74,15 +78,17 @@ void Renderer::init()
 
 	//レンダーターゲットからテキスト書き込み用のテクスチャ取得
 	IDXGISurface* pBack;
-	m_pRenderTargetDefault->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
+	m_RTLayers.at(GraphicsLayer::Default)->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
 	m_pD2DFactory->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &m_pD2DRenderTarget);
 }
 
 void Renderer::draw()
 {
 	//レンダーターゲットをクリア
-	m_pRenderTargetDefault->clearRenderTarget();
-	m_pRenderTargetFinal->clearRenderTarget();
+	for (auto layer : m_RTLayers)
+	{
+		layer.second->clearRenderTarget();
+	}
 
 	drawMeshes();
 	draw2D();
@@ -239,21 +245,24 @@ void Renderer::initRenderTargets()
 	ID3D11Texture2D* pBack;
 	pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBack);
 	//画面描画用RTV作成
-	m_pRenderTargetFinal = new RenderTarget(pBack);
-	m_pRenderTargetFinal->setClearColor(Color(0.0f, 0.0f, 0.0f, 1.0f));
+	RenderTarget* pRTFinal = new RenderTarget(pBack);
+	pRTFinal->setClearColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
+	m_RTLayers.emplace(GraphicsLayer::Final, pRTFinal);
 
 	//通常描画用RTV作成
-	m_pRenderTargetDefault = new RenderTarget(Screen::getWindowWidth(), Screen::getWindowHeight());
-	//m_pRenderTargetDefault = new RenderTarget(pBack);
-	m_pRenderTargetDefault->setClearColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
+	RenderTarget* pRTDefault = new RenderTarget(Screen::getWindowWidth(), Screen::getWindowHeight());
+	pRTDefault->setClearColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
+	m_RTLayers.emplace(GraphicsLayer::Default, pRTDefault);
+
+	//メタボール用画用RTV作成
+	RenderTarget* pRTMetaBall = new RenderTarget(Screen::getWindowWidth(), Screen::getWindowHeight());
+	pRTMetaBall->setClearColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
+	m_RTLayers.emplace(GraphicsLayer::MetaBall, pRTMetaBall);
 }
 
 void Renderer::draw2D()
 {
 	auto pDeviceContext = DirectXManager::getDeviceContext();
-
-	//通常描画用レンダーターゲットを深度バッファ無しでセット
-	m_pRenderTargetDefault->setRenderTarget(false);
 
 	pDeviceContext->IASetInputLayout(m_pSpriteInputLayout);
 	pDeviceContext->PSSetSamplers(0, 1, &m_pSpriteSampler);
@@ -268,6 +277,8 @@ void Renderer::draw2D()
 	m_pD2DRenderTarget->BeginDraw();
 	for (auto renderer2D : m_Renderer2DList)
 	{
+		//各描画コンポーネントのレイヤー設定を取得
+		m_RTLayers.at(renderer2D->getGraphicsLayer())->setRenderTarget(false);
 		renderer2D->draw();
 	}
 	m_pD2DRenderTarget->EndDraw();
@@ -279,7 +290,7 @@ void Renderer::drawMeshes()
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
 	//通常描画用レンダーターゲットを深度バッファ付きでセット
-	m_pRenderTargetDefault->setRenderTarget(true);
+	m_RTLayers.at(GraphicsLayer::Default)->setRenderTarget(true);
 
 	pDeviceContext->IASetInputLayout(m_pMeshInputLayout);
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -294,7 +305,7 @@ void Renderer::drawMeshes()
 
 void Renderer::postEffect()
 {
-	m_pRenderTargetFinal->setRenderTarget(true);
+	m_RTLayers.at(GraphicsLayer::Final)->setRenderTarget(true);
 
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 	//シェーダーを設定
@@ -314,7 +325,7 @@ void Renderer::postEffect()
 	pDeviceContext->IASetIndexBuffer(m_pSpriteIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
 	//レンダーターゲットからSRV作成
-	auto srv = m_pRenderTargetDefault->getSRV();
+	auto srv = m_RTLayers.at(GraphicsLayer::Default)->getSRV();
 	pDeviceContext->PSSetShaderResources(0, 1, &srv);
 
 	//定数バッファの行列用データを作成
@@ -348,7 +359,7 @@ void Renderer::postEffect()
 
 void Renderer::postEffect2()
 {
-	m_pRenderTargetFinal->setRenderTarget(false);
+	m_RTLayers.at(GraphicsLayer::Final)->setRenderTarget(false);
 
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 	//シェーダーを設定
@@ -368,7 +379,7 @@ void Renderer::postEffect2()
 	pDeviceContext->IASetIndexBuffer(m_pSpriteIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
 	//レンダーターゲットからSRV作成
-	auto srv = m_pRenderTargetDefault->getSRV();
+	auto srv = m_RTLayers.at(GraphicsLayer::MetaBall)->getSRV();
 	pDeviceContext->PSSetShaderResources(0, 1, &srv);
 
 	//定数バッファの行列用データを作成

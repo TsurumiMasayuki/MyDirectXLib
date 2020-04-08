@@ -239,6 +239,7 @@
     <ClInclude Include="Source\Actor\Test\Tester.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
     <ClInclude Include="Source\Component\Audio\AudioSource.h" />
+    <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />
     <ClInclude Include="Source\Component\Graphics\IRenderer2D.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\TextRenderer.h" />

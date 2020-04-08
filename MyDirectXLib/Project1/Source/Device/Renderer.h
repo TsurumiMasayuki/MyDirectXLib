@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include <DirectXMath.h>
-#include <array>
+#include "Component\Graphics\GraphicsLayer.h"
 
 class IRenderer2D;
 class MeshRenderer;
@@ -49,8 +50,7 @@ private:
 
 private:
 	//レンダーターゲット
-	RenderTarget* m_pRenderTargetDefault;
-	RenderTarget* m_pRenderTargetFinal;
+	std::unordered_map<GraphicsLayer, RenderTarget*> m_RTLayers;
 
 	//ラスタライザ
 	ID3D11RasterizerState* m_pRasterizer;
@@ -78,11 +78,5 @@ private:
 	struct BlurConstantBuffer
 	{
 		DirectX::XMFLOAT4 texelSize;
-	};
-
-	struct MetaBallConstantBuffer
-	{
-		DirectX::XMFLOAT4 baseColor;
-		DirectX::XMFLOAT4 outlineColor;
 	};
 };

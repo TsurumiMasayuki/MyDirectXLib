@@ -19,6 +19,8 @@
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
 
+GameObject* controlObj = nullptr;
+
 void TestScene::init()
 {
 	m_pObjManager = new GameObjectManager();
@@ -33,16 +35,23 @@ void TestScene::init()
 	//text1->setText(L"Hello World!");
 	//text1->setColor(Color(DirectX::Colors::Red));
 
+	controlObj = new GameObject(this);
+	controlObj->setSize(Vec3(48, 48, 0));
+	controlObj->setPosition(Vec3(0, 0, 0));
+
+	auto sprite = new SpriteRenderer(controlObj);
+	sprite->setTextureName("MetaBall");
+
 	Random random;
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		for (int j = 0; j < 2; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			auto newObj = new GameObject(this);
 			float size = random.getRandom(32, 96);
 			newObj->setSize(Vec3(size, size, 0));
-			newObj->setPosition(Vec3(i * 48, j * 48, 0));
+			newObj->setPosition(Vec3(i * 32, j * 32, 0));
 
 			auto sprite = new SpriteRenderer(newObj);
 			sprite->setTextureName("MetaBall");
@@ -55,6 +64,8 @@ void TestScene::init()
 
 void TestScene::update()
 {
+	controlObj->setPosition(Input::getMousePosition());
+
 	m_pObjManager->update();
 	m_pPhysicsWorld->update();
 }

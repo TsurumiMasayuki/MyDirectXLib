@@ -8,7 +8,6 @@
 
 class Renderer;
 class ConstantBuffer;
-class RenderTarget;
 
 class SpriteRenderer
 	: public AbstractComponent, public IRenderer2D
@@ -21,6 +20,7 @@ public:
 	virtual void onUpdate() override;
 
 	virtual int getDrawOrder() const override { return m_DrawOrder; }
+	virtual GraphicsLayer getGraphicsLayer() const override { return GraphicsLayer::MetaBall; }
 	virtual void draw() override;
 
 	void setTextureName(const std::string textureName);
@@ -37,8 +37,6 @@ public:
 	void setUVRect(RectF uvRect);
 
 private:
-	RenderTarget* m_pRenderTarget;
-
 	int m_DrawOrder;
 
 	std::string m_TextureName;

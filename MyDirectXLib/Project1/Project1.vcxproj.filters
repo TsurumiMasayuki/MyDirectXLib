@@ -171,6 +171,7 @@
     <ClInclude Include="Source\Component\Test\MetaBallRenderer.h" />
     <ClInclude Include="Source\Utility\Action\ScaleTo.h" />
     <ClInclude Include="Source\Utility\Action\ScaleBy.h" />
+    <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
