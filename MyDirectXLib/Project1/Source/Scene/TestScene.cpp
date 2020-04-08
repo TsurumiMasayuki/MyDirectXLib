@@ -39,6 +39,12 @@ void TestScene::init()
 	controlObj->setSize(Vec3(48, 48, 0));
 	controlObj->setPosition(Vec3(0, 0, 0));
 
+	auto text1 = new TextRenderer(controlObj, 110);
+	text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
+	text1->setTextSize(32.0f);
+	text1->setText(L"Hello World!");
+	text1->setColor(Color(DirectX::Colors::Red));
+
 	auto sprite = new SpriteRenderer(controlObj);
 	sprite->setTextureName("MetaBall");
 

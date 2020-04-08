@@ -23,7 +23,7 @@ public:
 	virtual void onUpdate() override;
 
 	virtual int getDrawOrder() const override { return m_DrawOrder; }
-	virtual GraphicsLayer getGraphicsLayer() const override { return GraphicsLayer::Default; }
+	virtual GraphicsLayer getGraphicsLayer() const override { return GraphicsLayer::Final; }
 	virtual void draw() override;
 
 	//ƒtƒHƒ“ƒg–¼‚Ìİ’è

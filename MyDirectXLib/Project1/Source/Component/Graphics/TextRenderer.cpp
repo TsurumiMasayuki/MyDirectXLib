@@ -44,7 +44,10 @@ void TextRenderer::draw()
 	if (m_pTextFormat == nullptr) return;
 	if (m_pTextLayout == nullptr) return;
 
-	D2D1_POINT_2F d2dPoint = { getPosition().x + Screen::getWindowWidth() / 2, -getPosition().y + Screen::getWindowHeight() / 2 };
+	float x = m_TextSize * m_Text.size() * 0.5f;
+	float y = m_TextSize * 0.5f;
+
+	D2D1_POINT_2F d2dPoint = { getPosition().x + Screen::getWindowWidth() / 2 - x, -getPosition().y + Screen::getWindowHeight() / 2 - y };
 	GameDevice::getRenderer()->getD2DRenderTarget()->DrawTextLayout(d2dPoint, m_pTextLayout, m_pBrush);
 }
 

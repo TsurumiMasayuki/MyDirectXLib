@@ -78,7 +78,7 @@ void Renderer::init()
 
 	//レンダーターゲットからテキスト書き込み用のテクスチャ取得
 	IDXGISurface* pBack;
-	m_RTLayers.at(GraphicsLayer::Default)->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
+	m_RTLayers.at(GraphicsLayer::Final)->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
 	m_pD2DFactory->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &m_pD2DRenderTarget);
 }
 

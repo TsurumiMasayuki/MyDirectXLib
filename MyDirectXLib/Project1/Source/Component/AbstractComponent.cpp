@@ -27,7 +27,7 @@ void AbstractComponent::setPosition(const Vec3 & position)
 
 Vec3 AbstractComponent::getPosition() const
 {
-	return m_pUser->getAngles();
+	return m_pUser->getPosition();
 }
 
 void AbstractComponent::setAngles(const Vec3 & angles)
