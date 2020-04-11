@@ -5,6 +5,8 @@ enum GraphicsLayer
 {
 	Default,
 	MetaBall,
+	Block,
+	Splash,
 	Final
 };
 

@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Component\Test\SimpleMove.cpp" />
     <ClCompile Include="Source\Utility\Action\ScaleTo.cpp" />
     <ClCompile Include="Source\Utility\Action\ScaleBy.cpp" />
+    <ClCompile Include="Source\Component\Graphics\CustomRenderer2D.cpp" />
+    <ClCompile Include="Source\Actor\Test\TestSplat.cpp" />
+    <ClCompile Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -172,6 +175,10 @@
     <ClInclude Include="Source\Utility\Action\ScaleTo.h" />
     <ClInclude Include="Source\Utility\Action\ScaleBy.h" />
     <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />
+    <ClInclude Include="Source\Component\Graphics\CustomRenderer2D.h" />
+    <ClInclude Include="Source\Actor\Test\TestSplat.h" />
+    <ClInclude Include="Source\Component\Graphics\PostEffect\IPostEffectRenderer.h" />
+    <ClInclude Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
@@ -180,5 +187,8 @@
     <FxCompile Include="Assets\Shaders\MeshVS.hlsl" />
     <FxCompile Include="Assets\Shaders\BlurPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MetaBallPS.hlsl" />
+    <FxCompile Include="Assets\Shaders\WaterFallGame\BasicVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\WaterFallGame\CircleFillPS.hlsl" />
+    <FxCompile Include="Assets\Shaders\WaterFallGame\CircleGradPS.hlsl" />
   </ItemGroup>
 </Project>

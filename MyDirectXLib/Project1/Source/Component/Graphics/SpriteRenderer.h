@@ -8,6 +8,14 @@
 
 class Renderer;
 class ConstantBuffer;
+class VertexBuffer;
+class IndexBuffer;
+class VertexShader;
+class PixelShader;
+
+struct ID3D11InputLayout;
+struct ID3D11SamplerState;
+struct ID3D11ShaderResourceView;
 
 class SpriteRenderer
 	: public AbstractComponent, public IRenderer2D
@@ -20,11 +28,11 @@ public:
 	virtual void onUpdate() override;
 
 	virtual int getDrawOrder() const override { return m_DrawOrder; }
-	virtual GraphicsLayer getGraphicsLayer() const override { return GraphicsLayer::MetaBall; }
+	virtual GraphicsLayer getGraphicsLayer() const override { return m_GraphicsLayer; }
 	virtual void draw() override;
 
-	void setTextureName(const std::string textureName);
-	std::string getTextureName();
+	void setTexture(ID3D11ShaderResourceView* pSRV);
+	void setTextureByName(const std::string& textureName);
 
 	void setColor(Color color);
 	void setFlipX(bool flipX);
@@ -36,12 +44,14 @@ public:
 	RectF getUVRect();
 	void setUVRect(RectF uvRect);
 
+	void setGraphicsLayer(GraphicsLayer graphicsLayer) { m_GraphicsLayer = graphicsLayer; }
+
 private:
 	int m_DrawOrder;
 
-	std::string m_TextureName;
-	std::string m_VSName;
-	std::string m_PSName;
+	ID3D11ShaderResourceView* m_pSRV;
+	VertexShader* m_pVertexShader;
+	PixelShader* m_pPixelShader;
 
 	Color m_Color;
 	bool m_FlipX;
@@ -50,6 +60,13 @@ private:
 	Vec2 m_ImagePivot;
 	RectF m_UVRect;
 
-	static unsigned int componentCount;
+	GraphicsLayer m_GraphicsLayer;
+
+	static int componentCount;
+
+	static ID3D11InputLayout* pInputLayout;
+	static ID3D11SamplerState* pSampler;
+	static VertexBuffer* pVertices;
+	static IndexBuffer* pIndices;
 	static ConstantBuffer* pSpriteCB;
 };

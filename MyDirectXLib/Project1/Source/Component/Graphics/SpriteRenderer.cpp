@@ -10,7 +10,13 @@
 #include "Device\Renderer.h"
 #include "Device\Resource\TextureManager.h"
 #include "Device\Resource\Shader\ShaderManager.h"
+#include "Device\Resource\Shader\VertexShader.h"
+#include "Device\Resource\Shader\PixelShader.h"
 
+#include "Device\Base\SpriteVertex.h"
+
+#include "Device\Buffer\VertexBuffer.h"
+#include "Device\Buffer\IndexBuffer.h"
 #include "Device\Buffer\SpriteConstantBuffer.h"
 #include "Device\Buffer\ConstantBuffer.h"
 
@@ -19,23 +25,86 @@
 
 using namespace DirectX;
 
-unsigned int SpriteRenderer::componentCount;
+int SpriteRenderer::componentCount;
+
+ID3D11InputLayout* SpriteRenderer::pInputLayout;
+ID3D11SamplerState* SpriteRenderer::pSampler;
+
+VertexBuffer* SpriteRenderer::pVertices;
+IndexBuffer* SpriteRenderer::pIndices;
 ConstantBuffer* SpriteRenderer::pSpriteCB;
 
 SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 	: AbstractComponent(pUser),
 	m_DrawOrder(drawOrder),
-	m_VSName("SpriteVS"),
-	m_PSName("SpritePS"),
+	m_pVertexShader(nullptr),
+	m_pPixelShader(nullptr),
+	m_pSRV(nullptr),
 	m_Color(DirectX::Colors::White),
 	m_UVRect(0, 0, 1, 1),
-	m_ImagePivot(0, 0)
+	m_ImagePivot(0, 0),
+	m_GraphicsLayer(GraphicsLayer::Final)
 {
 	//Rendererに登録
 	GameDevice::getRenderer()->addRenderer2D(this);
 
+	//頂点シェーダー取得
+	m_pVertexShader = ShaderManager::GetVertexShader("SpriteVS");
+	//ピクセルシェーダー取得
+	m_pPixelShader = ShaderManager::GetPixelShader("SpritePS");
+
 	if (componentCount == 0)
 	{
+		auto pDevice = DirectXManager::getDevice();
+
+		//InputLayout作成
+		D3D11_INPUT_ELEMENT_DESC inputDesc[2];
+		SpriteVertex::getInputDesc(inputDesc);
+		UINT numElements = 2;
+
+		m_pVertexShader->createInputLayout(
+			pDevice,
+			inputDesc,
+			2,
+			&pInputLayout
+		);
+
+		//SamplerState作成
+		D3D11_SAMPLER_DESC spriteSamDesc;
+		ZeroMemory(&spriteSamDesc, sizeof(D3D11_SAMPLER_DESC));
+		spriteSamDesc.Filter = D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT;
+		spriteSamDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		spriteSamDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		spriteSamDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		spriteSamDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		pDevice->CreateSamplerState(&spriteSamDesc, &pSampler);
+
+		//頂点バッファ作成
+		float width = 0.5f;
+		float height = 0.5f;
+
+		//四角の頂点情報作成
+		SpriteVertex vertices[]
+		{
+			{{-width,  height, 0.0f}, {0.0f, 0.0f}},
+			{{ width, -height, 0.0f}, {1.0f, 1.0f}},
+			{{-width, -height, 0.0f}, {0.0f, 1.0f}},
+			{{ width,  height, 0.0f}, {1.0f, 0.0f}},
+		};
+
+		pVertices = new VertexBuffer();
+		pVertices->init(pDevice, sizeof(SpriteVertex) * 4, vertices);
+
+		UINT indices[]
+		{
+			0, 1, 2,
+			0, 3, 1
+		};
+
+		pIndices = new IndexBuffer();
+		pIndices->init(pDevice, sizeof(UINT) * 6, indices);
+
+		//コンスタントバッファ作成
 		pSpriteCB = new ConstantBuffer();
 		SpriteConstantBuffer buffer;
 		pSpriteCB->init(DirectXManager::getDevice(), sizeof(SpriteConstantBuffer), &buffer);
@@ -53,8 +122,12 @@ SpriteRenderer::~SpriteRenderer()
 
 	if (componentCount == 0)
 	{
+		pInputLayout->Release();
+		pSampler->Release();
+
+		delete pVertices;
+		delete pIndices;
 		delete pSpriteCB;
-		pSpriteCB = nullptr;
 	}
 }
 
@@ -68,18 +141,26 @@ void SpriteRenderer::onUpdate()
 
 void SpriteRenderer::draw()
 {
-	if (!isActive())
-		return;
-
-	if (Camera::isCulling2D(getPosition(), getSize()))
-		return;
+	if (!isActive()) return;
+	if (m_pSRV == nullptr) return;
+	if (Camera::isCulling2D(getPosition(), getSize())) return;
 
 	auto pDeviceContext = DirectXManager::getDeviceContext();
 
+	//頂点バッファをセット
+	auto vertices = pVertices->getBuffer();
+	UINT stride = sizeof(SpriteVertex);
+	UINT offset = 0;
+	pDeviceContext->IASetVertexBuffers(0, 1, &vertices, &stride, &offset);
+	//インデックスバッファをセット
+	pDeviceContext->IASetIndexBuffer(pIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
+	//インプットレイアウトをセット
+	pDeviceContext->IASetInputLayout(pInputLayout);
+
 	//VertexShaderをセット
-	pDeviceContext->VSSetShader(ShaderManager::GetVertexShaderInstance(m_VSName), NULL, 0);
+	pDeviceContext->VSSetShader(m_pVertexShader->getShader(), NULL, 0);
 	//PixelShaderをセット
-	pDeviceContext->PSSetShader(ShaderManager::GetPixelShaderInstance(m_PSName), NULL, 0);
+	pDeviceContext->PSSetShader(m_pPixelShader->getShader() , NULL, 0);
 
 	SpriteConstantBuffer constantBuffer;
 
@@ -107,21 +188,23 @@ void SpriteRenderer::draw()
 	pDeviceContext->VSSetConstantBuffers(0, 1, &cBuffer);
 
 	//テクスチャを設定
-	auto texture = TextureManager::getTextureView(m_TextureName);
-	pDeviceContext->PSSetShaderResources(0, 1, &texture);
+	pDeviceContext->PSSetShaderResources(0, 1, &m_pSRV);
+	
+	//サンプラーを設定
+	pDeviceContext->PSSetSamplers(0, 1, &pSampler);
 
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pDeviceContext->DrawIndexed(6, 0, 0);
 }
 
-void SpriteRenderer::setTextureName(const std::string textureName)
+void SpriteRenderer::setTexture(ID3D11ShaderResourceView * pSRV)
 {
-	m_TextureName = textureName;
+	m_pSRV = pSRV;
 }
 
-std::string SpriteRenderer::getTextureName()
+void SpriteRenderer::setTextureByName(const std::string& textureName)
 {
-	return m_TextureName;
+	m_pSRV = TextureManager::getTextureView(textureName);
 }
 
 void SpriteRenderer::setColor(Color color)

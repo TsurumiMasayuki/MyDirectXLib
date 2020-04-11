@@ -6,15 +6,19 @@
 #include "Component\Graphics\SpriteRenderer.h"
 #include "Component\Graphics\TextRenderer.h"
 #include "Math\MathUtility.h"
+#include "Device\Camera.h"
 #include "Device\GameTime.h"
 #include "Device\Input.h"
 #include "Utility\Color.h"
 #include <DirectXColors.h>
 
+#include "Def\Screen.h"
+
 #include "Actor\Test\Tester.h"
 #include "Component\Transform.h"
 #include "Component\Physics\SphereCollider3D.h"
 #include "Component\Physics\BoxCollider3D.h"
+#include "Component\Graphics\PostEffect\MetaBallRenderer.h"
 #include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
@@ -39,14 +43,15 @@ void TestScene::init()
 	controlObj->setSize(Vec3(48, 48, 0));
 	controlObj->setPosition(Vec3(0, 0, 0));
 
-	auto text1 = new TextRenderer(controlObj, 110);
-	text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
-	text1->setTextSize(32.0f);
-	text1->setText(L"Hello World!");
-	text1->setColor(Color(DirectX::Colors::Red));
+	//auto text1 = new TextRenderer(controlObj, 110);
+	//text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
+	//text1->setTextSize(32.0f);
+	//text1->setText(L"Hello World!");
+	//text1->setColor(Color(DirectX::Colors::Red));
 
 	auto sprite = new SpriteRenderer(controlObj);
-	sprite->setTextureName("MetaBall");
+	sprite->setTextureByName("MetaBall");
+	sprite->setGraphicsLayer(GraphicsLayer::MetaBall);
 
 	Random random;
 
@@ -60,12 +65,18 @@ void TestScene::init()
 			newObj->setPosition(Vec3(i * 32, j * 32, 0));
 
 			auto sprite = new SpriteRenderer(newObj);
-			sprite->setTextureName("MetaBall");
+			sprite->setTextureByName("MetaBall");
+			sprite->setGraphicsLayer(GraphicsLayer::MetaBall);
 
 			auto action = new Action::ActionManager(newObj);
 			action->enqueueAction(new Action::EaseInOutBounce(new Action::ScaleBy(Vec3(size * 3, size * 3, 0), 5.0f)));
 		}
 	}
+
+	auto postEffect = new GameObject(this);
+	new MetaBallRenderer(postEffect);
+	postEffect->setPosition(Camera::getPosition());
+	postEffect->setSize(Vec3(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f));
 }
 
 void TestScene::update()

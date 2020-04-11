@@ -36,7 +36,7 @@ void Tester::start()
 
 	//setSize(Vec3(256, 256, 0));
 	//auto renderer = new SpriteRenderer(this);
-	//renderer->setTextureName("CircleFill");
+	//renderer->setTextureByName("CircleFill");
 	//renderer->setColor(Color(0.8f, 0.5f, 0.5f, 1.0f));
 
 	auto audio = new AudioSource(this);
