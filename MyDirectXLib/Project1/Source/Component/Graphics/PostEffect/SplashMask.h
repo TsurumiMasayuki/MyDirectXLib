@@ -18,13 +18,13 @@ class SplashMask
 	: public AbstractComponent, public IPostEffectRenderer
 {
 public:
-	SplashMask(GameObject* pUser);
+	SplashMask(GameObject* pUser, int drawOrder);
 	~SplashMask();
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	virtual int getDrawOrder() const override { return 100; }
+	virtual int getDrawOrder() const override { return m_DrawOrder; }
 	virtual GraphicsLayer getDestLayer() const override { return GraphicsLayer::Final; }
 
 	virtual void draw() override;
@@ -53,6 +53,8 @@ private:
 
 	RenderTarget* m_pSplashRT;
 	RenderTarget* m_pBlockRT;
+
+	int m_DrawOrder;
 };
 
 #endif

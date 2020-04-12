@@ -163,6 +163,7 @@
     <ClCompile Include="Source\Component\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Component\Graphics\CustomRenderer2D.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
+    <ClCompile Include="Source\Component\Graphics\PostEffect\DefaultRender.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\SplashMask.cpp" />
     <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />
     <ClInclude Include="Source\Component\Graphics\IRenderer2D.h" />
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
+    <ClInclude Include="Source\Component\Graphics\PostEffect\DefaultRender.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\IPostEffectRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\SplashMask.h" />
@@ -340,17 +342,25 @@
     <ClInclude Include="Source\WindowInstance.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Assets\Shaders\BlurPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    <FxCompile Include="Assets\Shaders\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Assets\Shaders\BasicVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Assets\Shaders\BlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shaders\MeshVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shaders\MetaBallPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -361,10 +371,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Assets\Shaders\SpriteVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Assets\Shaders\WaterFallGame\BasicVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

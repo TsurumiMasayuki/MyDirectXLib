@@ -81,9 +81,6 @@ void Renderer::draw()
 	draw2D();
 	drawPostEffects();
 
-	//postEffect();
-	//postEffect2();
-
 	DirectXManager::presentSwapChain();
 }
 
@@ -135,7 +132,19 @@ void Renderer::removeMesh(MeshRenderer * pMesh)
 
 void Renderer::addPostEffect(IPostEffectRenderer * pPostEffect)
 {
-	m_PostEffects.emplace_back(pPostEffect);
+	int myDrawOrder = pPostEffect->getDrawOrder();
+
+	auto itr = m_PostEffects.begin();
+	//©•ª‚æ‚èDrawOrder‚ª‚‚­‚È‚é‚Ü‚Åƒ‹[ƒv
+	while (itr != m_PostEffects.end())
+	{
+		if (myDrawOrder < (*itr)->getDrawOrder())
+			break;
+
+		++itr;
+	}
+
+	m_PostEffects.insert(itr, pPostEffect);
 }
 
 void Renderer::removePostEffect(IPostEffectRenderer * pPostEffect)

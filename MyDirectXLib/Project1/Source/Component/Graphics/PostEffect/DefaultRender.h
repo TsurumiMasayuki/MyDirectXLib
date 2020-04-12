@@ -1,5 +1,5 @@
-#ifndef _METABALLRENDERER_H_
-#define _METABALLRENDERER_H_
+#ifndef _DEFAULTRENDER_H_
+#define _DEFAULTRENDER_H_
 
 #include <DirectXMath.h>
 #include "Component\AbstractComponent.h"
@@ -14,18 +14,18 @@ class RenderTarget;
 struct ID3D11InputLayout;
 struct ID3D11SamplerState;
 
-class MetaBallRenderer
+class DefaultRender
 	: public AbstractComponent, public IPostEffectRenderer
 {
 public:
-	MetaBallRenderer(GameObject* pUser);
-	~MetaBallRenderer();
+	DefaultRender(GameObject* pUser, int drawOrder, GraphicsLayer sourceLayer, GraphicsLayer destLayer = GraphicsLayer::Final);
+	~DefaultRender();
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	virtual int getDrawOrder() const override { return 140; }
-	virtual GraphicsLayer getDestLayer() const override { return GraphicsLayer::Final; }
+	virtual int getDrawOrder() const override { return m_DrawOrder; }
+	virtual GraphicsLayer getDestLayer() const override { return m_DestLayer; }
 
 	virtual void draw() override;
 
@@ -41,12 +41,6 @@ private:
 		DirectX::XMFLOAT4X4 wvp;
 	};
 
-	struct MetaBallCBuffer
-	{
-		DirectX::XMFLOAT4 baseColor;
-		DirectX::XMFLOAT4 outlineColor;
-	};
-
 private:
 	VertexShader* m_pVertexShader;
 	PixelShader* m_pPixelShader;
@@ -58,6 +52,11 @@ private:
 	ID3D11SamplerState* m_pSampler;
 
 	RenderTarget* m_pSourceRT;
+
+	GraphicsLayer m_SourceLayer;
+	GraphicsLayer m_DestLayer;
+
+	int m_DrawOrder;
 };
 
 #endif

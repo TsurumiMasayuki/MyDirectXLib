@@ -21,8 +21,9 @@
 #include "Device\Resource\Shader\VertexShader.h"
 #include "Device\Resource\Shader\PixelShader.h"
 
-SplashMask::SplashMask(GameObject * pUser)
-	: AbstractComponent(pUser)
+SplashMask::SplashMask(GameObject * pUser, int drawOrder)
+	: AbstractComponent(pUser),
+	m_DrawOrder(drawOrder)
 {
 	auto pRenderer = GameDevice::getRenderer();
 	pRenderer->addPostEffect(this);

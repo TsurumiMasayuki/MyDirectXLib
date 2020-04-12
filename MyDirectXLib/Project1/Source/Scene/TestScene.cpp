@@ -15,76 +15,82 @@
 #include "Def\Screen.h"
 
 #include "Actor\Test\Tester.h"
+#include "Actor\Test\TestSplat.h"
 #include "Component\Transform.h"
 #include "Component\Physics\SphereCollider3D.h"
 #include "Component\Physics\BoxCollider3D.h"
 #include "Component\Graphics\PostEffect\MetaBallRenderer.h"
 #include "Component\Graphics\PostEffect\SplashMask.h"
+#include "Component\Graphics\PostEffect\DefaultRender.h"
 #include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
 
 GameObject* controlObj = nullptr;
-GameObject* postEffect = nullptr;
 
 void TestScene::init()
 {
 	m_pObjManager = new GameObjectManager();
 	m_pPhysicsWorld = new PhysicsWorld(this);
 
-	//auto obj1 = new Tester(this);
-
-	//auto obj2 = new GameObject(this);
-	//auto text1 = new TextRenderer(obj2, 110);
-	//text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
-	//text1->setTextSize(32.0f);
-	//text1->setText(L"Hello World!");
-	//text1->setColor(Color(DirectX::Colors::Red));
-
 	controlObj = new GameObject(this);
-	controlObj->setSize(Vec3(128, 128, 0));
+	controlObj->setSize(Vec3(32, 32, 0));
 	controlObj->setPosition(Vec3(0, 0, 0));
-
-	//auto text1 = new TextRenderer(controlObj, 110);
-	//text1->setFont(L"Meiryo", FONT_WEIGHT_BLACK, FONT_STYLE_NORMAL);
-	//text1->setTextSize(32.0f);
-	//text1->setText(L"Hello World!");
-	//text1->setColor(Color(DirectX::Colors::Red));
 
 	auto sprite = new SpriteRenderer(controlObj);
 	sprite->setTextureByName("BoxFill");
 	sprite->setGraphicsLayer(GraphicsLayer::Block);
+	sprite->setColor(Color(0.5f, 0.5f, 0.5f, 1.0f));
 
-	//auto sprite2 = new SpriteRenderer(controlObj);
-	//sprite2->setTextureByName("BoxFill");
-	//sprite2->setGraphicsLayer(GraphicsLayer::Final);
-
-	Random random;
-
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 0; j < 5; j++)
-		{
-			auto newObj = new GameObject(this);
-			float size = random.getRandom(32, 96);
-			newObj->setSize(Vec3(size, size, 0));
-			newObj->setPosition(Vec3(i * 32, j * 32, 0));
+		auto newObj = new GameObject(this);
+		newObj->setSize(Vec3(640, 96, 0));
+		newObj->setPosition(Vec3(0, i * (720 / 4) - (720 * 0.5f), 0));
 
-			auto sprite = new SpriteRenderer(newObj);
-			sprite->setTextureByName("MetaBall");
-			sprite->setGraphicsLayer(GraphicsLayer::Splash);
-			sprite->setColor(Color(0.25f, 0.4f, 0.8f, 1.0f));
-
-			auto action = new Action::ActionManager(newObj);
-			action->enqueueAction(new Action::EaseInOutBounce(new Action::ScaleBy(Vec3(size * 3, size * 3, 0), 5.0f)));
-		}
+		auto sprite = new SpriteRenderer(newObj);
+		sprite->setTextureByName("BoxFill");
+		sprite->setGraphicsLayer(GraphicsLayer::Block);
+		sprite->setColor(Color(0.5f, 0.5f, 0.5f, 1.0f));
 	}
 
-	postEffect = new GameObject(this);
-	new SplashMask(postEffect);
+	//Random random;
+
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	for (int j = 0; j < 5; j++)
+	//	{
+	//		auto newObj = new GameObject(this);
+	//		float size = random.getRandom(32, 96);
+	//		newObj->setSize(Vec3(size, size, 0));
+	//		newObj->setPosition(Vec3(i * 32, j * 32, 0));
+
+	//		auto sprite = new SpriteRenderer(newObj);
+	//		sprite->setTextureByName("MetaBall");
+	//		sprite->setGraphicsLayer(GraphicsLayer::Splash);
+	//		sprite->setColor(Color(0.25f, 0.4f, 0.8f, 1.0f));
+
+	//		auto action = new Action::ActionManager(newObj);
+	//		action->enqueueAction(new Action::EaseInOutBounce(new Action::ScaleBy(Vec3(size * 3, size * 3, 0), 5.0f)));
+	//	}
+	//}
+
+	auto postEffect = new GameObject(this);
+	//new DefaultRender(postEffect, 150, GraphicsLayer::Default);
+	new DefaultRender(postEffect, 110, GraphicsLayer::Block);
+	new SplashMask(postEffect, 150);
 	//new MetaBallRenderer(postEffect);
-	postEffect->setPosition(Camera::getPosition());
-	postEffect->setSize(Vec3(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f));
+	postEffect->setPosition(Vec3(-Screen::getWindowWidth() / 4, 0, 1.0f));
+	postEffect->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
+
+	auto postEffect2 = new GameObject(this);
+	//new DefaultRender(postEffect2, 100, GraphicsLayer::Default);
+	new DefaultRender(postEffect2, 110, GraphicsLayer::Block);
+	new DefaultRender(postEffect2, 120, GraphicsLayer::Splash);
+	//new SplashMask(postEffect2, 130);
+	//new MetaBallRenderer(postEffect);
+	postEffect2->setPosition(Vec3(Screen::getWindowWidth() / 4, 0, 1.0f));
+	postEffect2->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
 }
 
 void TestScene::update()
@@ -92,7 +98,10 @@ void TestScene::update()
 	controlObj->setPosition(Input::getMousePosition());
 
 	if (Input::isKeyDown(VK_SPACE))
-		postEffect->setActive(!postEffect->isActive());
+	{
+		auto splat = new TestSplat(this);
+		splat->setPosition(Input::getMousePosition());
+	}
 
 	m_pObjManager->update();
 	m_pPhysicsWorld->update();

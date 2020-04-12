@@ -43,7 +43,9 @@ void Game::init()
 	ShaderManager::LoadPixelShader_CSO("BlurPS", "Assets/Shaders/BlurPS.cso");
 	ShaderManager::LoadPixelShader_CSO("MetaBallPS", "Assets/Shaders/MetaBallPS.cso");
 
-	ShaderManager::LoadVertexShader_CSO("BasicVS", "Assets/Shaders/WaterFallGame/BasicVS.cso");
+	ShaderManager::LoadVertexShader_CSO("BasicVS", "Assets/Shaders/BasicVS.cso");
+	ShaderManager::LoadPixelShader_CSO("BasicPS", "Assets/Shaders/BasicPS.cso");
+
 	ShaderManager::LoadPixelShader_CSO("CircleFillPS", "Assets/Shaders/WaterFallGame/CircleFillPS.cso");
 	ShaderManager::LoadPixelShader_CSO("CircleGradPS", "Assets/Shaders/WaterFallGame/CircleGradPS.cso");
 	ShaderManager::LoadPixelShader_CSO("SplashPS", "Assets/Shaders/WaterFallGame/SplashPS.cso");

@@ -80,6 +80,7 @@
     <ClCompile Include="Source\Actor\Test\TestSplat.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\SplashMask.cpp" />
+    <ClCompile Include="Source\Component\Graphics\PostEffect\DefaultRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -181,15 +182,17 @@
     <ClInclude Include="Source\Component\Graphics\PostEffect\IPostEffectRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\SplashMask.h" />
+    <ClInclude Include="Source\Component\Graphics\PostEffect\DefaultRender.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
-    <FxCompile Include="Assets\Shaders\SpriteVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\BasicPS.hlsl" />
+    <FxCompile Include="Assets\Shaders\BasicVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\BlurPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MeshVS.hlsl" />
-    <FxCompile Include="Assets\Shaders\BlurPS.hlsl" />
     <FxCompile Include="Assets\Shaders\MetaBallPS.hlsl" />
-    <FxCompile Include="Assets\Shaders\WaterFallGame\BasicVS.hlsl" />
+    <FxCompile Include="Assets\Shaders\SpritePS.hlsl" />
+    <FxCompile Include="Assets\Shaders\SpriteVS.hlsl" />
     <FxCompile Include="Assets\Shaders\WaterFallGame\CircleFillPS.hlsl" />
     <FxCompile Include="Assets\Shaders\WaterFallGame\CircleGradPS.hlsl" />
     <FxCompile Include="Assets\Shaders\WaterFallGame\SplashPS.hlsl" />
