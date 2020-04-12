@@ -46,6 +46,7 @@ void Game::init()
 	ShaderManager::LoadVertexShader_CSO("BasicVS", "Assets/Shaders/WaterFallGame/BasicVS.cso");
 	ShaderManager::LoadPixelShader_CSO("CircleFillPS", "Assets/Shaders/WaterFallGame/CircleFillPS.cso");
 	ShaderManager::LoadPixelShader_CSO("CircleGradPS", "Assets/Shaders/WaterFallGame/CircleGradPS.cso");
+	ShaderManager::LoadPixelShader_CSO("SplashPS", "Assets/Shaders/WaterFallGame/SplashPS.cso");
 
 	GameDevice::initialize();
 	GameDevice::getMeshManager()->loadMesh("Vox", "Assets/Models/testVox.fbx", L"Assets/Models/testVox.png");

@@ -19,11 +19,13 @@
 #include "Component\Physics\SphereCollider3D.h"
 #include "Component\Physics\BoxCollider3D.h"
 #include "Component\Graphics\PostEffect\MetaBallRenderer.h"
+#include "Component\Graphics\PostEffect\SplashMask.h"
 #include "Component\ActionManager.h"
 #include "Utility\Action\Actions.h"
 #include "Utility\Random.h"
 
 GameObject* controlObj = nullptr;
+GameObject* postEffect = nullptr;
 
 void TestScene::init()
 {
@@ -40,7 +42,7 @@ void TestScene::init()
 	//text1->setColor(Color(DirectX::Colors::Red));
 
 	controlObj = new GameObject(this);
-	controlObj->setSize(Vec3(48, 48, 0));
+	controlObj->setSize(Vec3(128, 128, 0));
 	controlObj->setPosition(Vec3(0, 0, 0));
 
 	//auto text1 = new TextRenderer(controlObj, 110);
@@ -50,8 +52,12 @@ void TestScene::init()
 	//text1->setColor(Color(DirectX::Colors::Red));
 
 	auto sprite = new SpriteRenderer(controlObj);
-	sprite->setTextureByName("MetaBall");
-	sprite->setGraphicsLayer(GraphicsLayer::MetaBall);
+	sprite->setTextureByName("BoxFill");
+	sprite->setGraphicsLayer(GraphicsLayer::Block);
+
+	//auto sprite2 = new SpriteRenderer(controlObj);
+	//sprite2->setTextureByName("BoxFill");
+	//sprite2->setGraphicsLayer(GraphicsLayer::Final);
 
 	Random random;
 
@@ -66,15 +72,17 @@ void TestScene::init()
 
 			auto sprite = new SpriteRenderer(newObj);
 			sprite->setTextureByName("MetaBall");
-			sprite->setGraphicsLayer(GraphicsLayer::MetaBall);
+			sprite->setGraphicsLayer(GraphicsLayer::Splash);
+			sprite->setColor(Color(0.25f, 0.4f, 0.8f, 1.0f));
 
 			auto action = new Action::ActionManager(newObj);
 			action->enqueueAction(new Action::EaseInOutBounce(new Action::ScaleBy(Vec3(size * 3, size * 3, 0), 5.0f)));
 		}
 	}
 
-	auto postEffect = new GameObject(this);
-	new MetaBallRenderer(postEffect);
+	postEffect = new GameObject(this);
+	new SplashMask(postEffect);
+	//new MetaBallRenderer(postEffect);
 	postEffect->setPosition(Camera::getPosition());
 	postEffect->setSize(Vec3(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f));
 }
@@ -82,6 +90,9 @@ void TestScene::init()
 void TestScene::update()
 {
 	controlObj->setPosition(Input::getMousePosition());
+
+	if (Input::isKeyDown(VK_SPACE))
+		postEffect->setActive(!postEffect->isActive());
 
 	m_pObjManager->update();
 	m_pPhysicsWorld->update();

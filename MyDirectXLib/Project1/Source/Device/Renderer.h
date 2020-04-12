@@ -56,8 +56,7 @@ private:
 	void draw2D();
 	void drawMeshes();
 	void drawPostEffects();
-	void postEffect();
-	void postEffect2();
+	void applyRenderResults();
 
 private:
 	//レンダーターゲット

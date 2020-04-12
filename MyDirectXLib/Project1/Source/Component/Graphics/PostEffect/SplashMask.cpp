@@ -1,4 +1,4 @@
-#include "MetaBallRenderer.h"
+#include "SplashMask.h"
 
 #include <d3d11.h>
 
@@ -21,38 +21,40 @@
 #include "Device\Resource\Shader\VertexShader.h"
 #include "Device\Resource\Shader\PixelShader.h"
 
-MetaBallRenderer::MetaBallRenderer(GameObject * pUser)
+SplashMask::SplashMask(GameObject * pUser)
 	: AbstractComponent(pUser)
 {
 	auto pRenderer = GameDevice::getRenderer();
 	pRenderer->addPostEffect(this);
-	m_pSourceRT = pRenderer->getRenderTarget(GraphicsLayer::MetaBall);
+	m_pSplashRT = pRenderer->getRenderTarget(GraphicsLayer::Splash);
+	m_pBlockRT = pRenderer->getRenderTarget(GraphicsLayer::Block);
 
 	m_pVertexShader = ShaderManager::GetVertexShader("BasicVS");
-	m_pPixelShader = ShaderManager::GetPixelShader("MetaBallPS");
+	m_pPixelShader = ShaderManager::GetPixelShader("SplashPS");
 }
 
-MetaBallRenderer::~MetaBallRenderer()
+SplashMask::~SplashMask()
 {
 	GameDevice::getRenderer()->removePostEffect(this);
 
 	delete m_pVertices;
 	delete m_pIndices;
-	
+
 	m_pInputLayout->Release();
 	m_pSampler->Release();
 }
 
-void MetaBallRenderer::onStart()
+void SplashMask::onStart()
 {
 	auto pDevice = DirectXManager::getDevice();
 
 	//InputLayout作成
-	D3D11_INPUT_ELEMENT_DESC inputDesc[2] = 
+	D3D11_INPUT_ELEMENT_DESC inputDesc[2] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
+
 	m_pVertexShader->createInputLayout(
 		pDevice,
 		inputDesc,
@@ -97,11 +99,11 @@ void MetaBallRenderer::onStart()
 	m_pIndices->init(pDevice, sizeof(UINT) * 6, indices);
 }
 
-void MetaBallRenderer::onUpdate()
+void SplashMask::onUpdate()
 {
 }
 
-void MetaBallRenderer::draw()
+void SplashMask::draw()
 {
 	if (!isActive()) return;
 
@@ -124,9 +126,13 @@ void MetaBallRenderer::draw()
 	//インデックスバッファ設定
 	pDeviceContext->IASetIndexBuffer(m_pIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
-	//レンダーターゲットからSRV作成
-	auto srv = m_pSourceRT->getSRV();
-	pDeviceContext->PSSetShaderResources(0, 1, &srv);
+	//SRVをスロット0に設定
+	auto splashSRV = m_pSplashRT->getSRV();
+	pDeviceContext->PSSetShaderResources(0, 1, &splashSRV);
+
+	//SRVをスロット1に設定
+	auto blockSRV = m_pBlockRT->getSRV();
+	pDeviceContext->PSSetShaderResources(1, 1, &blockSRV);
 
 	//定数バッファの行列用データを作成
 	BasicCBuffer wvpCBuffer;
@@ -143,23 +149,11 @@ void MetaBallRenderer::draw()
 	auto vsD3DConstantBuffer = vsCBuffer.getBuffer();
 	pDeviceContext->VSSetConstantBuffers(0, 1, &vsD3DConstantBuffer);
 
-	//定数バッファ用データ作成
-	MetaBallCBuffer metaBallCBuffer;
-	metaBallCBuffer.baseColor = { 0.25f, 0.5f, 1.0f, 1.0f };
-	metaBallCBuffer.outlineColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	
-	//定数バッファ作成
-	ConstantBuffer psCBuffer;
-	psCBuffer.init(DirectXManager::getDevice(), sizeof(MetaBallCBuffer), &metaBallCBuffer);
-
-	//ピクセルシェーダーに定数バッファ設定
-	auto psD3DConstantBuffer = psCBuffer.getBuffer();
-	pDeviceContext->PSSetConstantBuffers(0, 1, &psD3DConstantBuffer);
-
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//描画
 	pDeviceContext->DrawIndexed(6, 0, 0);
 
-	srv->Release();
+	splashSRV->Release();
+	blockSRV->Release();
 }

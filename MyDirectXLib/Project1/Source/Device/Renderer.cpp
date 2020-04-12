@@ -13,20 +13,14 @@
 #include "Component\Graphics\IRenderer2D.h"
 #include "Component\Graphics\PostEffect\IPostEffectRenderer.h"
 
-#include "WindowInstance.h"
-
 #include "Device\Camera.h"
 #include "Device\DirectXManager.h"
 
 #include "Device\Base\MeshVertex.h"
-#include "Device\Buffer\ConstantBuffer.h"
-#include "Device\Buffer\SpriteConstantBuffer.h"
 
-#include "Device\Buffer\WVPConstantBuffer.h"
 #include "Device\Resource\Shader\VertexShader.h"
 #include "Device\Resource\Shader\PixelShader.h"
 #include "Device\Resource\Shader\ShaderManager.h"
-#include "Device\Resource\TextureManager.h"
 #include "Device\Resource\RenderTarget.h"
 
 #include "Math\MathUtility.h"
@@ -71,7 +65,7 @@ void Renderer::init()
 
 	//レンダーターゲットからテキスト書き込み用のテクスチャ取得
 	IDXGISurface* pBack;
-	m_RTLayers.at(GraphicsLayer::Final)->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
+	m_RTLayers.at(GraphicsLayer::Default)->getRenderTexture()->QueryInterface(__uuidof(IDXGISurface), (LPVOID*)&pBack);
 	m_pD2DFactory->CreateDxgiSurfaceRenderTarget(pBack, rtProp, &m_pD2DRenderTarget);
 }
 
@@ -268,103 +262,7 @@ void Renderer::drawPostEffects()
 	}
 }
 
-void Renderer::postEffect()
+void Renderer::applyRenderResults()
 {
-	//m_RTLayers.at(GraphicsLayer::Final)->setRenderTarget(true);
 
-	//auto pDeviceContext = DirectXManager::getDeviceContext();
-	////シェーダーを設定
-	//pDeviceContext->VSSetShader(ShaderManager::GetVertexShaderInstance("BasicVS"), nullptr, 0);
-	//pDeviceContext->PSSetShader(ShaderManager::GetPixelShaderInstance("MetaBallPS"), nullptr, 0);
-
-	////画像表示用のInputLayoutとSamplerを設定
-	//pDeviceContext->IASetInputLayout(m_pSpriteInputLayout);
-	//pDeviceContext->PSSetSamplers(0, 1, &m_pSpriteSampler);
-
-	////頂点バッファ設定
-	//auto vertices = m_pSpriteVertices->getBuffer();
-	//UINT stride = sizeof(SpriteVertex);
-	//UINT offset = 0;
-	//pDeviceContext->IASetVertexBuffers(0, 1, &vertices, &stride, &offset);
-	////インデックスバッファ設定
-	//pDeviceContext->IASetIndexBuffer(m_pSpriteIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
-
-	////レンダーターゲットからSRV作成
-	//auto srv = m_RTLayers.at(GraphicsLayer::Default)->getSRV();
-	//pDeviceContext->PSSetShaderResources(0, 1, &srv);
-
-	////定数バッファの行列用データを作成
-	//SpriteConstantBuffer spriteCBuffer;
-	//auto translate = DirectX::XMMatrixTranslationFromVector(Camera::getPosition().toXMVector());
-	//auto rotation = DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);
-	//auto scaling = DirectX::XMMatrixScaling(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f);
-	//auto wvp = scaling * rotation * translate * Camera::getViewProjMatrix2D();
-	//DirectX::XMStoreFloat4x4(&spriteCBuffer.wvpMatrix, DirectX::XMMatrixTranspose(wvp));
-
-	////定数バッファ作成
-	//ConstantBuffer cBuffer;
-	//cBuffer.init(DirectXManager::getDevice(), sizeof(SpriteConstantBuffer), &spriteCBuffer);
-
-	////頂点シェーダーに定数バッファ設定
-	//auto d3dConstantBuffer = cBuffer.getBuffer();
-	//pDeviceContext->VSSetConstantBuffers(0, 1, &d3dConstantBuffer);
-
-	//BlurConstantBuffer blurCBuffer;
-	//blurCBuffer.texelSize = { 1.0f / Screen::getWindowWidth(), 1.0f / Screen::getWindowHeight(), 0.0f, 0.0f };
-	//ConstantBuffer blurCBufferClass;
-	//blurCBufferClass.init(DirectXManager::getDevice(), sizeof(BlurConstantBuffer), &blurCBuffer);
-	//d3dConstantBuffer = blurCBufferClass.getBuffer();
-	//pDeviceContext->PSSetConstantBuffers(0, 1, &d3dConstantBuffer);
-
-	////描画
-	//pDeviceContext->DrawIndexed(6, 0, 0);
-
-	//srv->Release();
-}
-
-void Renderer::postEffect2()
-{
-	//m_RTLayers.at(GraphicsLayer::Final)->setRenderTarget(false);
-
-	//auto pDeviceContext = DirectXManager::getDeviceContext();
-	////シェーダーを設定
-	//pDeviceContext->VSSetShader(ShaderManager::GetVertexShaderInstance("SpriteVS"), nullptr, 0);
-	//pDeviceContext->PSSetShader(ShaderManager::GetPixelShaderInstance("MetaBallPS"), nullptr, 0);
-
-	////画像表示用のInputLayoutとSamplerを設定
-	//pDeviceContext->IASetInputLayout(m_pSpriteInputLayout);
-	//pDeviceContext->PSSetSamplers(0, 1, &m_pSpriteSampler);
-
-	////頂点バッファ設定
-	//auto vertices = m_pSpriteVertices->getBuffer();
-	//UINT stride = sizeof(SpriteVertex);
-	//UINT offset = 0;
-	//pDeviceContext->IASetVertexBuffers(0, 1, &vertices, &stride, &offset);
-	////インデックスバッファ設定
-	//pDeviceContext->IASetIndexBuffer(m_pSpriteIndices->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
-
-	////レンダーターゲットからSRV作成
-	//auto srv = m_RTLayers.at(GraphicsLayer::MetaBall)->getSRV();
-	//pDeviceContext->PSSetShaderResources(0, 1, &srv);
-
-	////定数バッファの行列用データを作成
-	//SpriteConstantBuffer spriteCBuffer;
-	//auto translate = DirectX::XMMatrixTranslationFromVector(Camera::getPosition().toXMVector());
-	//auto rotation = DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);
-	//auto scaling = DirectX::XMMatrixScaling(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f);
-	//auto wvp = scaling * rotation * translate * Camera::getViewProjMatrix2D();
-	//DirectX::XMStoreFloat4x4(&spriteCBuffer.wvpMatrix, DirectX::XMMatrixTranspose(wvp));
-
-	////定数バッファ作成
-	//ConstantBuffer cBuffer;
-	//cBuffer.init(DirectXManager::getDevice(), sizeof(SpriteConstantBuffer), &spriteCBuffer);
-
-	////頂点シェーダーに定数バッファ設定
-	//auto d3dConstantBuffer = cBuffer.getBuffer();
-	//pDeviceContext->VSSetConstantBuffers(0, 1, &d3dConstantBuffer);
-
-	////描画
-	//pDeviceContext->DrawIndexed(6, 0, 0);
-
-	//srv->Release();
 }

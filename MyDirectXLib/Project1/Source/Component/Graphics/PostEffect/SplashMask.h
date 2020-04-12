@@ -1,5 +1,5 @@
-#ifndef _METABALLRENDERER_H_
-#define _METABALLRENDERER_H_
+#ifndef _SPLASHMASK_H_
+#define _SPLASHMASK_H_
 
 #include <DirectXMath.h>
 #include "Component\AbstractComponent.h"
@@ -14,17 +14,17 @@ class RenderTarget;
 struct ID3D11InputLayout;
 struct ID3D11SamplerState;
 
-class MetaBallRenderer
+class SplashMask
 	: public AbstractComponent, public IPostEffectRenderer
 {
 public:
-	MetaBallRenderer(GameObject* pUser);
-	~MetaBallRenderer();
+	SplashMask(GameObject* pUser);
+	~SplashMask();
 
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	virtual int getDrawOrder() const override { return 90; }
+	virtual int getDrawOrder() const override { return 100; }
 	virtual GraphicsLayer getDestLayer() const override { return GraphicsLayer::Final; }
 
 	virtual void draw() override;
@@ -41,12 +41,6 @@ private:
 		DirectX::XMFLOAT4X4 wvp;
 	};
 
-	struct MetaBallCBuffer
-	{
-		DirectX::XMFLOAT4 baseColor;
-		DirectX::XMFLOAT4 outlineColor;
-	};
-
 private:
 	VertexShader* m_pVertexShader;
 	PixelShader* m_pPixelShader;
@@ -57,7 +51,8 @@ private:
 	ID3D11InputLayout* m_pInputLayout;
 	ID3D11SamplerState* m_pSampler;
 
-	RenderTarget* m_pSourceRT;
+	RenderTarget* m_pSplashRT;
+	RenderTarget* m_pBlockRT;
 };
 
 #endif

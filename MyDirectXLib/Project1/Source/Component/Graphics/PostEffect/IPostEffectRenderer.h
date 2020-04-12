@@ -7,6 +7,9 @@ class IPostEffectRenderer
 public:
 	virtual ~IPostEffectRenderer() {};
 
+	virtual int getDrawOrder() const = 0;
+	virtual GraphicsLayer getDestLayer() const = 0;
+
 	virtual void draw() = 0;
 
 protected:

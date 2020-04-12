@@ -62,7 +62,7 @@ void AbstractComponent::setActive(bool value)
 
 bool AbstractComponent::isActive()
 {
-	return m_Enabled;
+	return m_Enabled && m_pUser->isActive();
 }
 
 void AbstractComponent::update()

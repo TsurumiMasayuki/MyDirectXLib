@@ -43,7 +43,7 @@ SpriteRenderer::SpriteRenderer(GameObject * pUser, int drawOrder)
 	m_Color(DirectX::Colors::White),
 	m_UVRect(0, 0, 1, 1),
 	m_ImagePivot(0, 0),
-	m_GraphicsLayer(GraphicsLayer::Final)
+	m_GraphicsLayer(GraphicsLayer::Default)
 {
 	//Renderer‚É“o˜^
 	GameDevice::getRenderer()->addRenderer2D(this);
