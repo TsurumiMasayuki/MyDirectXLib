@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Actor\Test\Tester.cpp" />
     <ClCompile Include="Source\Actor\Test\TestSplat.cpp" />
+    <ClCompile Include="Source\Actor\Test\TestSplatNode.cpp" />
     <ClCompile Include="Source\Component\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Component\Graphics\CustomRenderer2D.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
@@ -244,6 +245,10 @@
     <ClInclude Include="Source\Actor\Test\Tester.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
     <ClInclude Include="Source\Actor\Test\TestSplat.h" />
+    <ClInclude Include="Source\Actor\Test\TestSplatNode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Source\Component\Audio\AudioSource.h" />
     <ClInclude Include="Source\Component\Graphics\CustomRenderer2D.h" />
     <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />

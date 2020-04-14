@@ -81,6 +81,7 @@
     <ClCompile Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\SplashMask.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\DefaultRender.cpp" />
+    <ClCompile Include="Source\Actor\Test\TestSplatNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\SplashMask.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\DefaultRender.h" />
+    <ClInclude Include="Source\Actor\Test\TestSplatNode.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\BasicPS.hlsl" />

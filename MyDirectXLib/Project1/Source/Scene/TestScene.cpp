@@ -39,8 +39,8 @@ void TestScene::init()
 
 	auto sprite = new SpriteRenderer(controlObj);
 	sprite->setTextureByName("BoxFill");
-	sprite->setGraphicsLayer(GraphicsLayer::Block);
-	sprite->setColor(Color(0.5f, 0.5f, 0.5f, 1.0f));
+	sprite->setGraphicsLayer(GraphicsLayer::Default);
+	sprite->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -76,28 +76,36 @@ void TestScene::init()
 	//}
 
 	auto postEffect = new GameObject(this);
-	//new DefaultRender(postEffect, 150, GraphicsLayer::Default);
+	new DefaultRender(postEffect, 150, GraphicsLayer::Default);
 	new DefaultRender(postEffect, 110, GraphicsLayer::Block);
 	new SplashMask(postEffect, 150);
 	//new MetaBallRenderer(postEffect);
-	postEffect->setPosition(Vec3(-Screen::getWindowWidth() / 4, 0, 1.0f));
-	postEffect->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
+	postEffect->setPosition(Vec3(0, 0, 0));
+	postEffect->setSize(Vec3(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f));
 
-	auto postEffect2 = new GameObject(this);
-	//new DefaultRender(postEffect2, 100, GraphicsLayer::Default);
-	new DefaultRender(postEffect2, 110, GraphicsLayer::Block);
-	new DefaultRender(postEffect2, 120, GraphicsLayer::Splash);
-	//new SplashMask(postEffect2, 130);
-	//new MetaBallRenderer(postEffect);
-	postEffect2->setPosition(Vec3(Screen::getWindowWidth() / 4, 0, 1.0f));
-	postEffect2->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
+	//auto postEffect = new GameObject(this);
+	////new DefaultRender(postEffect, 150, GraphicsLayer::Default);
+	//new DefaultRender(postEffect, 110, GraphicsLayer::Block);
+	//new SplashMask(postEffect, 150);
+	////new MetaBallRenderer(postEffect);
+	//postEffect->setPosition(Vec3(-Screen::getWindowWidth() / 4, 0, 1.0f));
+	//postEffect->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
+
+	//auto postEffect2 = new GameObject(this);
+	////new DefaultRender(postEffect2, 100, GraphicsLayer::Default);
+	//new DefaultRender(postEffect2, 110, GraphicsLayer::Block);
+	//new DefaultRender(postEffect2, 120, GraphicsLayer::Splash);
+	////new SplashMask(postEffect2, 130);
+	////new MetaBallRenderer(postEffect);
+	//postEffect2->setPosition(Vec3(Screen::getWindowWidth() / 4, 0, 1.0f));
+	//postEffect2->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
 }
 
 void TestScene::update()
 {
 	controlObj->setPosition(Input::getMousePosition());
 
-	if (Input::isKeyDown(VK_SPACE))
+	if (Input::isKeyDown(VK_LBUTTON))
 	{
 		auto splat = new TestSplat(this);
 		splat->setPosition(Input::getMousePosition());

@@ -11,7 +11,5 @@ float4 main(PS_IN input) : SV_Target
 {
 	float4 sampled = myTexture.Sample(mySampler, input.tex);
 
-	// if (sampled.w == 0) discard;
-
 	return sampled;
 }

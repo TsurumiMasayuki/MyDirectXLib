@@ -270,8 +270,3 @@ void Renderer::drawPostEffects()
 		postEffect->draw();
 	}
 }
-
-void Renderer::applyRenderResults()
-{
-
-}

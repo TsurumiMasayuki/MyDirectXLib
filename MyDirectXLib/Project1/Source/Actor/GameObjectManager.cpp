@@ -12,6 +12,13 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
+	while (!m_AddObjects.empty())
+	{
+		delete m_AddObjects.back();
+	}
+
+	m_AddObjects.clear();
+
 	while (!m_GameObjects.empty())
 	{
 		delete m_GameObjects.back();
@@ -22,6 +29,8 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::update()
 {
+	addObjects();
+
 	for (auto& gameObject : m_AddObjects)
 	{
 		if (!gameObject->isActive()) continue;
@@ -36,7 +45,6 @@ void GameObjectManager::update()
 		gameObject->objUpdate();
 	}
 
-	addObjects();
 	destroyObjects();
 }
 

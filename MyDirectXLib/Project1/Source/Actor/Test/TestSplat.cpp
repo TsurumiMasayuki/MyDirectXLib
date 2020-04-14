@@ -1,11 +1,7 @@
 #include "TestSplat.h"
-#include "Component\Graphics\CustomRenderer2D.h"
-#include "Component\Graphics\SpriteRenderer.h"
-#include "Component\ActionManager.h"
+#include "Actor\Test\TestSplatNode.h"
 
 #include "Utility\Random.h"
-#include "Utility\Action\Actions.h"
-#include "Utility\Action\EasingActions.h"
 
 TestSplat::TestSplat(IGameMediator * pGameMediator)
 	: GameObject(pGameMediator)
@@ -14,20 +10,18 @@ TestSplat::TestSplat(IGameMediator * pGameMediator)
 
 void TestSplat::start()
 {
-	setSize(Vec3(0.0f, 0.0f, 1));
-
-	auto renderer = new SpriteRenderer(this);
-	//レイヤーを水しぶき用にセット
-	renderer->setGraphicsLayer(GraphicsLayer::Splash);
-	renderer->setTextureByName("CircleFill");
-	renderer->setColor(Color(0.25f, 0.3f, 0.8f, 1.0f));
-
-
 	Random random;
-	float destScale = random.getRandom(32, 96);
+	int nodeCount = random.getRandom(2, 5);
 
-	auto actionManager = new Action::ActionManager(this);
-	actionManager->enqueueAction(new Action::ScaleTo(Vec3(destScale, destScale, 1.0f), 0.3f));
+	for (int i = 0; i < nodeCount; i++)
+	{
+		//方向にはならないけど、位置のランダム性のためにあえて大き目の範囲
+		float range = 1.25f;
+		float dirX = random.getRandom(-range, range);
+		float dirY = random.getRandom(-range, range);
+		auto pNewSplat = new TestSplatNode(m_pGameMediator, random.getRandom(48, 56), Vec2(dirX, dirY));
+		pNewSplat->setPosition(getPosition());
+	}
 }
 
 void TestSplat::update()
