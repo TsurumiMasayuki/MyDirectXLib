@@ -6,6 +6,7 @@
 #include "Component\Transform.h"
 
 #include "Def\Screen.h"
+#include <DirectXColors.h>
 
 #include "Device\Camera.h"
 #include "Device\Renderer.h"
@@ -26,7 +27,7 @@ MetaBallRenderer::MetaBallRenderer(GameObject * pUser)
 {
 	auto pRenderer = GameDevice::getRenderer();
 	pRenderer->addPostEffect(this);
-	m_pSourceRT = pRenderer->getRenderTarget(GraphicsLayer::Splash);
+	m_pSourceRT = pRenderer->getRenderTarget(GraphicsLayer::MetaBall);
 
 	m_pVertexShader = ShaderManager::GetVertexShader("BasicVS");
 	m_pPixelShader = ShaderManager::GetPixelShader("MetaBallPS");
@@ -145,9 +146,9 @@ void MetaBallRenderer::draw()
 
 	//定数バッファ用データ作成
 	MetaBallCBuffer metaBallCBuffer;
-	metaBallCBuffer.baseColor = { 0.25f, 0.5f, 1.0f, 1.0f };
-	metaBallCBuffer.outlineColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	
+	DirectX::XMStoreFloat4(&metaBallCBuffer.baseColor, DirectX::Colors::Cyan);
+	DirectX::XMStoreFloat4(&metaBallCBuffer.outlineColor, DirectX::Colors::DarkCyan);
+
 	//定数バッファ作成
 	ConstantBuffer psCBuffer;
 	psCBuffer.init(DirectXManager::getDevice(), sizeof(MetaBallCBuffer), &metaBallCBuffer);

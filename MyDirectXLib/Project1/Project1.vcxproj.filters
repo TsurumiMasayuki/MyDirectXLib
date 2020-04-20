@@ -82,6 +82,8 @@
     <ClCompile Include="Source\Component\Graphics\PostEffect\SplashMask.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\DefaultRender.cpp" />
     <ClCompile Include="Source\Actor\Test\TestSplatNode.cpp" />
+    <ClCompile Include="Source\Actor\Test\WaterDrop.cpp" />
+    <ClCompile Include="Source\Actor\Test\WaterDrop2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -185,6 +187,8 @@
     <ClInclude Include="Source\Component\Graphics\PostEffect\SplashMask.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\DefaultRender.h" />
     <ClInclude Include="Source\Actor\Test\TestSplatNode.h" />
+    <ClInclude Include="Source\Actor\Test\WaterDrop.h" />
+    <ClInclude Include="Source\Actor\Test\WaterDrop2.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\BasicPS.hlsl" />

@@ -100,7 +100,7 @@ void Transform::setLocalPosition(Vec3 position)
 	auto children = *getUser()->getChildren();
 	for (auto child : children)
 	{
-		child->getTransform()->updateAngles();
+		child->getTransform()->updatePosition();
 	}
 }
 

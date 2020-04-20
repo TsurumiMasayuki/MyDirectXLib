@@ -21,6 +21,11 @@ GameObject::GameObject(IGameMediator* pGameMediator) :
 
 GameObject::~GameObject()
 {
+	for (auto child : m_Children)
+	{
+		child->m_pParent = nullptr;
+	}
+
 	//親オブジェクトが設定されているなら自身を子オブジェクトから登録解除する
 	if (m_pParent != nullptr)
 		m_pParent->removeChild(*this);
@@ -96,7 +101,7 @@ void GameObject::setParent(GameObject* parent)
 	if (m_pParent != nullptr)
 		m_pParent->removeChild(*this);
 
-	m_pParent = parent;
+	parent->addChild(*this);
 }
 
 GameObject * GameObject::getParent()
@@ -122,6 +127,7 @@ void GameObject::removeChild(GameObject & child)
 	if (itr != m_Children.end())
 	{
 		std::iter_swap(itr, m_Children.end() - 1);
+		(*itr)->m_pParent = nullptr;
 		m_Children.pop_back();
 	}
 }
@@ -176,6 +182,7 @@ void GameObject::destroy()
 	for (auto child : m_Children)
 	{
 		child->destroy();
+		child->m_pParent = nullptr;
 	}
 
 	m_DestroyFlag = true;

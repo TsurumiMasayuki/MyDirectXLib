@@ -2,6 +2,8 @@
 #include "AbstractScene.h"
 #include "Actor\IGameMediator.h"
 
+#include "Utility\Timer.h"
+
 class TestScene
 	: public AbstractScene, public IGameMediator
 {
@@ -21,4 +23,7 @@ public:
 private:
 	GameObjectManager* m_pObjManager;
 	PhysicsWorld* m_pPhysicsWorld;
+
+	Timer m_Timer;
+	int m_DropCount;
 };
