@@ -10,7 +10,7 @@ class TestSplatNode
 	: public GameObject
 {
 public:
-	TestSplatNode(IGameMediator* pGameMediator, float destSize, const Vec2& direction);
+	TestSplatNode(IGameMediator* pGameMediator, float destSize, float shrinkRate, float minSize, const Vec2& direction);
 	~TestSplatNode();
 
 	virtual void start() override;
@@ -19,10 +19,10 @@ public:
 private:
 	bool m_CreateChild;
 	float m_DestSize;
+	float m_MinSize;
+	float m_ShrinkRate;
 	Vec2 m_Direction;
 	Timer* m_pTimer;
-
-	static const float minSize;
 };
 
 #endif // !_TESTSPLATNODE_H_

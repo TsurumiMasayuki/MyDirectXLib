@@ -11,15 +11,15 @@ TestSplat::TestSplat(IGameMediator * pGameMediator)
 void TestSplat::start()
 {
 	Random random;
-	int nodeCount = random.getRandom(2, 5);
-
+	int nodeCount = random.getRandom(8, 11);
+	
 	for (int i = 0; i < nodeCount; i++)
 	{
 		//•ûŒü‚É‚Í‚È‚ç‚È‚¢‚¯‚ÇAˆÊ’u‚Ìƒ‰ƒ“ƒ_ƒ€«‚Ì‚½‚ß‚É‚ ‚¦‚Ä‘å‚«–Ú‚Ì”ÍˆÍ
-		float range = 1.25f;
+		float range = 0.8f;
 		float dirX = random.getRandom(-range, range);
-		float dirY = random.getRandom(-range, range);
-		auto pNewSplat = new TestSplatNode(m_pGameMediator, random.getRandom(48, 56), Vec2(dirX, dirY));
+		float dirY = random.getRandom(-1.0f, 0.0f);
+		auto pNewSplat = new TestSplatNode(m_pGameMediator, random.getRandom(48, 56), 0.8f, 32, Vec2(dirX, dirY));
 		pNewSplat->setPosition(getPosition());
 	}
 }
