@@ -63,7 +63,7 @@ void TestScene::init()
 
 	auto blockRenderer = new SpriteRenderer(block);
 	blockRenderer->setTextureByName("BoxFill");
-	blockRenderer->setGraphicsLayer(GraphicsLayer::Default);
+	blockRenderer->setGraphicsLayer(GraphicsLayer::Block);
 	blockRenderer->setColor(Color(0.5f, 0.5f, 0.5f, 1.0f));
 
 	auto pCollider = new BoxCollider2D(block);
@@ -89,7 +89,7 @@ void TestScene::init()
 	//postEffect2->setPosition(Vec3(Screen::getWindowWidth() / 4, 0, 1.0f));
 	//postEffect2->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
 
-	m_Timer.setMaxTime(0.02f);
+	m_Timer.setMaxTime(0.01f);
 	m_DropCount = 64;
 }
 
@@ -113,7 +113,7 @@ void TestScene::update()
 		//pWaterDrop->setPosition(Input::getMousePosition());
 	}
 
-	if (m_Timer.isTime() && m_DropCount < 20)
+	if (m_Timer.isTime() && m_DropCount < 40)
 	{
 		m_Timer.reset();
 
@@ -128,11 +128,13 @@ void TestScene::update()
 		//	pWaterDrop2->setPosition(Vec3(m_DropCount * -16 + random.getRandom(-8.0f, 8.0f) + random.getRandom(-16.0f, 16.0f), 360, 0));
 		//}
 
+		float increment = 640 / 40;
+
 		auto pWaterDrop = new WaterDrop2(this);
-		pWaterDrop->setPosition(Vec3(m_DropCount * 32 + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
+		pWaterDrop->setPosition(Vec3(m_DropCount * increment + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
 
 		auto pWaterDrop2 = new WaterDrop2(this);
-		pWaterDrop2->setPosition(Vec3(m_DropCount * -32 + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
+		pWaterDrop2->setPosition(Vec3(m_DropCount * -increment + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
 
 		m_DropCount++;
 	}

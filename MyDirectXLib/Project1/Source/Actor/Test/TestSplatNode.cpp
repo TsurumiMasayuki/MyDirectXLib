@@ -33,7 +33,7 @@ void TestSplatNode::start()
 	//レイヤーを水しぶき用にセット
 	renderer->setGraphicsLayer(GraphicsLayer::Splash);
 	renderer->setTextureByName("CircleFill");
-	renderer->setColor(Color(0.25f, 0.3f, 0.8f, 1.0f));
+	renderer->setColor(Color(DirectX::Colors::Cyan));
 
 	//サイズ変更用Actionをセット
 	auto actionManager = new Action::ActionManager(this);

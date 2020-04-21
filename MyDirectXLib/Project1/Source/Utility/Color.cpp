@@ -10,8 +10,8 @@ Color::Color(float r, float g, float b, float a)
 {
 }
 
-Color::Color(DirectX::XMVECTOR color)
-	: Color(color.m128_f32[0], color.m128_f32[1], color.m128_f32[2], color.m128_f32[3])
+Color::Color(DirectX::XMVECTOR color, float alpha)
+	: Color(color.m128_f32[0], color.m128_f32[1], color.m128_f32[2], alpha)
 {
 }
 

@@ -5,6 +5,9 @@
 #include "Component\Transform.h"
 #include "Utility\Action\Actions.h"
 
+#include "Actor\Test\TestSplat.h"
+#include "Actor\Test\SplashEffect.h"
+
 #include "Utility\Random.h"
 #include "Device\GameTime.h"
 #include <DirectXColors.h>
@@ -25,15 +28,15 @@ void WaterDrop2::start()
 	{
 		auto pMetaBall = new GameObject(m_pGameMediator);
 		pMetaBall->setParent(this);
-		pMetaBall->setSize(Vec3(24.0f, 24.0f, 0.0f));
+		pMetaBall->setSize(Vec3(16.0f, 16.0f, 0.0f));
 
 		float range = 8.0f;
 		pMetaBall->getTransform()->setLocalPosition(Vec3(random.getRandom(-range, range), random.getRandom(-range, range), 0.0f));
 
 		auto pActionM = new Action::ActionManager(pMetaBall);
 		auto pSequence = new Action::Sequence(2, 
-			new Action::EaseInOutBack(new Action::ScaleTo(Vec3(32.0f, 32.0f, 0.0f), random.getRandom(0.1f, 0.3f))),
-			new Action::EaseInOutSine(new Action::ScaleTo(Vec3(24.0f, 24.0f, 0.0f), random.getRandom(0.1f, 0.3f)))
+			new Action::EaseInOutBack(new Action::ScaleTo(Vec3(24.0f, 24.0f, 0.0f), random.getRandom(0.1f, 0.3f))),
+			new Action::EaseInOutSine(new Action::ScaleTo(Vec3(16.0f, 16.0f, 0.0f), random.getRandom(0.1f, 0.3f)))
 			);
 
 		pActionM->enqueueAction(new Action::RepeatForever(pSequence));
@@ -53,5 +56,11 @@ void WaterDrop2::update()
 
 void WaterDrop2::onCollisionEnter(GameObject * pHit)
 {
+	auto pSplash = new SplashEffect(m_pGameMediator);
+	pSplash->setPosition(getPosition());
+
+	auto pSplat = new TestSplat(m_pGameMediator);
+	pSplat->setPosition(getPosition());
+
 	destroy();
 }
