@@ -37,7 +37,7 @@ public:
 	//子オブジェクトを登録解除
 	void removeChild(GameObject& child);
 	//子オブジェクトを全取得
-	const std::vector<GameObject*>* getChildren() const { return &m_Children; }
+	const std::vector<GameObject*>& getChildren() const { return m_Children; }
 
 	//タグの比較
 	bool compareTag(std::string tag);

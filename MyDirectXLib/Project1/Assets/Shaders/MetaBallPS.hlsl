@@ -18,6 +18,7 @@ float4 main(PS_IN input) : SV_Target
 	float4 sampled = myTexture.Sample(mySampler, input.tex);
 
 	if (sampled.w == 0) discard;
+	float gradation = 1 - sampled.w;
 
-	return sampled.w > 0.9 ? baseColor : outlineColor;
+	return lerp(baseColor, outlineColor, gradation);;
 }

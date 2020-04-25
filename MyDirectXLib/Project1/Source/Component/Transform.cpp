@@ -30,7 +30,7 @@ void Transform::setPosition(Vec3 position)
 	//座標を設定
 	m_Position = position;
 
-	auto children = *getUser()->getChildren();
+	auto children = getUser()->getChildren();
 
 	//子オブジェクトに座標を適用
 	for (auto child : children)
@@ -52,7 +52,7 @@ void Transform::setAngleZ(float angle)
 	//座標を設定
 	m_Angles.z = angle;
 
-	auto children = *getUser()->getChildren();
+	auto children = getUser()->getChildren();
 
 	//子オブジェクトに座標を適用
 	for (auto child : children)
@@ -74,7 +74,7 @@ void Transform::setAngles(Vec3 angles)
 	//座標を設定
 	m_Angles = angles;
 
-	auto children = *getUser()->getChildren();
+	auto children = getUser()->getChildren();
 
 	//子オブジェクトに座標を適用
 	for (auto child : children)
@@ -97,7 +97,7 @@ void Transform::setLocalPosition(Vec3 position)
 	m_LocalPosition = position;
 
 	//子に座標を適用
-	auto children = *getUser()->getChildren();
+	auto children = getUser()->getChildren();
 	for (auto child : children)
 	{
 		child->getTransform()->updatePosition();
@@ -118,7 +118,7 @@ void Transform::setLocalAngleZ(float angle)
 	m_LocalAngles.z = angle;
 
 	//子に座標を適用
-	auto children = *getUser()->getChildren();
+	auto children = getUser()->getChildren();
 	for (auto child : children)
 	{
 		child->getTransform()->updateAngles();

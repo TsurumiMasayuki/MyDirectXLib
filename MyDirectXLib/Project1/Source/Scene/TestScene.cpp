@@ -18,6 +18,7 @@
 #include "Actor\Test\TestSplat.h"
 #include "Actor\Test\WaterDrop.h"
 #include "Actor\Test\WaterDrop2.h"
+#include "Actor\Test\WaterSource.h"
 
 #include "Component\Transform.h"
 #include "Component\Physics\SphereCollider3D.h"
@@ -45,21 +46,15 @@ void TestScene::init()
 	sprite->setGraphicsLayer(GraphicsLayer::Default);
 	sprite->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	auto newObj = new GameObject(this);
-	//	newObj->setSize(Vec3(640, 96, 0));
-	//	newObj->setPosition(Vec3(0, i * (720 / 4) - (720 * 0.5f), 0));
-
-	//	auto sprite = new SpriteRenderer(newObj);
-	//	sprite->setTextureByName("BoxFill");
-	//	sprite->setGraphicsLayer(GraphicsLayer::Block);
-	//	sprite->setColor(Color(0.5f, 0.5f, 0.5f, 1.0f));
-	//}
+	for (int i = 0; i < 1280 / 32; i++)
+	{
+		auto pWaterSource = new WaterSource(this);
+		pWaterSource->setPosition(Vec3(32 * i - 640 + 16, 360 - 16, 0));
+	}
 
 	auto block = new GameObject(this);
 	block->setSize(Vec3(640, 96, 0));
-	block->setPosition(Vec3(0, -360, 0));
+	block->setPosition(Vec3(0, -240, 0));
 
 	auto blockRenderer = new SpriteRenderer(block);
 	blockRenderer->setTextureByName("BoxFill");
@@ -71,23 +66,14 @@ void TestScene::init()
 	pCollider->setHeight(96.0f);
 
 	auto postEffect = new GameObject(this);
-	new DefaultRender(postEffect, 150, GraphicsLayer::Default);
-	new DefaultRender(postEffect, 110, GraphicsLayer::Block);
+	new DefaultRender(postEffect, 160, GraphicsLayer::Default);
+	new DefaultRender(postEffect, 150, GraphicsLayer::Block);
 
-	new SplashMask(postEffect, 150);
+	new SplashMask(postEffect, 160);
 	new MetaBallRenderer(postEffect);
 
 	postEffect->setPosition(Vec3(0, 0, 0));
 	postEffect->setSize(Vec3(Screen::getWindowWidth(), Screen::getWindowHeight(), 1.0f));
-
-	//auto postEffect2 = new GameObject(this);
-	////new DefaultRender(postEffect2, 100, GraphicsLayer::Default);
-	//new DefaultRender(postEffect2, 110, GraphicsLayer::Block);
-	//new DefaultRender(postEffect2, 120, GraphicsLayer::Splash);
-	////new SplashMask(postEffect2, 130);
-	////new MetaBallRenderer(postEffect);
-	//postEffect2->setPosition(Vec3(Screen::getWindowWidth() / 4, 0, 1.0f));
-	//postEffect2->setSize(Vec3(Screen::getWindowWidth() / 2, Screen::getWindowHeight() / 2, 1.0f));
 
 	m_Timer.setMaxTime(0.01f);
 	m_DropCount = 64;
@@ -108,9 +94,6 @@ void TestScene::update()
 	if (Input::isKeyDown(VK_LBUTTON))
 	{
 		m_DropCount = 0;
-
-		//auto pWaterDrop = new WaterDrop2(this);
-		//pWaterDrop->setPosition(Input::getMousePosition());
 	}
 
 	if (m_Timer.isTime() && m_DropCount < 40)
@@ -131,10 +114,10 @@ void TestScene::update()
 		float increment = 640 / 40;
 
 		auto pWaterDrop = new WaterDrop2(this);
-		pWaterDrop->setPosition(Vec3(m_DropCount * increment + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
+		pWaterDrop->setPosition(Vec3(m_DropCount * increment + random.getRandom(-8.0f, 8.0f), 360 - 32.0f, 0));
 
 		auto pWaterDrop2 = new WaterDrop2(this);
-		pWaterDrop2->setPosition(Vec3(m_DropCount * -increment + random.getRandom(-8.0f, 8.0f), 360 + random.getRandom(-16.0f, 16.0f), 0));
+		pWaterDrop2->setPosition(Vec3(m_DropCount * -increment + random.getRandom(-8.0f, 8.0f), 360 -32.0f, 0));
 
 		m_DropCount++;
 	}

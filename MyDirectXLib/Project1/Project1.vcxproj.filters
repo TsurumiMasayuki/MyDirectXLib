@@ -85,6 +85,7 @@
     <ClCompile Include="Source\Actor\Test\WaterDrop.cpp" />
     <ClCompile Include="Source\Actor\Test\WaterDrop2.cpp" />
     <ClCompile Include="Source\Actor\Test\SplashEffect.cpp" />
+    <ClCompile Include="Source\Actor\Test\WaterSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene\AbstractScene.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Source\Actor\Test\WaterDrop.h" />
     <ClInclude Include="Source\Actor\Test\WaterDrop2.h" />
     <ClInclude Include="Source\Actor\Test\SplashEffect.h" />
+    <ClInclude Include="Source\Actor\Test\WaterSource.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\BasicPS.hlsl" />

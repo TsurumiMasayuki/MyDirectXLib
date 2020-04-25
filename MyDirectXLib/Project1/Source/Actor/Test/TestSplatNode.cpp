@@ -32,7 +32,7 @@ void TestSplatNode::start()
 	auto renderer = new SpriteRenderer(this);
 	//レイヤーを水しぶき用にセット
 	renderer->setGraphicsLayer(GraphicsLayer::Splash);
-	renderer->setTextureByName("CircleFill");
+	renderer->setTextureByName("MetaBall");
 	renderer->setColor(Color(DirectX::Colors::Cyan));
 
 	//サイズ変更用Actionをセット

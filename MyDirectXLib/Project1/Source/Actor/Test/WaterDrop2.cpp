@@ -10,7 +10,6 @@
 
 #include "Utility\Random.h"
 #include "Device\GameTime.h"
-#include <DirectXColors.h>
 
 WaterDrop2::WaterDrop2(IGameMediator * pGameMediator)
 	: GameObject(pGameMediator)
