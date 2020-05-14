@@ -41,20 +41,17 @@ void Game::init()
 	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
 
 	ShaderManager::LoadPixelShader_CSO("BlurPS", "Assets/Shaders/BlurPS.cso");
-	ShaderManager::LoadPixelShader_CSO("MetaBallPS", "Assets/Shaders/MetaBallPS.cso");
 
 	ShaderManager::LoadVertexShader_CSO("BasicVS", "Assets/Shaders/BasicVS.cso");
 	ShaderManager::LoadPixelShader_CSO("BasicPS", "Assets/Shaders/BasicPS.cso");
 
+	//エフェクト用シェーダーを読み込み
+	ShaderManager::LoadPixelShader_CSO("MetaBallPS", "Assets/Shaders/WaterFallGame/MetaBallPS.cso");
 	ShaderManager::LoadPixelShader_CSO("CircleFillPS", "Assets/Shaders/WaterFallGame/CircleFillPS.cso");
 	ShaderManager::LoadPixelShader_CSO("CircleGradPS", "Assets/Shaders/WaterFallGame/CircleGradPS.cso");
 	ShaderManager::LoadPixelShader_CSO("SplashPS", "Assets/Shaders/WaterFallGame/SplashPS.cso");
 
 	GameDevice::initialize();
-	GameDevice::getMeshManager()->loadMesh("Vox", "Assets/Models/testVox.fbx", L"Assets/Models/testVox.png");
-	GameDevice::getMeshManager()->loadMesh("TestMesh", "Assets/Models/tekitou.fbx");
-	GameDevice::getMeshManager()->loadMesh("Cube", "Assets/Models/cube.fbx");
-	GameDevice::getMeshManager()->loadMesh("Sphere", "Assets/Models/sphere.fbx");
 
 	GameDevice::getAudioManager()->loadWavFile("MusicMono", L"Assets/Sounds/MusicMono.wav");
 
