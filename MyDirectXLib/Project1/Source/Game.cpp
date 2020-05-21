@@ -30,7 +30,6 @@ void Game::init()
 	TextureManager::loadTexture(L"Assets/Textures/BoxFill.png", "BoxFill");
 	TextureManager::loadTexture(L"Assets/Textures/BoxOutline.png", "BoxOutline");
 	TextureManager::loadTexture(L"Assets/Textures/Default.png", "Default");
-	TextureManager::loadTexture(L"Assets/Textures/MetaBall.png", "MetaBall");
 
 	//スプライト用シェーダーを読み込み
 	ShaderManager::LoadVertexShader_CSO("SpriteVS", "Assets/Shaders/SpriteVS.cso");
@@ -40,16 +39,8 @@ void Game::init()
 	ShaderManager::LoadVertexShader_CSO("MeshVS", "Assets/Shaders/MeshVS.cso");
 	ShaderManager::LoadPixelShader_CSO("MeshPS", "Assets/Shaders/MeshPS.cso");
 
-	ShaderManager::LoadPixelShader_CSO("BlurPS", "Assets/Shaders/BlurPS.cso");
-
 	ShaderManager::LoadVertexShader_CSO("BasicVS", "Assets/Shaders/BasicVS.cso");
 	ShaderManager::LoadPixelShader_CSO("BasicPS", "Assets/Shaders/BasicPS.cso");
-
-	//エフェクト用シェーダーを読み込み
-	ShaderManager::LoadPixelShader_CSO("MetaBallPS", "Assets/Shaders/WaterFallGame/MetaBallPS.cso");
-	ShaderManager::LoadPixelShader_CSO("CircleFillPS", "Assets/Shaders/WaterFallGame/CircleFillPS.cso");
-	ShaderManager::LoadPixelShader_CSO("CircleGradPS", "Assets/Shaders/WaterFallGame/CircleGradPS.cso");
-	ShaderManager::LoadPixelShader_CSO("SplashPS", "Assets/Shaders/WaterFallGame/SplashPS.cso");
 
 	GameDevice::initialize();
 

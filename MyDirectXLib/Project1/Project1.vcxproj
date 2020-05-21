@@ -107,7 +107,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)inc\WICTextureLoader;$(SolutionDir)inc\DDSTextureLoader;$(SolutionDir)inc\DirectXTex;$(SolutionDir)inc\WAVFileReader;$(ProjectDir)Source;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)inc\WICTextureLoader;$(SolutionDir)inc\DDSTextureLoader;$(SolutionDir)inc\WAVFileReader;$(ProjectDir)Source;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>Winmm.Lib;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -144,7 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)inc\WICTextureLoader;$(SolutionDir)inc\DDSTextureLoader;$(SolutionDir)inc\DirectXTex;$(SolutionDir)inc\WAVFileReader;$(ProjectDir)Source;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)inc\WICTextureLoader;$(SolutionDir)inc\DDSTextureLoader;$(SolutionDir)inc\WAVFileReader;$(ProjectDir)Source;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -158,19 +158,10 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Actor\Test\SplashEffect.cpp" />
-    <ClCompile Include="Source\Actor\Test\Tester.cpp" />
-    <ClCompile Include="Source\Actor\Test\TestSplat.cpp" />
-    <ClCompile Include="Source\Actor\Test\TestSplatNode.cpp" />
-    <ClCompile Include="Source\Actor\Test\WaterDrop.cpp" />
-    <ClCompile Include="Source\Actor\Test\WaterDrop2.cpp" />
-    <ClCompile Include="Source\Actor\Test\WaterSource.cpp" />
     <ClCompile Include="Source\Component\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Component\Graphics\CustomRenderer2D.cpp" />
     <ClCompile Include="Source\Component\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="Source\Component\Graphics\PostEffect\DefaultRender.cpp" />
-    <ClCompile Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.cpp" />
-    <ClCompile Include="Source\Component\Graphics\PostEffect\SplashMask.cpp" />
     <ClCompile Include="Source\Component\Graphics\TextRenderer.cpp" />
     <ClCompile Include="Source\Component\Physics\AbstractCollider2D.cpp" />
     <ClCompile Include="Source\Component\Physics\CircleCollider2D.cpp" />
@@ -246,26 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Actor\IGameMediator.h" />
-    <ClInclude Include="Source\Actor\Test\SplashEffect.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Source\Actor\Test\Tester.h" />
     <ClInclude Include="Source\Actor\Test\TestObject.h" />
-    <ClInclude Include="Source\Actor\Test\TestSplat.h" />
-    <ClInclude Include="Source\Actor\Test\TestSplatNode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Source\Actor\Test\WaterDrop.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Source\Actor\Test\WaterDrop2.h" />
-    <ClInclude Include="Source\Actor\Test\WaterSource.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Source\Component\Audio\AudioSource.h" />
     <ClInclude Include="Source\Component\Graphics\CustomRenderer2D.h" />
     <ClInclude Include="Source\Component\Graphics\GraphicsLayer.h" />
@@ -273,8 +245,6 @@
     <ClInclude Include="Source\Component\Graphics\MeshRenderer.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\DefaultRender.h" />
     <ClInclude Include="Source\Component\Graphics\PostEffect\IPostEffectRenderer.h" />
-    <ClInclude Include="Source\Component\Graphics\PostEffect\MetaBallRenderer.h" />
-    <ClInclude Include="Source\Component\Graphics\PostEffect\SplashMask.h" />
     <ClInclude Include="Source\Component\Graphics\TextRenderer.h" />
     <ClInclude Include="Source\Component\Physics\AbstractCollider2D.h" />
     <ClInclude Include="Source\Component\Physics\BoxCollider3D.h" />
@@ -372,10 +342,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Assets\Shaders\BlurPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
     <FxCompile Include="Assets\Shaders\MeshPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -384,10 +350,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Assets\Shaders\MetaBallPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
     <FxCompile Include="Assets\Shaders\SpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -395,18 +357,6 @@
     <FxCompile Include="Assets\Shaders\SpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Assets\Shaders\WaterFallGame\CircleFillPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Assets\Shaders\WaterFallGame\CircleGradPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Assets\Shaders\WaterFallGame\SplashPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

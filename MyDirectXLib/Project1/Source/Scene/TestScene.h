@@ -23,7 +23,4 @@ public:
 private:
 	GameObjectManager* m_pObjManager;
 	PhysicsWorld* m_pPhysicsWorld;
-
-	Timer m_Timer;
-	int m_DropCount;
 };
